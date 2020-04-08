@@ -4,6 +4,7 @@
  */
 package Business.Employee;
 
+import Business.Vaccine.Vaccine;
 import java.awt.image.BufferedImage;
 
 /**
@@ -12,11 +13,13 @@ import java.awt.image.BufferedImage;
  */
 public class Employee {
     
+    private Vaccine vaccine;
     private String name;
-    private String phoneNum;
+    private int id;
+    private String phoneNum;    
     private BufferedImage photo;
     
-    private int id;
+    
     private static int count = 1;
 
     public Employee() {
@@ -24,8 +27,9 @@ public class Employee {
         count++;
     }
 
-    public Employee(String name, String phoneNum, BufferedImage photo) {
+    public Employee(String name, int id, String phoneNum, BufferedImage photo) {
         this.name = name;
+        this.id = id;
         this.phoneNum = phoneNum;
         this.photo = photo;
     }
@@ -58,6 +62,14 @@ public class Employee {
 
     public void setPhoto(BufferedImage photo) {
         this.photo = photo;
+    }
+
+    public Vaccine getVaccine() {
+        return vaccine;
+    }
+
+    public void setVaccine(Vaccine vaccine) {
+        this.vaccine = vaccine;
     }
     
 

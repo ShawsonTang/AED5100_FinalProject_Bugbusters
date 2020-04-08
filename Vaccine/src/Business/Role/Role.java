@@ -47,7 +47,7 @@ public abstract class Role {
             EcoSystem business);
 
     @Override
-    public String toString() {
+    public String toString() {        
         return this.getClass().getName();
     }
     

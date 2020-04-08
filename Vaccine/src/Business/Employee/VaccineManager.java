@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
  */
 public class VaccineManager extends Employee {
     
-    public VaccineManager(String name, String phoneNum, BufferedImage photo) {
-        super(name, phoneNum, photo);
+    public VaccineManager(String name, int id, String phoneNum, BufferedImage photo) {
+        super(name, id, phoneNum, photo);
     }
 }

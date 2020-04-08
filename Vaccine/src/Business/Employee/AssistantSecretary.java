@@ -12,9 +12,10 @@ import java.awt.image.BufferedImage;
  * @author shawson
  */
 public class AssistantSecretary extends Employee {
+    
 
-    public AssistantSecretary(String name, String phoneNum, BufferedImage photo) {
-        super(name, phoneNum, photo);
+    public AssistantSecretary(String name, int id, String phoneNum, BufferedImage photo) {
+        super(name, id, phoneNum, photo);
     }
     
     

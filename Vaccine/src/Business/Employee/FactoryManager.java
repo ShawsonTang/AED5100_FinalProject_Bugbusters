@@ -12,9 +12,9 @@ import java.awt.image.BufferedImage;
  * @author shawson
  */
 public class FactoryManager extends Employee {
-
-    public FactoryManager(String name, String phoneNum, BufferedImage photo) {
-        super(name, phoneNum, photo);
+    
+    public FactoryManager(String name, int id, String phoneNum, BufferedImage photo) {
+        super(name, id, phoneNum, photo);
     }
     
     
