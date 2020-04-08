@@ -12,7 +12,8 @@ import java.awt.image.BufferedImage;
  * @author shawson
  */
 public class Doctor extends Employee {
-    public Doctor(String name, String phoneNum, BufferedImage photo) {
-        super(name, phoneNum, photo);
+    
+    public Doctor(String name, int id, String phoneNum, BufferedImage photo) {
+        super(name, id, phoneNum, photo);
     }
 }

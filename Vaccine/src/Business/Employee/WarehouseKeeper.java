@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
  */
 public class WarehouseKeeper extends Employee {
     
-    public WarehouseKeeper(String name, String phoneNum, BufferedImage photo) {
-        super(name, phoneNum, photo);
+    public WarehouseKeeper(String name, int id, String phoneNum, BufferedImage photo) {
+        super(name, id, phoneNum, photo);
     }
     
 }
