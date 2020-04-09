@@ -5,6 +5,9 @@
  */
 package Business.Enterprise;
 
+import Business.Organization.FactoryOrganization;
+import Business.Organization.Organization;
+import Business.Organization.WarehouseOrganization;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -19,8 +22,14 @@ public class ManufacturerEnterprise extends Enterprise {
     }
 
     @Override
-    public ArrayList<Role> getSupportedRole() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Organization.OrganizationType> getSupportedOrganizations() {
+        ArrayList<Organization.OrganizationType> organizations = new ArrayList();
+        organizations.add(Organization.OrganizationType.Factory);
+        organizations.add(Organization.OrganizationType.Warehouse);
+        return organizations;
     }
+
+    
+    
     
 }

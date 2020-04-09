@@ -6,6 +6,7 @@
 package Business.Organization;
 
 import Business.Role.Role;
+import Business.Role.VaccineManager;
 import java.util.ArrayList;
 
 /**
@@ -14,15 +15,14 @@ import java.util.ArrayList;
  */
 public class WarehouseOrganization extends Organization {
     public WarehouseOrganization() {
-        super(Organization.OrganizationType.Warehouse.getValue());
+        super(Organization.OrganizationType.Warehouse.getValue(), Organization.OrganizationType.Warehouse);
     }
     
     @Override
     public ArrayList<Role> getSupportedRole() {
-//        ArrayList<Role> roles = new ArrayList();
-//        roles.add(new AdminRole());
-//        return roles;
-        return null;
+        ArrayList<Role> roles = new ArrayList();
+        roles.add(new VaccineManager());
+        return roles;
     }
     
 }

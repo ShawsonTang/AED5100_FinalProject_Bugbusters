@@ -6,6 +6,8 @@
 package Business.Enterprise;
 
 import Business.Enterprise.Enterprise.EnterpriseType;
+import Business.Organization.DoPHOrganization;
+import Business.Organization.Organization;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -19,7 +21,9 @@ public class RegulatorEnterprise extends Enterprise {
     }
 
     @Override
-    public ArrayList<Role> getSupportedRole() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Organization.OrganizationType> getSupportedOrganizations() {
+        ArrayList<Organization.OrganizationType> organizations = new ArrayList();
+        organizations.add(Organization.OrganizationType.DoPH);        
+        return organizations;
     }
 }

@@ -5,6 +5,10 @@
  */
 package Business.Enterprise;
 
+import Business.Organization.DoPHOrganization;
+import Business.Organization.DoctorOrganization;
+import Business.Organization.HealthDepartmentOrganization;
+import Business.Organization.Organization;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -19,8 +23,11 @@ public class ProviderEnterprise extends Enterprise {
     }
 
     @Override
-    public ArrayList<Role> getSupportedRole() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Organization.OrganizationType> getSupportedOrganizations() {
+        ArrayList<Organization.OrganizationType> organizations = new ArrayList();
+        organizations.add(Organization.OrganizationType.HealthDepartment);
+        organizations.add(Organization.OrganizationType.Doctor);
+        return organizations;
     }
     
 }
