@@ -10,6 +10,8 @@ import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import userinterface.SystemAdminWorkArea.SystemAdminWorkAreaJPanel;
 import javax.swing.JPanel;
+import userinterface.SystemAdminWorkArea.ChooseNetworkJPanel;
+import userinterface.SystemAdminWorkArea.manageenterprise.CreateNetworkJPanel;
 
 /**
  *

@@ -6,6 +6,7 @@
 package Business.Organization;
 
 import Business.Role.AdminRole;
+import Business.Role.FactoryManagerRole;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -15,15 +16,14 @@ import java.util.ArrayList;
  */
 public class FactoryOrganization extends Organization {
     public FactoryOrganization() {
-        super(Organization.OrganizationType.Factory.getValue());
+        super(Organization.OrganizationType.Factory.getValue(), Organization.OrganizationType.Factory);
     }
     
     @Override
     public ArrayList<Role> getSupportedRole() {
-//        ArrayList<Role> roles = new ArrayList();
-//        roles.add(new AdminRole());
-//        return roles;
-        return null;
+        ArrayList<Role> roles = new ArrayList();
+        roles.add(new FactoryManagerRole());
+        return roles;
     }
     
 }

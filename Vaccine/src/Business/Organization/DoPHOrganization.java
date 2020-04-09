@@ -5,6 +5,7 @@
  */
 package Business.Organization;
 
+import Business.Role.AssistantSecretaryRole;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -14,12 +15,14 @@ import java.util.ArrayList;
  */
 public class DoPHOrganization extends Organization {
     public DoPHOrganization() {
-        super(Organization.OrganizationType.DoPH.getValue());
+        super(Organization.OrganizationType.DoPH.getValue(), Organization.OrganizationType.DoPH);
     }
     
     @Override
     public ArrayList<Role> getSupportedRole() {
-        return null;
+       ArrayList<Role> roles = new ArrayList();
+        roles.add(new AssistantSecretaryRole());
+        return roles;
     }
     
 }

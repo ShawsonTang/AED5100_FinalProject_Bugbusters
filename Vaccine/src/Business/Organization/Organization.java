@@ -15,13 +15,13 @@ import java.util.ArrayList;
  * @author shawson
  */
 public abstract class Organization {
-
+    private OrganizationType organizationType;
     private String name;
     private WorkQueue workQueue;
     private EmployeeDirectory employeeDirectory;
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
-    private static int counter=0;
+    private static int counter = 0;
     
     public enum OrganizationType {
         Admin("Admin Organization"), 
@@ -37,10 +37,15 @@ public abstract class Organization {
         public String getValue() {
             return value;
         }
+        @Override
+        public String toString() {
+            return value;
+        }
     }
 
-    public Organization(String name) {
+    public Organization(String name, OrganizationType organizationType) {
         this.name = name;
+        this.organizationType = organizationType;
         workQueue = new WorkQueue();
         employeeDirectory = new EmployeeDirectory();
         userAccountDirectory = new UserAccountDirectory();
@@ -77,6 +82,23 @@ public abstract class Organization {
     public void setWorkQueue(WorkQueue workQueue) {
         this.workQueue = workQueue;
     }
+
+    public OrganizationType getOrganizationType() {
+        return organizationType;
+    }
+
+    public void setOrganizationType(OrganizationType organizationType) {
+        this.organizationType = organizationType;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        Organization.counter = counter;
+    }
+    
 
     @Override
     public String toString() {

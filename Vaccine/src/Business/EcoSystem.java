@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author shawson
  */
-public class EcoSystem extends Organization{
+public class EcoSystem extends Organization {
     
     private static EcoSystem business;
     private ArrayList<Network> networkList;
@@ -26,8 +26,8 @@ public class EcoSystem extends Organization{
         return business;
     }
     
-    public Network createAndAddNetwork(){
-        Network network=new Network();
+    public Network createAndAddNetwork(String name){
+        Network network=new Network(name);
         networkList.add(network);
         return network;
     }
@@ -38,7 +38,7 @@ public class EcoSystem extends Organization{
         return roleList;
     }
     private EcoSystem(){
-        super(null);
+        super(null, null);
         networkList=new ArrayList<Network>();
     }
 

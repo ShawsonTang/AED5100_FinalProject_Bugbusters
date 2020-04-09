@@ -5,8 +5,10 @@
  */
 package Business.Organization;
 
+import Business.Role.DoctorRole;
 import Business.Role.Role;
 import java.util.ArrayList;
+import javax.swing.Action;
 
 /**
  *
@@ -14,12 +16,14 @@ import java.util.ArrayList;
  */
 public class DoctorOrganization extends Organization {
     public DoctorOrganization() {
-        super(Organization.OrganizationType.Doctor.getValue());
+        super(Organization.OrganizationType.Doctor.getValue(), Organization.OrganizationType.Doctor);
     }
     
     @Override
     public ArrayList<Role> getSupportedRole() {
-        return null;
+        ArrayList<Role> roles = new ArrayList();
+        roles.add(new DoctorRole());
+        return roles;
     }
     
 }
