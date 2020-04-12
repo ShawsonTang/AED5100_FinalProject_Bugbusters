@@ -5,14 +5,12 @@
  */
 package userinterface.Signup;
 
-import Business.EcoSystem;
-
 /**
  *
  * @author Jasmine
  */
 public class CreateUserJPanel extends javax.swing.JPanel {
-    private EcoSystem system;
+
     /**
      * Creates new form CreateUserJPanel
      */
@@ -205,11 +203,11 @@ public class CreateUserJPanel extends javax.swing.JPanel {
 
     private void createBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBtnActionPerformed
         // TODO add your handling code here:
-//        String name = nameText.getText();
-//        String address = addressText.getText();
-//        String phoneNum = phoneNumText.getText();
-//        String username = usernameText.getText();
-//        String password = passwordText.getText();
+        String name = nameText.getText();
+        String address = addressText.getText();
+        String phoneNum = phoneNumText.getText();
+        String username = usernameText.getText();
+        String password = passwordText.getText();
 //        if(username == null || username.equals("") || password == null || username.equals("") || name == null || name.equals("") || address == null || address.equals("") || phoneNum == null || phoneNum.equals("")){
 //            JOptionPane.showMessageDialog(null, "Text field can't be empty.");
 //            return;

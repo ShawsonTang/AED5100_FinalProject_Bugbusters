@@ -180,6 +180,7 @@ public class VaccineProduceRequestJPanel extends javax.swing.JPanel {
         request.setVaccine(vaccine);
         request.setDosesRequest(dose);
         request.setReceiver(factoryOrganization);
+        request.setSender(organization);
         request.setMessage(message);
         request.setStatus("Pending");
         organization.getWorkQueue().getWorkRequestList().add(request);
