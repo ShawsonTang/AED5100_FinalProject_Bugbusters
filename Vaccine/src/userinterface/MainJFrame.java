@@ -32,6 +32,14 @@ public class MainJFrame extends javax.swing.JFrame {
 //        system = dB4OUtil.retrieveSystem();
         system = ConfigureASystem.configure();
         this.setSize(1680, 1050);
+//        for (Network n : system.getNetworkList()) {
+//            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+//                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+//                    o.getUserAccountDirectory().getUserAccountList().forEach((account) -> 
+//                            System.out.println(account.getRole()));
+//                }
+//            }
+//        }
     }
 
     /**
@@ -156,91 +164,89 @@ public class MainJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signinJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinJButtonActionPerformed
-//        // Get user name
-//        String userName = userNameJTextField.getText();
-//        // Get Password
-//        char[] passwordCharArray = passwordField.getPassword();
-//        String password = String.valueOf(passwordCharArray);
-//        
-//        //Step1: Check in the system admin user account directory if you have the user
-//        UserAccount userAccount=system.getUserAccountDirectory().authenticateUser(userName, password);
-//        
-//        Enterprise inEnterprise=null;
-//        Organization inOrganization=null;
-//        
-//        if(userAccount==null){
-//            //Step 2: Go inside each network and check each enterprise
-//            for(Network network:system.getNetworkList()){
-//                //Step 2.a: check against each enterprise
-//                for(Enterprise enterprise:network.getEnterpriseDirectory().getEnterpriseList()){
-//                    userAccount=enterprise.getUserAccountDirectory().authenticateUser(userName, password);
-//                    if(userAccount==null){
-//                       //Step 3:check against each organization for each enterprise
-//                       for(Organization organization:enterprise.getOrganizationDirectory().getOrganizationList()){
-//                           userAccount=organization.getUserAccountDirectory().authenticateUser(userName, password);
-//                           if(userAccount!=null){
-//                               inEnterprise=enterprise;
-//                               inOrganization=organization;
-//                               break;
-//                           }
-//                       }
-//                        
-//                    }
-//                    else{
-//                       inEnterprise=enterprise;
-//                       break;
-//                    }
-//                    if(inOrganization!=null){
-//                        break;
-//                    }  
-//                }
-//                if(inEnterprise!=null){
-//                    break;
-//                }
-//            }
-//        }
-//        
-//        if(userAccount==null){
-//            JOptionPane.showMessageDialog(null, "Invalid credentials");
-//            return;
-//        }
-//        else{
-//            CardLayout layout=(CardLayout)container.getLayout();
-//            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
-//            layout.next(container);
-//        }
-//        
-//        signinJButton.setEnabled(false);
-//        signoutJButton.setEnabled(true);
-//        userNameJTextField.setEnabled(false);
-//        passwordField.setEnabled(false);
-// Get user name
-        String inputUserName = userNameJTextField.getText();
+        // Get user name
+        String userName = userNameJTextField.getText();
+        // Get Password
         char[] passwordCharArray = passwordField.getPassword();
-        String inputPassword = String.valueOf(passwordCharArray);
+        String password = String.valueOf(passwordCharArray);
         
-//        System.out.println(system.getEmployeeDirectory().getEmployeeList().size());
-//        System.out.println(system.getUserAccountDirectory().getUserAccountList().size());
+        //Step1: Check in the system admin user account directory if you have the user
+        UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(userName, password);
         
-        UserAccount ua = system.getUserAccountDirectory().authenticateUser(inputUserName, inputPassword);
         Enterprise inEnterprise = null;
         Organization inOrganization = null;
-        if (ua != null) {
-            JPanel workAreaJPanel = ua.getRole().createWorkArea(container, ua, inOrganization, inEnterprise, system);
-            container.add("WorkAreaJPanel", workAreaJPanel);
-            CardLayout layout = (CardLayout) container.getLayout();
+        
+        if(userAccount == null) {
+            //Step 2: Go inside each network and check each enterprise
+            for(Network network : system.getNetworkList()){
+                //Step 2.a: check against each enterprise
+                for(Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()){
+                    //Step 3:check against each organization for each enterprise
+                    for(Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()){ 
+//                        organization.getUserAccountDirectory().getUserAccountList().forEach(System.out::println);
+                        userAccount = organization.getUserAccountDirectory().authenticateUser(userName, password);
+                        if(userAccount != null){
+                            inEnterprise = enterprise;
+                            inOrganization = organization;
+                            break;
+                        }
+                    }
+                    if (inEnterprise != null) {
+                        break;
+                    }
+                }
+                if (inEnterprise != null) {
+                        break;
+                }
+            }            
+            
+            if(userAccount == null){
+                JOptionPane.showMessageDialog(null, "Invalid credentials");
+                return;
+            }
+            System.out.println("The role of current user account:");
+            System.out.println(userAccount.getRole());
+            CardLayout layout=(CardLayout)container.getLayout();
+            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
             layout.next(container);
-            signinJButton.setEnabled(true);
-            userNameJTextField.setEnabled(false);
-            passwordField.setEnabled(false);
-            signinJButton.setEnabled(false);
-            userNameJTextField.setText("");
-            passwordField.setText("");
+        }
+
+        else{
+            System.out.println("The role of current user account:");
+            System.out.println(userAccount.getRole());
+            CardLayout layout=(CardLayout)container.getLayout();
+            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
+            layout.next(container);
+        }
+        
+        signinJButton.setEnabled(false);
+        signoutJButton.setEnabled(true);
+        userNameJTextField.setEnabled(false);
+        passwordField.setEnabled(false);
+
+
+// Get user name
+//        String inputUserName = userNameJTextField.getText();
+//        char[] passwordCharArray = passwordField.getPassword();
+//        String inputPassword = String.valueOf(passwordCharArray);               
+//        UserAccount ua = system.getUserAccountDirectory().authenticateUser(inputUserName, inputPassword);
+//        if (ua != null) {
+//            JPanel workAreaJPanel = ua.getRole().createWorkArea(container, ua, system);
+//            container.add("WorkAreaJPanel", workAreaJPanel);
+//            CardLayout layout = (CardLayout) container.getLayout();
+//            layout.next(container);
+//            signinJButton.setEnabled(true);
+//            userNameJTextField.setEnabled(false);
+//            passwordField.setEnabled(false);
+//            signinJButton.setEnabled(false);
+//            signoutJButton.setEnabled(true);
+//            userNameJTextField.setText("");
+//            passwordField.setText("");
 //            System.out.println(system);
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Your username or password is incorrect!");
-        }
+//        
+//        else {
+//            JOptionPane.showMessageDialog(null, "Your username or password is incorrect!");
+//        }
     }//GEN-LAST:event_signinJButtonActionPerformed
 
     private void signoutJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutJButtonActionPerformed

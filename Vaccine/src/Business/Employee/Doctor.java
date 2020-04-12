@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
  */
 public class Doctor extends Employee {
     
-    public Doctor(String name, int id, String phoneNum, BufferedImage photo) {
-        super(name, id, phoneNum, photo);
+    public Doctor(String name, int id, String phoneNum) {
+        super(name, id, phoneNum);
     }
 }

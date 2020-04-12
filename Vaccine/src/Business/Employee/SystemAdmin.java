@@ -11,11 +11,8 @@ import java.awt.image.BufferedImage;
  *
  * @author shawson
  */
-public class FactoryManager extends Employee {
-    
-    public FactoryManager(String name, int id, String phoneNum) {
+public class SystemAdmin extends Employee {
+    public SystemAdmin(String name, int id, String phoneNum) {
         super(name, id, phoneNum);
     }
-    
-    
 }

@@ -5,12 +5,14 @@
  */
 package userinterface.Signup;
 
+import Business.EcoSystem;
+
 /**
  *
  * @author Jasmine
  */
 public class CreateUserJPanel extends javax.swing.JPanel {
-
+    private EcoSystem system;
     /**
      * Creates new form CreateUserJPanel
      */
@@ -203,38 +205,38 @@ public class CreateUserJPanel extends javax.swing.JPanel {
 
     private void createBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBtnActionPerformed
         // TODO add your handling code here:
-        String name = nameText.getText();
-        String address = addressText.getText();
-        String phoneNum = phoneNumText.getText();
-        String username = usernameText.getText();
-        String password = passwordText.getText();
-        if(username == null || username.equals("") || password == null || username.equals("") || name == null || name.equals("") || address == null || address.equals("") || phoneNum == null || phoneNum.equals("")){
-            JOptionPane.showMessageDialog(null, "Text field can't be empty.");
-            return;
-        }
-        if (system.getUserAccountDirectory().checkIfUsernameIsUnique(username)) {
-            Employee employee = system.getEmployeeDirectory().createEmployee(name);
-            UserAccount userAccount = system.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
-            Restaurant restaurant = new Restaurant(name, address, phoneNum, userAccount);
-            system.getRestaurantDirectory().getRestaurantList().add(restaurant);
-            JOptionPane.showMessageDialog(null,"Restaurant created successfully!");
-            nameText.setText("");
-            addressText.setText("");
-            phoneNumText.setText("");
-            usernameText.setText("");
-            passwordText.setText("");
-        } else {
-            JOptionPane.showMessageDialog(null, "This username already exists!");
-        }
+//        String name = nameText.getText();
+//        String address = addressText.getText();
+//        String phoneNum = phoneNumText.getText();
+//        String username = usernameText.getText();
+//        String password = passwordText.getText();
+//        if(username == null || username.equals("") || password == null || username.equals("") || name == null || name.equals("") || address == null || address.equals("") || phoneNum == null || phoneNum.equals("")){
+//            JOptionPane.showMessageDialog(null, "Text field can't be empty.");
+//            return;
+//        }
+//        if (system.getUserAccountDirectory().checkIfUsernameIsUnique(username)) {
+//            Employee employee = system.getEmployeeDirectory().createEmployee(name);
+//            UserAccount userAccount = system.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
+//            Restaurant restaurant = new Restaurant(name, address, phoneNum, userAccount);
+//            system.getRestaurantDirectory().getRestaurantList().add(restaurant);
+//            JOptionPane.showMessageDialog(null,"Restaurant created successfully!");
+//            nameText.setText("");
+//            addressText.setText("");
+//            phoneNumText.setText("");
+//            usernameText.setText("");
+//            passwordText.setText("");
+//        } else {
+//            JOptionPane.showMessageDialog(null, "This username already exists!");
+//        }
     }//GEN-LAST:event_createBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        container.remove(this);
-        CardLayout layout = (CardLayout) container.getLayout();
-        Component[] components = container.getComponents();
-        ManageRestaurantJPanel manageRestaurantJPanel = (ManageRestaurantJPanel) container.getComponent(components.length - 1);
-        manageRestaurantJPanel.populateTable();
-        layout.previous(container);
+//        container.remove(this);
+//        CardLayout layout = (CardLayout) container.getLayout();
+//        Component[] components = container.getComponents();
+//        ManageRestaurantJPanel manageRestaurantJPanel = (ManageRestaurantJPanel) container.getComponent(components.length - 1);
+//        manageRestaurantJPanel.populateTable();
+//        layout.previous(container);
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void photoTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_photoTextActionPerformed
