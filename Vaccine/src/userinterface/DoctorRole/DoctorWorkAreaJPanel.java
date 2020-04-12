@@ -7,6 +7,7 @@ package userinterface.DoctorRole;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.DoctorOrganization;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
@@ -16,26 +17,38 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author raunak
+ * @author shawson
  */
 public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
 
-    private JPanel userProcessContainer;
+    private JPanel container;
     private DoctorOrganization organization;
     private Enterprise enterprise;
     private UserAccount userAccount;
+    private EcoSystem system;
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public DoctorWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, DoctorOrganization organization, Enterprise enterprise) {
+    public DoctorWorkAreaJPanel(JPanel container, UserAccount userAccount, DoctorOrganization organization, Enterprise enterprise, EcoSystem system) {
         initComponents();
         
-        this.userProcessContainer = userProcessContainer;
+        this.container = container;
         this.organization = organization;
         this.enterprise = enterprise;
-        this.userAccount = account;
-        valueLabel.setText(enterprise.getName());
+        this.userAccount = userAccount;
+        this.system = system;
+//        valueLabel.setText(enterprise.getName());
         populateRequestTable();
+        populateTextField();
+    }
+    
+    void populateTextField() {
+        nameText.setText(userAccount.getEmployee().getName());
+        phoneNumText.setText(userAccount.getEmployee().getPhoneNum());
+        photoLabel.setIcon(userAccount.getEmployee().getPhoto());
+//        System.out.println(userAccount.getEmployee().getPhoto());
+        usernameText.setText(userAccount.getUsername());
+        passwordText.setText(userAccount.getPassword());
     }
     
     public void populateRequestTable(){
@@ -72,7 +85,6 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         phoneNumText = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        photoText = new javax.swing.JTextField();
         usernameText = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         passwordText = new javax.swing.JTextField();
@@ -80,6 +92,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         nameText = new javax.swing.JTextField();
+        photoLabel = new javax.swing.JLabel();
 
         vaccineTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -143,13 +156,6 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel8.setText("Username:");
 
-        photoText.setEditable(false);
-        photoText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                photoTextActionPerformed(evt);
-            }
-        });
-
         usernameText.setEditable(false);
         usernameText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,11 +213,11 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel10))
                                 .addGap(40, 40, 40)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(addressText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(phoneNumText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(photoText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(addressText, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(nameText, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(phoneNumText, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(photoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(requestButton)
@@ -237,31 +243,32 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(phoneNumText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(photoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(requestButton))
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel10)
+                                .addComponent(requestButton))
+                            .addComponent(photoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void requestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestButtonActionPerformed
         
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        userProcessContainer.add("RequestLabTestJPanel", new RequestLabTestJPanel(userProcessContainer, userAccount, enterprise));
-        layout.next(userProcessContainer);
+        CardLayout layout = (CardLayout) container.getLayout();
+        
+        layout.next(container);
         
     }//GEN-LAST:event_requestButtonActionPerformed
 
@@ -272,10 +279,6 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
     private void phoneNumTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_phoneNumTextActionPerformed
-
-    private void photoTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_photoTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_photoTextActionPerformed
 
     private void usernameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTextActionPerformed
         // TODO add your handling code here:
@@ -302,7 +305,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField nameText;
     private javax.swing.JTextField passwordText;
     private javax.swing.JTextField phoneNumText;
-    private javax.swing.JTextField photoText;
+    private javax.swing.JLabel photoLabel;
     private javax.swing.JButton requestButton;
     private javax.swing.JTextField usernameText;
     private javax.swing.JTable vaccineTable;

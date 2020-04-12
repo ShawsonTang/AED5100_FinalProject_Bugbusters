@@ -6,6 +6,7 @@ package Business.UserAccount;
 
 import Business.Employee.Employee;
 import Business.Role.Role;
+import Business.Vaccine.VaccineDirectory;
 import Business.WorkQueue.WorkQueue;
 
 /**
@@ -19,9 +20,10 @@ public class UserAccount {
     private Employee employee;
     private Role role;
     private WorkQueue workQueue;
-
+    private VaccineDirectory vaccineDirectory;
     public UserAccount() {
         workQueue = new WorkQueue();
+        vaccineDirectory = new VaccineDirectory();
     }
     
     
@@ -60,6 +62,14 @@ public class UserAccount {
 
     public WorkQueue getWorkQueue() {
         return workQueue;
+    }
+
+    public VaccineDirectory getVaccineDirectory() {
+        return vaccineDirectory;
+    }
+
+    public void setVaccineDirectory(VaccineDirectory vaccineDirectory) {
+        this.vaccineDirectory = vaccineDirectory;
     }
 
     

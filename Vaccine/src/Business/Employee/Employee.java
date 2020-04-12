@@ -6,6 +6,7 @@ package Business.Employee;
 
 import Business.Vaccine.Vaccine;
 import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,21 +18,21 @@ public class Employee {
     private String name;
     private int id;
     private String phoneNum;    
-    private BufferedImage photo;
+    private ImageIcon photo;
     
     
     private static int count = 1;
 
-    public Employee() {
-        id = count;
-        count++;
-    }
+//    public Employee() {
+//        id = count;
+//        count++;
+//    }
 
-    public Employee(String name, int id, String phoneNum, BufferedImage photo) {
+    public Employee(String name, int id, String phoneNum) {
         this.name = name;
         this.id = id;
         this.phoneNum = phoneNum;
-        this.photo = photo;
+//        this.photo = photo;
     }
     
 
@@ -56,11 +57,11 @@ public class Employee {
         this.phoneNum = phoneNum;
     }
 
-    public BufferedImage getPhoto() {
+    public ImageIcon getPhoto() {
         return photo;
     }
 
-    public void setPhoto(BufferedImage photo) {
+    public void setPhoto(ImageIcon photo) {
         this.photo = photo;
     }
 
