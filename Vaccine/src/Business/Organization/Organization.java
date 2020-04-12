@@ -7,6 +7,8 @@ package Business.Organization;
 import Business.Employee.EmployeeDirectory;
 import Business.Role.Role;
 import Business.UserAccount.UserAccountDirectory;
+import Business.Vaccine.Vaccine;
+import Business.Vaccine.VaccineDirectory;
 import Business.WorkQueue.WorkQueue;
 import java.util.ArrayList;
 
@@ -21,6 +23,7 @@ public abstract class Organization {
     private EmployeeDirectory employeeDirectory;
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
+    private VaccineDirectory vaccineDirectory;
     private static int counter = 0;
     
     public enum OrganizationType {
@@ -49,6 +52,7 @@ public abstract class Organization {
         workQueue = new WorkQueue();
         employeeDirectory = new EmployeeDirectory();
         userAccountDirectory = new UserAccountDirectory();
+        vaccineDirectory = new VaccineDirectory();
         organizationID = counter;
         ++counter;
     }
@@ -98,6 +102,15 @@ public abstract class Organization {
     public static void setCounter(int counter) {
         Organization.counter = counter;
     }
+
+    public VaccineDirectory getVaccineDirectory() {
+        return vaccineDirectory;
+    }
+
+    public void setVaccineDirectory(VaccineDirectory vaccineDirectory) {
+        this.vaccineDirectory = vaccineDirectory;
+    }
+    
     
 
     @Override
