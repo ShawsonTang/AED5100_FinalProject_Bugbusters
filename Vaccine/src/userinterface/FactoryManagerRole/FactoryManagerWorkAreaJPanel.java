@@ -79,7 +79,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
             if (r instanceof VaccineProduceRequest) {
                 row[0] = r;
                 row[1] = ((VaccineProduceRequest) r).getDosesRequest();
-                row[2] = r.getReceiver();
+                row[2] = r.getSender();
                 row[3] = r.getStatus();
                 model.addRow(row);
             }

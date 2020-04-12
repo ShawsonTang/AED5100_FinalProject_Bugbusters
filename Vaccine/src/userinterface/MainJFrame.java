@@ -14,6 +14,7 @@ import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import userinterface.Signup.SignupJPanel;
 
 /**
  *
@@ -271,7 +272,11 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-        // TODO add your handling code here:
+        SignupJPanel sigupJPanel = new SignupJPanel(this.container,system);
+
+        this.container.add(sigupJPanel);
+        CardLayout cardLayout = (CardLayout) container.getLayout();
+        cardLayout.next(this.container);
     }//GEN-LAST:event_signupButtonActionPerformed
 
     /**
