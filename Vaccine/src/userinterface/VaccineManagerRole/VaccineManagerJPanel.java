@@ -5,17 +5,45 @@
  */
 package userinterface.VaccineManagerRole;
 
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.FactoryOrganization;
+import Business.Organization.HealthDepartmentOrganization;
+import Business.Organization.Organization;
+import Business.Organization.WarehouseOrganization;
+import Business.UserAccount.UserAccount;
+import Business.Vaccine.Vaccine;
+import Business.WorkQueue.VaccineDoctorRequest;
+import Business.WorkQueue.VaccineProduceRequest;
+import Business.WorkQueue.WorkRequest;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Jasmine
  */
 public class VaccineManagerJPanel extends javax.swing.JPanel {
-
+    private JPanel container;
+    private HealthDepartmentOrganization organization;
+    private Enterprise enterprise;
+    private UserAccount userAccount;
+    private EcoSystem system;
     /**
      * Creates new form VaccineManagerJPanel
      */
-    public VaccineManagerJPanel() {
+    public VaccineManagerJPanel(JPanel container, UserAccount userAccount, HealthDepartmentOrganization organization, Enterprise enterprise, EcoSystem system) {
         initComponents();
+        this.container = container;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.userAccount = userAccount;
+        this.system = system;
+        populateTextField();
+ 
+        populateDoctorRequestTable();
     }
 
     /**
@@ -57,12 +85,12 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
         phoneNumText1 = new javax.swing.JTextField();
         declineVaccineButton1 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        vaccineTable1 = new javax.swing.JTable();
+        vaccineInfoTable = new javax.swing.JTable();
         approveVaccineButton1 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         viewProviderButton1 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        providerTable1 = new javax.swing.JTable();
+        doctorRequestTable = new javax.swing.JTable();
         declineProviderButton1 = new javax.swing.JButton();
         enterpriseLabel1 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -196,7 +224,7 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
 
         declineVaccineButton1.setText("Decline");
 
-        vaccineTable1.setModel(new javax.swing.table.DefaultTableModel(
+        vaccineInfoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -207,7 +235,7 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(vaccineTable1);
+        jScrollPane3.setViewportView(vaccineInfoTable);
 
         approveVaccineButton1.setText("Approve");
 
@@ -215,7 +243,7 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
 
         viewProviderButton1.setText("View");
 
-        providerTable1.setModel(new javax.swing.table.DefaultTableModel(
+        doctorRequestTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -226,7 +254,7 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(providerTable1);
+        jScrollPane4.setViewportView(doctorRequestTable);
 
         declineProviderButton1.setText("Decline");
 
@@ -236,6 +264,11 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
         jLabel13.setText("Username:");
 
         approveProviderButton1.setText("Approve");
+        approveProviderButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                approveProviderButton1ActionPerformed(evt);
+            }
+        });
 
         photoText1.setEditable(false);
         photoText1.addActionListener(new java.awt.event.ActionListener() {
@@ -291,7 +324,7 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
                             .addComponent(nameText1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(phoneNumText1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(photoText1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,6 +453,28 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameText1ActionPerformed
 
+    private void approveProviderButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveProviderButton1ActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = doctorRequestTable.getSelectedRow();
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null,"Please select a row from table first.","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        VaccineDoctorRequest vaccineDoctorRequest = (VaccineDoctorRequest) doctorRequestTable.getValueAt(selectedRow, 0);
+        vaccineDoctorRequest.setStatus("Approved");
+        Vaccine selectedVaccine = vaccineDoctorRequest.getVaccine();
+        DefaultTableModel model = (DefaultTableModel) vaccineTable.getModel();
+//        for (int count = 0; count < model.getRowCount(); count++) {
+//            Vaccine target = (Vaccine) model.getValueAt(count, 0);
+//            if (selectedVaccine.getVaccineType().equals(target.getVaccineType())) {
+//                target.setDoseProdeced(vaccineDoctorRequest.getDosesRequest());
+//            }
+//        }
+       
+        populateDoctorRequestTable();
+        
+    }//GEN-LAST:event_approveProviderButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressText;
@@ -432,6 +487,7 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
     private javax.swing.JButton declineProviderButton1;
     private javax.swing.JButton declineVaccineButton;
     private javax.swing.JButton declineVaccineButton1;
+    private javax.swing.JTable doctorRequestTable;
     private javax.swing.JLabel enterpriseLabel;
     private javax.swing.JLabel enterpriseLabel1;
     private javax.swing.JLabel jLabel10;
@@ -459,14 +515,42 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField photoText;
     private javax.swing.JTextField photoText1;
     private javax.swing.JTable providerTable;
-    private javax.swing.JTable providerTable1;
     private javax.swing.JTextField usernameText;
     private javax.swing.JTextField usernameText1;
+    private javax.swing.JTable vaccineInfoTable;
     private javax.swing.JTable vaccineTable;
-    private javax.swing.JTable vaccineTable1;
     private javax.swing.JButton viewProviderButton;
     private javax.swing.JButton viewProviderButton1;
     private javax.swing.JButton viewVaccineButton;
     private javax.swing.JButton viewVaccineButton1;
     // End of variables declaration//GEN-END:variables
+
+    private void populateDoctorRequestTable() {
+        DefaultTableModel model = (DefaultTableModel) doctorRequestTable.getModel();
+        model.setRowCount(0);
+        Object[] row = new Object[4];        
+        for (WorkRequest r : organization.getWorkQueue().getWorkRequestList()) {            
+            if (r instanceof VaccineDoctorRequest) {
+                row[0] = r;
+                row[1] = ((VaccineDoctorRequest) r).getDosesRequest();
+                row[2] = r.getSender();
+                row[3] = r.getStatus();
+                model.addRow(row);
+            }
+        }
+    }
+
+    private void populateTextField() {
+        nameText1.setText(userAccount.getEmployee().getName());
+        phoneNumText.setText(userAccount.getEmployee().getPhoneNum());
+        //photo needs to implement 
+        //photoLabel1.setIcon(userAccount.getEmployee().getPhoto());
+//        System.out.println(userAccount.getEmployee().getPhoto());
+        usernameText.setText(userAccount.getUsername());
+        passwordText.setText(userAccount.getPassword());    }
+
+    private void populateVaccineInfoTable() {
+        
+        
+    }
 }

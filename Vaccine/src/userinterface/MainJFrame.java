@@ -74,6 +74,12 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("User Name");
 
         jLabel2.setText("Password");
@@ -124,7 +130,7 @@ public class MainJFrame extends javax.swing.JFrame {
                             .addComponent(signinJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jTextField1))
-                .addContainerGap())
+                .addGap(1892, 1892, 1892))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(signupButton)
@@ -144,14 +150,14 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(signinJButton)
                 .addGap(18, 18, 18)
-                .addComponent(signoutJButton)
+                .addComponent(signoutJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(signupButton)
                 .addGap(16, 16, 16)
                 .addComponent(loginJLabel)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(312, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -164,91 +170,17 @@ public class MainJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void signinJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinJButtonActionPerformed
-        // Get user name
-        String userName = userNameJTextField.getText();
-        // Get Password
-        char[] passwordCharArray = passwordField.getPassword();
-        String password = String.valueOf(passwordCharArray);
-        
-        //Step1: Check in the system admin user account directory if you have the user
-        UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(userName, password);
-        
-        Enterprise inEnterprise = null;
-        Organization inOrganization = null;
-        
-        if(userAccount == null) {
-            //Step 2: Go inside each network and check each enterprise
-            for(Network network : system.getNetworkList()){
-                //Step 2.a: check against each enterprise
-                for(Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()){
-                    //Step 3:check against each organization for each enterprise
-                    for(Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()){ 
-//                        organization.getUserAccountDirectory().getUserAccountList().forEach(System.out::println);
-                        userAccount = organization.getUserAccountDirectory().authenticateUser(userName, password);
-                        if(userAccount != null){
-                            inEnterprise = enterprise;
-                            inOrganization = organization;
-                            break;
-                        }
-                    }
-                    if (inEnterprise != null) {
-                        break;
-                    }
-                }
-                if (inEnterprise != null) {
-                        break;
-                }
-            }            
-            
-            if(userAccount == null){
-                JOptionPane.showMessageDialog(null, "Invalid credentials");
-                return;
-            }
-            System.out.println("The role of current user account:");
-            System.out.println(userAccount.getRole());
-            CardLayout layout=(CardLayout)container.getLayout();
-            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
-            layout.next(container);
-        }
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
-        else{
-            System.out.println("The role of current user account:");
-            System.out.println(userAccount.getRole());
-            CardLayout layout=(CardLayout)container.getLayout();
-            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
-            layout.next(container);
-        }
-        
-        signinJButton.setEnabled(false);
-        signoutJButton.setEnabled(true);
-        userNameJTextField.setEnabled(false);
-        passwordField.setEnabled(false);
+    private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
+        SignupJPanel sigupJPanel = new SignupJPanel(this.container,system);
 
-
-// Get user name
-//        String inputUserName = userNameJTextField.getText();
-//        char[] passwordCharArray = passwordField.getPassword();
-//        String inputPassword = String.valueOf(passwordCharArray);               
-//        UserAccount ua = system.getUserAccountDirectory().authenticateUser(inputUserName, inputPassword);
-//        if (ua != null) {
-//            JPanel workAreaJPanel = ua.getRole().createWorkArea(container, ua, system);
-//            container.add("WorkAreaJPanel", workAreaJPanel);
-//            CardLayout layout = (CardLayout) container.getLayout();
-//            layout.next(container);
-//            signinJButton.setEnabled(true);
-//            userNameJTextField.setEnabled(false);
-//            passwordField.setEnabled(false);
-//            signinJButton.setEnabled(false);
-//            signoutJButton.setEnabled(true);
-//            userNameJTextField.setText("");
-//            passwordField.setText("");
-//            System.out.println(system);
-//        
-//        else {
-//            JOptionPane.showMessageDialog(null, "Your username or password is incorrect!");
-//        }
-    }//GEN-LAST:event_signinJButtonActionPerformed
+        this.container.add(sigupJPanel);
+        CardLayout cardLayout = (CardLayout) container.getLayout();
+        cardLayout.next(this.container);
+    }//GEN-LAST:event_signupButtonActionPerformed
 
     private void signoutJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutJButtonActionPerformed
         signoutJButton.setEnabled(false);
@@ -267,17 +199,94 @@ public class MainJFrame extends javax.swing.JFrame {
         dB4OUtil.storeSystem(system);
     }//GEN-LAST:event_signoutJButtonActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void signinJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinJButtonActionPerformed
+        // Get user name
+        String userName = userNameJTextField.getText();
+        // Get Password
+        char[] passwordCharArray = passwordField.getPassword();
+        String password = String.valueOf(passwordCharArray);
+
+        //Step1: Check in the system admin user account directory if you have the user
+        UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(userName, password);
+
+        Enterprise inEnterprise = null;
+        Organization inOrganization = null;
+
+        if(userAccount == null) {
+            //Step 2: Go inside each network and check each enterprise
+            for(Network network : system.getNetworkList()){
+                //Step 2.a: check against each enterprise
+                for(Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()){
+                    //Step 3:check against each organization for each enterprise
+                    for(Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()){
+                        //                        organization.getUserAccountDirectory().getUserAccountList().forEach(System.out::println);
+                        userAccount = organization.getUserAccountDirectory().authenticateUser(userName, password);
+                        if(userAccount != null){
+                            inEnterprise = enterprise;
+                            inOrganization = organization;
+                            break;
+                        }
+                    }
+                    if (inEnterprise != null) {
+                        break;
+                    }
+                }
+                if (inEnterprise != null) {
+                    break;
+                }
+            }
+
+            if(userAccount == null){
+                JOptionPane.showMessageDialog(null, "Invalid credentials");
+                return;
+            }
+            System.out.println("The role of current user account:");
+            System.out.println(userAccount.getRole());
+            CardLayout layout=(CardLayout)container.getLayout();
+            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
+            layout.next(container);
+        }
+
+        else{
+            System.out.println("The role of current user account:");
+            System.out.println(userAccount.getRole());
+            CardLayout layout=(CardLayout)container.getLayout();
+            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
+            layout.next(container);
+        }
+
+        signinJButton.setEnabled(false);
+        signoutJButton.setEnabled(true);
+        userNameJTextField.setEnabled(false);
+        passwordField.setEnabled(false);
+
+        // Get user name
+        //        String inputUserName = userNameJTextField.getText();
+        //        char[] passwordCharArray = passwordField.getPassword();
+        //        String inputPassword = String.valueOf(passwordCharArray);
+        //        UserAccount ua = system.getUserAccountDirectory().authenticateUser(inputUserName, inputPassword);
+        //        if (ua != null) {
+            //            JPanel workAreaJPanel = ua.getRole().createWorkArea(container, ua, system);
+            //            container.add("WorkAreaJPanel", workAreaJPanel);
+            //            CardLayout layout = (CardLayout) container.getLayout();
+            //            layout.next(container);
+            //            signinJButton.setEnabled(true);
+            //            userNameJTextField.setEnabled(false);
+            //            passwordField.setEnabled(false);
+            //            signinJButton.setEnabled(false);
+            //            signoutJButton.setEnabled(true);
+            //            userNameJTextField.setText("");
+            //            passwordField.setText("");
+            //            System.out.println(system);
+            //
+            //        else {
+                //            JOptionPane.showMessageDialog(null, "Your username or password is incorrect!");
+                //        }
+    }//GEN-LAST:event_signinJButtonActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-        SignupJPanel sigupJPanel = new SignupJPanel(this.container,system);
-
-        this.container.add(sigupJPanel);
-        CardLayout cardLayout = (CardLayout) container.getLayout();
-        cardLayout.next(this.container);
-    }//GEN-LAST:event_signupButtonActionPerformed
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
     /**
      * @param args the command line arguments

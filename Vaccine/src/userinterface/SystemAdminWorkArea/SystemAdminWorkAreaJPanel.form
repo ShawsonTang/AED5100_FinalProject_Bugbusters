@@ -87,10 +87,13 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="btnManageEnterprise" max="32767" attributes="0"/>
-                                  <Component id="btnManageNetwork" max="32767" attributes="0"/>
-                                  <Component id="btnManageOrganization" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="logOutBtn" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="btnManageEnterprise" max="32767" attributes="0"/>
+                                      <Component id="btnManageNetwork" max="32767" attributes="0"/>
+                                      <Component id="btnManageOrganization" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -112,7 +115,9 @@
                       <Component id="btnManageEnterprise" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnManageOrganization" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="175" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="logOutBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="103" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -150,6 +155,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageOrganizationActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="logOutBtn">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="logout"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logOutBtnActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
