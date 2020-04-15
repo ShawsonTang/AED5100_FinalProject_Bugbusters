@@ -6,14 +6,21 @@ package userinterface.DoctorRole;
 
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Network.Network;
 import Business.Organization.DoctorOrganization;
 import Business.Organization.Organization;
+import Business.Organization.WarehouseOrganization;
 import Business.UserAccount.UserAccount;
+import Business.Vaccine.Vaccine;
 import Business.WorkQueue.LabTestWorkRequest;
+import Business.WorkQueue.VaccineDoctorRequest;
+import Business.WorkQueue.VaccineProduceRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userinterface.WareHouseKeeperRole.VaccineProduceRequestJPanel;
 
 /**
  *
@@ -37,32 +44,37 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.userAccount = userAccount;
         this.system = system;
-//        valueLabel.setText(enterprise.getName());
+
         populateRequestTable();
         populateTextField();
+        populateInfoTable();
+   
+
+       
     }
-    
+ 
     void populateTextField() {
         nameText.setText(userAccount.getEmployee().getName());
         phoneNumText.setText(userAccount.getEmployee().getPhoneNum());
         photoLabel.setIcon(userAccount.getEmployee().getPhoto());
-//        System.out.println(userAccount.getEmployee().getPhoto());
+//        System.out.println(userzccount.getEmployee().getPhoto()z);
         usernameText.setText(userAccount.getUsername());
         passwordText.setText(userAccount.getPassword());
     }
     
     public void populateRequestTable(){
-        DefaultTableModel model = (DefaultTableModel) vaccineTable.getModel();
-        
+        DefaultTableModel model = (DefaultTableModel) vaccineRequestTable.getModel();
         model.setRowCount(0);
-        for (WorkRequest request : userAccount.getWorkQueue().getWorkRequestList()){
-            Object[] row = new Object[4];
-            row[0] = request.getMessage();
-            row[1] = request.getReceiver();
-            row[2] = request.getStatus();
-            String result = ((LabTestWorkRequest) request).getTestResult();
-            row[3] = result == null ? "Waiting" : result;
-            
+        
+        for (Vaccine keyV : organization.getVaccineDirectory().getVaccineMap().keySet()) {
+            int count = 0;            
+            for (Vaccine v : organization.getVaccineDirectory().getVaccineMap().get(keyV)) {                
+                count += v.getDoseInStock();
+            }    
+            Object[] row = new Object[1];
+            row[0] = keyV;
+            //row[1] = count; 
+            //row[2] = count == 0 ? "Out of Stock" : null;
             model.addRow(row);
         }
     }
@@ -77,8 +89,6 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        vaccineTable = new javax.swing.JTable();
         requestButton = new javax.swing.JButton();
         enterpriseLabel = new javax.swing.JLabel();
         addressText = new javax.swing.JTextField();
@@ -93,40 +103,10 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         nameText = new javax.swing.JTextField();
         photoLabel = new javax.swing.JLabel();
-
-        vaccineTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "", "", "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(vaccineTable);
-        if (vaccineTable.getColumnModel().getColumnCount() > 0) {
-            vaccineTable.getColumnModel().getColumn(0).setResizable(false);
-            vaccineTable.getColumnModel().getColumn(1).setResizable(false);
-            vaccineTable.getColumnModel().getColumn(2).setResizable(false);
-            vaccineTable.getColumnModel().getColumn(3).setResizable(false);
-        }
+        jScrollPanel3 = new javax.swing.JScrollPane();
+        vaccineRequestTable = new javax.swing.JTable();
+        jScrollPanel4 = new javax.swing.JScrollPane();
+        vaccineInfoTable = new javax.swing.JTable();
 
         requestButton.setText("Request");
         requestButton.addActionListener(new java.awt.event.ActionListener() {
@@ -185,53 +165,83 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        vaccineRequestTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Vaccine"
+            }
+        ));
+        jScrollPanel3.setViewportView(vaccineRequestTable);
+
+        vaccineInfoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Vaccine", "Doses", "Sender", "Receiver", "Status"
+            }
+        ));
+        jScrollPanel4.setViewportView(vaccineInfoTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(281, 281, 281))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel10))
-                                .addGap(40, 40, 40)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(addressText, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                                    .addComponent(nameText, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                                    .addComponent(phoneNumText, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                                    .addComponent(photoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(requestButton)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(51, 51, 51))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel10))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(addressText, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                            .addComponent(nameText, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                            .addComponent(phoneNumText, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                            .addComponent(photoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(149, 149, 149)
+                        .addComponent(requestButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(jScrollPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(468, 468, 468))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(362, 362, 362)
+                .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -242,33 +252,46 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(phoneNumText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel10)
-                                .addComponent(requestButton))
-                            .addComponent(photoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
+                            .addComponent(phoneNumText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addComponent(photoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(requestButton)))
+                        .addGap(56, 56, 56)
+                        .addComponent(jScrollPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void requestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestButtonActionPerformed
         
+       int selectedRow = vaccineRequestTable.getSelectedRow();
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null,"Please select a row from table first.","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Vaccine selectedVaccine = (Vaccine) vaccineRequestTable.getValueAt(selectedRow, 0);
+        DoctorRequestVaccineJPanel doctorRequestVaccineJPanel = new DoctorRequestVaccineJPanel(container, organization, enterprise, selectedVaccine,system);
+        container.add("doctorRequestVaccineJPanel", doctorRequestVaccineJPanel);
         CardLayout layout = (CardLayout) container.getLayout();
-        
         layout.next(container);
+        
         
     }//GEN-LAST:event_requestButtonActionPerformed
 
@@ -301,13 +324,33 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPanel3;
+    private javax.swing.JScrollPane jScrollPanel4;
     private javax.swing.JTextField nameText;
     private javax.swing.JTextField passwordText;
     private javax.swing.JTextField phoneNumText;
     private javax.swing.JLabel photoLabel;
     private javax.swing.JButton requestButton;
     private javax.swing.JTextField usernameText;
-    private javax.swing.JTable vaccineTable;
+    private javax.swing.JTable vaccineInfoTable;
+    private javax.swing.JTable vaccineRequestTable;
     // End of variables declaration//GEN-END:variables
+
+    private void populateInfoTable() {
+      DefaultTableModel model = (DefaultTableModel) vaccineInfoTable.getModel();
+        model.setRowCount(0);
+        Object[] row = new Object[5];        
+        for (WorkRequest r : organization.getWorkQueue().getWorkRequestList()) {            
+            if (r instanceof VaccineDoctorRequest) {
+                row[0] = r;
+                row[1] = ((VaccineDoctorRequest) r).getDosesRequest();
+
+                row[2] = r.getSender();
+                row[3] = r.getReceiver();
+                row[4] = r.getStatus();
+                model.addRow(row);
+            }
+        }
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

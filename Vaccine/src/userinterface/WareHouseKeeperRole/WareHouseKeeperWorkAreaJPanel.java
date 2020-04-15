@@ -18,6 +18,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userinterface.SignIn;
 
 /**
  *
@@ -139,6 +140,7 @@ public class WareHouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         vaccineTotalTable = new javax.swing.JTable();
         checkBtn = new javax.swing.JButton();
+        logOutBtn = new javax.swing.JButton();
 
         nameText.setEditable(false);
         nameText.addActionListener(new java.awt.event.ActionListener() {
@@ -278,6 +280,13 @@ public class WareHouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        logOutBtn.setText("Log Out");
+        logOutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOutBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -316,7 +325,8 @@ public class WareHouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
                                     .addComponent(photoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(addressText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(phoneNumText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(phoneNumText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(logOutBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(viewProviderButton, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -335,8 +345,10 @@ public class WareHouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logOutBtn))
+                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -444,6 +456,15 @@ public class WareHouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_approveBtnActionPerformed
 
+    private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
+        container.removeAll();
+        JPanel blankJP = new JPanel();
+        container.add("blank", blankJP);
+        CardLayout crdLyt = (CardLayout) container.getLayout();
+        crdLyt.next(container);
+        new SignIn().setVisible(true);
+    }//GEN-LAST:event_logOutBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressText;
@@ -461,6 +482,7 @@ public class WareHouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JButton logOutBtn;
     private javax.swing.JTextField nameText;
     private javax.swing.JTextField passwordText;
     private javax.swing.JTextField phoneNumText;
