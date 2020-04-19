@@ -25,8 +25,8 @@ public abstract class Role {
         WarehouseKeeper("Warehouse Keeper"),
         AssistantSecretary("Assistant Secretary"),
         VaccineManager("Vaccine Manager"),
-        Doctor("Doctor"),
-        LabAssistant("Lab Assistant");
+        Doctor("Doctor");
+       
         
         private String value;
         private RoleType(String value){
