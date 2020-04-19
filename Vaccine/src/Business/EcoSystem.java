@@ -19,6 +19,15 @@ public class EcoSystem extends Organization {
     
     private static EcoSystem business;
     private ArrayList<Network> networkList;
+    private ArrayList<Organization> defaultOrganizationList;
+
+    public void setDefaultOrganizationList(ArrayList<Organization> defaultOrganizationList) {
+        this.defaultOrganizationList = defaultOrganizationList;
+    }
+
+    public ArrayList<Organization> getDefaultOrganizationList() {
+        return defaultOrganizationList;
+    }
     public static EcoSystem getInstance(){
         if(business==null){
             business=new EcoSystem();
@@ -59,4 +68,5 @@ public class EcoSystem extends Organization {
         }
         return true;
     }
+  
 }

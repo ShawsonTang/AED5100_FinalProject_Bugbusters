@@ -7,11 +7,15 @@ package Business.Role;
 
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Network.Network;
 import Business.Organization.FactoryOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import userinterface.FactoryManagerRole.FactoryManagerWorkAreaJPanel;
+import userinterface.SignIn;
+
 
 /**
  *
@@ -20,8 +24,8 @@ import userinterface.FactoryManagerRole.FactoryManagerWorkAreaJPanel;
 public class FactoryManagerRole extends Role {
 
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-        return new FactoryManagerWorkAreaJPanel(userProcessContainer, account, (FactoryOrganization) organization, enterprise, business);
+    public JPanel createWorkArea(JPanel userProcessContainer, SignIn frame, UserAccount account, Organization organization, Enterprise enterprise, Network network, EcoSystem business) {
+        return new FactoryManagerWorkAreaJPanel(userProcessContainer, frame, account, (FactoryOrganization) organization, enterprise, business);
     }
     
 }

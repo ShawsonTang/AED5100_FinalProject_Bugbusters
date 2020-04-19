@@ -18,6 +18,12 @@ public class VaccineProduceRequest extends WorkRequest {
     private int dosesRequest;
     private FactoryOrganization receiver;
     private Vaccine vaccine;
+
+    public VaccineProduceRequest() {
+        super();
+    }
+    
+    
     
     public int getDosesRequest() {
         return dosesRequest;

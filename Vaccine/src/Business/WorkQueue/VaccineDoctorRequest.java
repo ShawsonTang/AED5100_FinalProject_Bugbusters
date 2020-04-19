@@ -19,6 +19,12 @@ public class VaccineDoctorRequest extends WorkRequest{
     private HealthDepartmentOrganization receiver;
     private Vaccine vaccine;
 
+    public VaccineDoctorRequest() {
+        super();
+    }
+    
+    
+    
     public int getDosesRequest() {
         return dosesRequest;
     }

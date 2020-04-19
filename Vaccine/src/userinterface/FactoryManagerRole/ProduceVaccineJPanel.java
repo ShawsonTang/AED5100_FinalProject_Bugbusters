@@ -31,7 +31,8 @@ public class ProduceVaccineJPanel extends javax.swing.JPanel {
         this.container = container;
         this.vaccine = vaccine;
         vaccineText.setText(vaccine.getVaccineType());
-        vaccineText.setEnabled(false);        
+        doseText.setText("" + vaccine.getDoseProdeced());
+        vaccineText.setEnabled(false);         
     }
 
     /**
@@ -157,7 +158,7 @@ public class ProduceVaccineJPanel extends javax.swing.JPanel {
         container.remove(this);
         CardLayout layout = (CardLayout) container.getLayout();
         Component[] components = container.getComponents();
-        FactoryManagerWorkAreaJPanel factoryManagerWorkAreaJPanel = (FactoryManagerWorkAreaJPanel) container.getComponent(components.length - 1);
+        OldFactoryManagerWorkAreaJPanel factoryManagerWorkAreaJPanel = (OldFactoryManagerWorkAreaJPanel) container.getComponent(components.length - 1);
         factoryManagerWorkAreaJPanel.populateVaccineProduceTable();
         layout.previous(container);
     }//GEN-LAST:event_backBtnActionPerformed
@@ -165,7 +166,7 @@ public class ProduceVaccineJPanel extends javax.swing.JPanel {
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         try {
             // TODO add your handling code here:
-            int id = Integer.parseInt(idText.getText());
+            String id = idText.getText();
             int dose = Integer.parseInt(doseText.getText());
             SimpleDateFormat formatter = new SimpleDateFormat("MM dd, yyyy");
             Date manuDate = formatter.parse(manuDateText.getText());

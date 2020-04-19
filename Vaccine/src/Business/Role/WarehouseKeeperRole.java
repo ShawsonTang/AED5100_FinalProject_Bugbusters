@@ -7,11 +7,15 @@ package Business.Role;
 
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Organization.WarehouseOrganization;
 import Business.UserAccount.UserAccount;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-import userinterface.WareHouseKeeperRole.WareHouseKeeperWorkAreaJPanel;
+import userinterface.SignIn;
+import userinterface.WareHouseKeeperRole.OldWarehouseKeeperWorkAreaJPanel;
+import userinterface.WareHouseKeeperRole.WarehouseKeeperWorkAreaJPanel;
 
 /**
  *
@@ -20,8 +24,8 @@ import userinterface.WareHouseKeeperRole.WareHouseKeeperWorkAreaJPanel;
 public class WarehouseKeeperRole extends Role {
 
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-        return new WareHouseKeeperWorkAreaJPanel(userProcessContainer, account, (WarehouseOrganization) organization, enterprise, business);
+    public JPanel createWorkArea(JPanel userProcessContainer, SignIn frame, UserAccount account, Organization organization, Enterprise enterprise, Network network, EcoSystem business) {
+        return new WarehouseKeeperWorkAreaJPanel(userProcessContainer, frame, account, (WarehouseOrganization) organization, enterprise, network, business);
     }
 
       
