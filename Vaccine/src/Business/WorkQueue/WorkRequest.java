@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  *
- * @author raunak
+ * @author shawson
  */
 public abstract class WorkRequest {
 
@@ -20,11 +20,23 @@ public abstract class WorkRequest {
     private String status;
     private Date requestDate;
     private Date resolveDate;
+    private int id;
+    private static int counter = 0;
     
     public WorkRequest(){
         requestDate = new Date();
+       ++counter;
+       id = counter;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getMessage() {
         return message;
     }

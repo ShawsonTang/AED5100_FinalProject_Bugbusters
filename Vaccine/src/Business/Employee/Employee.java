@@ -15,9 +15,11 @@ import javax.swing.ImageIcon;
 public class Employee {
     
     private Vaccine vaccine;
-    private String name;
+    private String name;    
     private int id;
-    private String phoneNum;    
+    private String phoneNum; 
+    private String address;
+    private String email;
     private ImageIcon photo;
     
     
@@ -33,6 +35,22 @@ public class Employee {
         this.id = id;
         this.phoneNum = phoneNum;
 //        this.photo = photo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
 

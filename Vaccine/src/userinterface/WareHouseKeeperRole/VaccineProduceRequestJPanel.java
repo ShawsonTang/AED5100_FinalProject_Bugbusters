@@ -166,7 +166,7 @@ public class VaccineProduceRequestJPanel extends javax.swing.JPanel {
         container.remove(this);
         CardLayout layout = (CardLayout) container.getLayout();
         Component[] components = container.getComponents();
-        WareHouseKeeperWorkAreaJPanel wareHouseKeeperWorkAreaJPanel = (WareHouseKeeperWorkAreaJPanel) container.getComponent(components.length - 1);
+        OldWarehouseKeeperWorkAreaJPanel wareHouseKeeperWorkAreaJPanel = (OldWarehouseKeeperWorkAreaJPanel) container.getComponent(components.length - 1);
         wareHouseKeeperWorkAreaJPanel.populateRequestTable();
         layout.previous(container);
     }//GEN-LAST:event_backBtnActionPerformed

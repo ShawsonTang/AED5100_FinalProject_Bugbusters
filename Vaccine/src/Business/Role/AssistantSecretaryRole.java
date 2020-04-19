@@ -7,9 +7,15 @@ package Business.Role;
 
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.DoPHOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import userinterface.AssistantRole.AssistantJPanel;
+import userinterface.SignIn;
+
 
 /**
  *
@@ -18,8 +24,7 @@ import javax.swing.JPanel;
 public class AssistantSecretaryRole extends Role {
 
     @Override
-    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public JPanel createWorkArea(JPanel userProcessContainer, SignIn frame, UserAccount account, Organization organization, Enterprise enterprise, Network network, EcoSystem business) {
+        return new AssistantJPanel(userProcessContainer, frame, account, (DoPHOrganization) organization, enterprise, network, business);
     }
-    
 }

@@ -24,7 +24,7 @@ import java.util.Map;
 public class Vaccine {
 
     private String vaccineType;
-    private int id;
+    private String id;
     private int doseProdeced;
     private int doseInStock;
     private Map<Organization.OrganizationType, Organization> vaccineHistory;
@@ -40,7 +40,7 @@ public class Vaccine {
     }
     
     
-    public Vaccine(String vaccineType, int id) {
+    public Vaccine(String vaccineType, String id) {
         this.vaccineType = vaccineType;
         this.id = id;        
 //        this.proDate = proDate;
@@ -48,7 +48,7 @@ public class Vaccine {
         vaccineHistory = new HashMap<>();
     }
 
-    public Vaccine(String vaccineType, int id, int doseProdeced, int doseInStock, Date proDate, Date expDate) {
+    public Vaccine(String vaccineType, String id, int doseProdeced, int doseInStock, Date proDate, Date expDate) {
         this.vaccineType = vaccineType;
         this.id = id;
         this.doseProdeced = doseProdeced;
@@ -67,13 +67,15 @@ public class Vaccine {
         this.vaccineType = vaccineType;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
+
+
 
     public int getDoseProdeced() {
         return doseProdeced;
