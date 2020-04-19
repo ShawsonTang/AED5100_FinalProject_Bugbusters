@@ -215,6 +215,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
         userProcessContainer.remove(this);
         frame.setJFrameVisible();
+        frame.getB4OUtil().storeSystem(ecosystem);
     }//GEN-LAST:event_logOutBtnActionPerformed
 
 

@@ -1367,6 +1367,7 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
         container.remove(this);
         frame.setJFrameVisible();
+        frame.getB4OUtil().storeSystem(system);
     }//GEN-LAST:event_logOutBtnActionPerformed
 
     private void uploadLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadLabelMouseClicked
