@@ -14,7 +14,6 @@ import Business.UserAccount.UserAccount;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import userinterface.SignIn;
-import userinterface.VaccineManagerRole.OldVaccineManagerJPanel;
 import userinterface.VaccineManagerRole.VaccineManagerJPanel;
 
 /**

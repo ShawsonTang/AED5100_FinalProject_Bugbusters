@@ -66,12 +66,11 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
     
     void populateTextField() {
         headLabel.setEnabled(false);            
-        headLabel.setText("Warehouse Keeper: " + userAccount.getEmployee().getName().toUpperCase());
+        headLabel.setText("Warehouse Keeper: " + userAccount.getEmployee().getName());
         headLabel.setBackground(new Color(51, 153, 255));
         headLabel.setForeground(Color.BLACK);
         headLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        
-        headLabel.setText("Warehouse Keeper: " + userAccount.getEmployee().getName());
+                
         nameText.setText(userAccount.getEmployee().getName());
         phoneNumText.setText(userAccount.getEmployee().getPhoneNum());
         addressText.setText(userAccount.getEmployee().getAddress());
@@ -121,14 +120,15 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
      void populateVaccinePurchaseTable() {
         DefaultTableModel model = (DefaultTableModel) vaccinePurchaseTable.getModel();
         model.setRowCount(0);
-        Object[] row = new Object[5];        
+        Object[] row = new Object[6];        
         for (WorkRequest r : organization.getWorkQueue().getWorkRequestList()) {            
             if (r instanceof VaccinePurchaseRequest) {
                 row[0] = r;
                 row[1] = r.getId();
                 row[2] = ((VaccinePurchaseRequest) r).getDosesPurchase();
-                row[3] = r.getSender();
-                row[4] = r.getStatus();
+                row[3] = ((VaccinePurchaseRequest) r).getDoseForUpdate();
+                row[4] = r.getSender();
+                row[5] = r.getStatus();
                 model.addRow(row);
             }
         }
@@ -186,6 +186,9 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel19 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
         workAreaJPanel = new javax.swing.JPanel();
         requestJPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -205,6 +208,8 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         vaccineIDComboBox = new javax.swing.JComboBox<>();
         purchaseVaccineText = new javax.swing.JTextField();
         confirmBtn = new javax.swing.JButton();
+        tableDesLabel1 = new javax.swing.JLabel();
+        tableDesLabel2 = new javax.swing.JLabel();
         vaccineStockJPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         vaccineTotalTable = new javax.swing.JTable();
@@ -215,10 +220,11 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         factoryComboBox = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         requestBtn = new javax.swing.JButton();
-        jLabel20 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         vaccineInfoTable = new javax.swing.JTable();
         requestSelectBtn = new javax.swing.JButton();
+        tableDesLabel3 = new javax.swing.JLabel();
+        tableDesLabel4 = new javax.swing.JLabel();
         infoJPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         nameText = new javax.swing.JTextField();
@@ -254,6 +260,34 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/gotvaccineblue.gif"))); // NOI18N
 
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/vaccine005.gif"))); // NOI18N
+
+        jPanel5.setBackground(new java.awt.Color(8, 41, 87));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 140, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+
+        jPanel6.setBackground(new java.awt.Color(8, 41, 87));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 140, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+
         setPreferredSize(new java.awt.Dimension(1300, 697));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -264,23 +298,23 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         vaccinePurchaseTable.setFont(new java.awt.Font("American Typewriter", 0, 14)); // NOI18N
         vaccinePurchaseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "VACCINE", "REQUEST ID", "DOSE REQUEST", "SENDER", "STATUS"
+                "VACCINE", "REQUEST ID", "DOSE REQUEST", "REQUEST REMAIN", "SENDER", "STATUS"
             }
         ));
         vaccinePurchaseTable.setSelectionBackground(new java.awt.Color(80, 148, 240));
@@ -427,71 +461,118 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        tableDesLabel1.setBackground(new java.awt.Color(204, 255, 204));
+        tableDesLabel1.setFont(new java.awt.Font("American Typewriter", 1, 24)); // NOI18N
+        tableDesLabel1.setForeground(new java.awt.Color(120, 168, 252));
+        tableDesLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tableDesLabel1.setText("Vaccine Produce Request");
+        tableDesLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tableDesLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDesLabel1MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tableDesLabel1MouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tableDesLabel1MouseEntered(evt);
+            }
+        });
+
+        tableDesLabel2.setBackground(new java.awt.Color(204, 255, 204));
+        tableDesLabel2.setFont(new java.awt.Font("American Typewriter", 1, 24)); // NOI18N
+        tableDesLabel2.setForeground(new java.awt.Color(120, 168, 252));
+        tableDesLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tableDesLabel2.setText("Vaccine Purchase Request");
+        tableDesLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tableDesLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDesLabel2MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tableDesLabel2MouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tableDesLabel2MouseEntered(evt);
+            }
+        });
+
         javax.swing.GroupLayout requestJPanelLayout = new javax.swing.GroupLayout(requestJPanel);
         requestJPanel.setLayout(requestJPanelLayout);
         requestJPanelLayout.setHorizontalGroup(
             requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(requestJPanelLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(544, 544, 544)
+                .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(requestJPanelLayout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(requestJPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addGap(18, 18, 18)
-                        .addComponent(purchaseVaccineText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel17)
-                        .addGap(18, 18, 18)
-                        .addComponent(doseText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(vaccineIDComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(requestJPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel23)
-                        .addGap(18, 18, 18)
-                        .addComponent(manuText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel21)
-                        .addGap(18, 18, 18)
-                        .addComponent(expText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
-                        .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(77, Short.MAX_VALUE))
-            .addComponent(jScrollPane6)
+                .addComponent(jLabel18)
+                .addGap(18, 18, 18)
+                .addComponent(purchaseVaccineText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel17)
+                .addGap(18, 18, 18)
+                .addComponent(doseText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(vaccineIDComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(requestJPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(65, 65, 65)
+                .addComponent(jLabel23)
+                .addGap(18, 18, 18)
+                .addComponent(manuText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel21)
+                .addGap(18, 18, 18)
+                .addComponent(expText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(requestJPanelLayout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addComponent(tableDesLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(requestJPanelLayout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(tableDesLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         requestJPanelLayout.setVerticalGroup(
             requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(requestJPanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(tableDesLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(selectBtn)
-                    .addComponent(declineBtn))
                 .addGap(18, 18, 18)
                 .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(purchaseVaccineText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22)
-                    .addComponent(doseText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vaccineIDComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(declineBtn)
+                    .addComponent(selectBtn))
+                .addGap(37, 37, 37)
+                .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(vaccineIDComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(requestJPanelLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18)
+                            .addComponent(purchaseVaccineText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17)
+                            .addComponent(doseText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22))))
                 .addGap(18, 18, 18)
-                .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel23)
                     .addComponent(manuText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21)
                     .addComponent(expText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(confirmBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addComponent(tableDesLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(294, Short.MAX_VALUE))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
         );
 
         workAreaJPanel.add(requestJPanel, "card2");
@@ -573,8 +654,6 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/vaccine005.gif"))); // NOI18N
-
         vaccineInfoTable.setFont(new java.awt.Font("American Typewriter", 0, 14)); // NOI18N
         vaccineInfoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -620,45 +699,87 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        tableDesLabel3.setBackground(new java.awt.Color(204, 255, 204));
+        tableDesLabel3.setFont(new java.awt.Font("American Typewriter", 1, 24)); // NOI18N
+        tableDesLabel3.setForeground(new java.awt.Color(120, 168, 252));
+        tableDesLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tableDesLabel3.setText("Vaccine Information");
+        tableDesLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tableDesLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDesLabel3MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tableDesLabel3MouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tableDesLabel3MouseEntered(evt);
+            }
+        });
+
+        tableDesLabel4.setBackground(new java.awt.Color(204, 255, 204));
+        tableDesLabel4.setFont(new java.awt.Font("American Typewriter", 1, 24)); // NOI18N
+        tableDesLabel4.setForeground(new java.awt.Color(120, 168, 252));
+        tableDesLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tableDesLabel4.setText("Vaccine Stock");
+        tableDesLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tableDesLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDesLabel4MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tableDesLabel4MouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tableDesLabel4MouseEntered(evt);
+            }
+        });
+
         javax.swing.GroupLayout vaccineStockJPanelLayout = new javax.swing.GroupLayout(vaccineStockJPanel);
         vaccineStockJPanel.setLayout(vaccineStockJPanelLayout);
         vaccineStockJPanelLayout.setHorizontalGroup(
             vaccineStockJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jScrollPane5)
-            .addComponent(jScrollPane7)
+            .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(vaccineStockJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
+                        .addGroup(vaccineStockJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, vaccineStockJPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(factoryComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(vaccineText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(doseRequestText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(requestBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vaccineStockJPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(requestSelectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
                 .addGroup(vaccineStockJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vaccineStockJPanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(requestSelectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
-                        .addGroup(vaccineStockJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
-                                .addGap(121, 121, 121)
-                                .addComponent(jLabel20))
-                            .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(vaccineStockJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, vaccineStockJPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(factoryComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(vaccineText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel11)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(doseRequestText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addComponent(requestBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 143, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(94, 94, 94)
+                        .addComponent(tableDesLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(tableDesLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 586, Short.MAX_VALUE))
         );
         vaccineStockJPanelLayout.setVerticalGroup(
             vaccineStockJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vaccineStockJPanelLayout.createSequentialGroup()
+            .addGroup(vaccineStockJPanelLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(tableDesLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(requestSelectBtn)
@@ -673,11 +794,11 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel12)
                     .addComponent(factoryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(requestBtn))
-                .addGap(66, 66, 66)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                .addComponent(tableDesLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
         );
 
         workAreaJPanel.add(vaccineStockJPanel, "card3");
@@ -1114,6 +1235,9 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         VaccinePurchaseRequest vaccinePurchaseRequest = (VaccinePurchaseRequest) vaccinePurchaseTable.getValueAt(selectedRow, 0);
         
         Vaccine selectedVaccine = vaccinePurchaseRequest.getVaccine();
+        purchaseVaccineText.setText(selectedVaccine.getVaccineType());
+        purchaseVaccineText.setEnabled(false);
+        doseText.setText("" + vaccinePurchaseRequest.getDosesPurchase());
         DefaultTableModel totalModel = (DefaultTableModel) vaccineTotalTable.getModel();
         for (int count = 0; count < totalModel.getRowCount(); count++) {
             Vaccine target = (Vaccine) totalModel.getValueAt(count, 0);
@@ -1207,14 +1331,30 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please select a row from table first.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (doseRequestText.getText() == null || doseRequestText.getText().equals("")) {
-            JOptionPane.showMessageDialog(null,"Invalid quantity!","Warning",JOptionPane.WARNING_MESSAGE);
+        
+        if (doseRequestText.getText() == null || doseRequestText.getText().equals("") || vaccineText.getText().equals("")) {
+            JOptionPane.showMessageDialog(null,"Please select a vaccine first or the quantity if invalid!","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
         Vaccine selectedVaccine = (Vaccine) vaccineTotalTable.getValueAt(selectedRow, 0);
+        FactoryOrganization factoryOrganization = (FactoryOrganization) factoryComboBox.getSelectedItem();
+        DefaultTableModel requestModel = (DefaultTableModel) vaccineRequestTable.getModel();
+        for (int i = 0; i < requestModel.getRowCount(); i++) {
+             VaccineProduceRequest targetRequest = (VaccineProduceRequest) requestModel.getValueAt(i, 0);
+             if (targetRequest.getVaccine().getVaccineType().equalsIgnoreCase(selectedVaccine.getVaccineType())) {
+                 if (targetRequest.getReceiver().getName().equalsIgnoreCase(factoryOrganization.getName())) {
+                    if (!targetRequest.getStatus().equalsIgnoreCase("produced and stored")) {
+                        JOptionPane.showMessageDialog(null,"One request of this kind vaccine is still processing, please try later.","Warning",JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                 }
+             }             
+        }
+        
         VaccineProduceRequest request = new VaccineProduceRequest();
         int dose = Integer.parseInt(doseRequestText.getText());
-        FactoryOrganization factoryOrganization = (FactoryOrganization) factoryComboBox.getSelectedItem();
+        
         request.setVaccine(selectedVaccine);
         request.setDosesRequest(dose);
         request.setReceiver(factoryOrganization);
@@ -1224,6 +1364,8 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         factoryOrganization.getWorkQueue().getWorkRequestList().add(request);
         populateRequestTable();
         JOptionPane.showMessageDialog(null,"Vaccine Purchase Request Created Successfully!");
+        vaccineText.setText("");
+        doseRequestText.setText("");
     }//GEN-LAST:event_requestBtnActionPerformed
 
     private void nameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextActionPerformed
@@ -1436,7 +1578,12 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please select a row from table first.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        VaccinePurchaseRequest vaccinePurchaseRequest = (VaccinePurchaseRequest) vaccinePurchaseTable.getValueAt(selectedRow, 0);
+        VaccinePurchaseRequest vaccinePurchaseRequest = (VaccinePurchaseRequest) vaccinePurchaseTable.getValueAt(selectedRow, 0);        
+        if (vaccinePurchaseRequest.getStatus().equalsIgnoreCase("Approved")) {
+            JOptionPane.showMessageDialog(null,"This work request has completed yet!","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+                
         Vaccine purchaseVaccine = vaccinePurchaseRequest.getVaccine();
         String id = "" + vaccineIDComboBox.getSelectedItem();
         int dose = Integer.parseInt(doseText.getText());
@@ -1446,23 +1593,28 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         purchaseVaccine.setId(id);
         purchaseVaccine.setDoseInStock(dose);
 
-        vaccinePurchaseRequest.setStatus("Approved");            
-        JOptionPane.showMessageDialog(null,"Approve vaccine purchase successfully.");
+        
 
         DefaultTableModel infoModel = (DefaultTableModel) vaccineInfoTable.getModel();           
         for (int i = 0; i < infoModel.getRowCount(); i++) {
             Vaccine sameIDVaccine = (Vaccine)infoModel.getValueAt(i, 0);
             if (sameIDVaccine.getId().equals(id)) {
-                if (dose < sameIDVaccine.getDoseInStock()) {
+                int updatePurchaseDoseReqeust = dose - sameIDVaccine.getDoseInStock() < 0 ? 0 : dose - sameIDVaccine.getDoseInStock();
+                if (updatePurchaseDoseReqeust > 0) {
                     sameIDVaccine.setDoseInStock(0);
+                    vaccinePurchaseRequest.setDoseForUpdate(updatePurchaseDoseReqeust);
                     purchaseVaccine.setExpDate(sameIDVaccine.getExpDate());
                     purchaseVaccine.setProDate(sameIDVaccine.getProDate());
                     JOptionPane.showMessageDialog(null,"The vaccine under this id is deficient, please split with another one!","Warning",JOptionPane.WARNING_MESSAGE);                    
+                    populateRequestTable();                    
                 }
                 else {
+                    vaccinePurchaseRequest.setDoseForUpdate(updatePurchaseDoseReqeust);
                     sameIDVaccine.setDoseInStock(sameIDVaccine.getDoseInStock() - dose);
                     purchaseVaccine.setExpDate(sameIDVaccine.getExpDate());
                     purchaseVaccine.setProDate(sameIDVaccine.getProDate());
+                    vaccinePurchaseRequest.setStatus("Approved");            
+                    JOptionPane.showMessageDialog(null,"Approve vaccine purchase successfully.");
                 }
             }
         }
@@ -1494,7 +1646,7 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         }
         Vaccine selectedVaccine = (Vaccine) vaccineTotalTable.getValueAt(selectedRow, 0);
         vaccineText.setText(selectedVaccine.getVaccineType());
-        vaccineText.setEditable(false);
+        vaccineText.setEnabled(false);
     }//GEN-LAST:event_requestSelectBtnActionPerformed
 
     private void requestSelectBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_requestSelectBtnMouseEntered
@@ -1506,6 +1658,54 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK);
         requestSelectBtn.setBorder(btnBorder);
     }//GEN-LAST:event_requestSelectBtnMouseClicked
+
+    private void tableDesLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel1MouseClicked
+
+    private void tableDesLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel1MouseExited
+
+    private void tableDesLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel1MouseEntered
+
+    private void tableDesLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel2MouseClicked
+
+    private void tableDesLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel2MouseExited
+
+    private void tableDesLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel2MouseEntered
+
+    private void tableDesLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel3MouseClicked
+
+    private void tableDesLabel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel3MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel3MouseExited
+
+    private void tableDesLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel3MouseEntered
+
+    private void tableDesLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel4MouseClicked
+
+    private void tableDesLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel4MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel4MouseExited
+
+    private void tableDesLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabel4MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabel4MouseEntered
 
     public void inactiveColor(JPanel panel) {
         panel.setBackground(new Color(23, 35, 51));
@@ -1553,10 +1753,10 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1564,6 +1764,8 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -1587,6 +1789,10 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton selectBtn;
     private javax.swing.JButton stockAreaBtn;
     private javax.swing.JPanel stockPanelArea;
+    private javax.swing.JLabel tableDesLabel1;
+    private javax.swing.JLabel tableDesLabel2;
+    private javax.swing.JLabel tableDesLabel3;
+    private javax.swing.JLabel tableDesLabel4;
     private javax.swing.JPanel topJPanel;
     private javax.swing.JLabel uploadLabel;
     private javax.swing.JTextField usernameText;

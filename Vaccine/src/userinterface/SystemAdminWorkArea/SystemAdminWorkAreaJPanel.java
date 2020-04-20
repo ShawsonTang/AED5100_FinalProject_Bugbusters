@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import userinterface.SignIn;
-import userinterface.Signup.SignUpJPanel;
 
 /**
  *
@@ -234,7 +233,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
         // TODO add your handling code here:
-        SignUpJPanel signUpJPanel = new SignUpJPanel(userProcessContainer, ecosystem);
+        CreateUserPanel signUpJPanel = new CreateUserPanel(userProcessContainer, ecosystem);
         userProcessContainer.add("manageEnterpriseJPanel", signUpJPanel);
         CardLayout layout=(CardLayout)userProcessContainer.getLayout();
         layout.next(userProcessContainer);
