@@ -42,6 +42,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
     private UserAccount userAccount;
     private EcoSystem system;
     private SignIn frame;
+    private int requestId;
     /**
      * Creates new form NewFactoryManagerWorkAreaJPanel
      */
@@ -94,6 +95,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
         for (Vaccine v : organization.getVaccineDirectory().getVaccineList()) {
             Object[] row = new Object[6];
             row[0] = v;
+            row[1] = requestId;
             row[2] = v.getId();
             row[3] = v.getDoseProdeced();
             row[4] = v.getProDate();
@@ -108,7 +110,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
         Object[] row = new Object[5];        
         for (WorkRequest r : organization.getWorkQueue().getWorkRequestList()) {            
             if (r instanceof VaccineProduceRequest) {
-                row[0] = r;
+                row[0] = r;                
                 row[1] = r.getId();
                 row[2] = ((VaccineProduceRequest) r).getDosesRequest();
                 row[3] = r.getSender();
@@ -812,12 +814,12 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
             vaccineProduceJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane5)
             .addGroup(vaccineProduceJPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(vaccineProduceJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vaccineProduceJPanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(vaccineProduceJPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(vaccineProduceJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(vaccineProduceJPanelLayout.createSequentialGroup()
                                 .addComponent(warehouseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -880,9 +882,9 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(vaccineProduceJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(warehouseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(storeBtn))
-                .addGap(60, 60, 60)
+                .addGap(72, 72, 72)
                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addContainerGap())
         );
 
         workAreaJPanel.add(vaccineProduceJPanel, "card3");
@@ -1118,6 +1120,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
         container.remove(this);
         frame.setJFrameVisible();
+        frame.getB4OUtil().storeSystem(system);
     }//GEN-LAST:event_logOutBtnActionPerformed
 
     private void approveBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_approveBtnMouseExited
@@ -1137,6 +1140,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
             return;
         }
         VaccineProduceRequest vaccineProduceRequest = (VaccineProduceRequest) vaccineRequestTable.getValueAt(selectedRow, 0);
+        requestId = vaccineProduceRequest.getId();
         vaccineProduceRequest.setStatus("Approved");
         Vaccine selectedVaccine = vaccineProduceRequest.getVaccine();
         DefaultTableModel model = (DefaultTableModel) vaccineProduceTable.getModel();
@@ -1145,13 +1149,16 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
             if (selectedVaccine.getVaccineType().equals(target.getVaccineType())) {
                 target.setDoseProdeced(vaccineProduceRequest.getDosesRequest());
 //                System.out.println(vaccineProduceRequest.getId());
-                vaccineProduceTable.setValueAt((Integer)vaccineProduceRequest.getId(), count, 1);
-                model.fireTableCellUpdated(count, 1);
+                populateVaccineProduceTable();
+                populateVaccineRequestTable();
+//                vaccineProduceTable.setValueAt((Integer)vaccineProduceRequest.getId(), count, 1);
+//                model.fireTableCellUpdated(count, 1);
+                System.out.println(model.getValueAt(count, 1));
+                break;
             }
-            System.out.println(model.getValueAt(count, 1));
+            
         }
-        populateVaccineProduceTable();
-        populateVaccineRequestTable();
+        
 
     }//GEN-LAST:event_approveBtnActionPerformed
 
@@ -1271,11 +1278,17 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
             selectedVaccine.setExpDate(null);                         
             
             //Change the status to prodeced and stored in vaccine request table
-            DefaultTableModel model = (DefaultTableModel) vaccineRequestTable.getModel();
-            for (int count = 0; count < model.getRowCount(); count++) {
-                VaccineProduceRequest target = (VaccineProduceRequest) model.getValueAt(count, 0);
-                if (selectedVaccine.getVaccineType().equals(target.getVaccine().getVaccineType())) {
+            DefaultTableModel requestModel = (DefaultTableModel) vaccineRequestTable.getModel();
+            DefaultTableModel produceModel = (DefaultTableModel) vaccineProduceTable.getModel();
+            for (int count = 0; count < requestModel.getRowCount(); count++) {
+                VaccineProduceRequest target = (VaccineProduceRequest) requestModel.getValueAt(count, 0);
+//                int requestId = (int) produceModel.getValueAt(count, 1);
+//                if (selectedVaccine.getVaccineType().equals(target.getVaccine().getVaccineType())) {
+//                    target.setStatus("Produced and Stored");
+//                } 
+                if (target.getId() == requestId) {
                     target.setStatus("Produced and Stored");
+                    break;
                 }
             }
             populateVaccineProduceTable();

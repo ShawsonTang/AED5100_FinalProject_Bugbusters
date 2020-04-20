@@ -49,11 +49,12 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
 //                System.out.println("Enterprise in " + network.getName() + " : " + enterprise.getName());
                 for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
 //                    System.out.println("Organization in " + enterprise.getName() + " : " + organization.getName());
-                    Object[] row = new Object[4];                    
-                    row[0] = network.getName();                    
+                    Object[] row = new Object[5];                    
+                    row[0] = network.getName();                     
                     row[1] = enterprise.getName();                    
                     row[2] = organization.getOrganizationType().getValue();
-                    row[3] = organization.getOrganizationID();
+                    row[3] = organization.getName();
+                    row[4] = organization.getOrganizationID();
                     model.addRow(row);    
                 }                
             }
@@ -123,20 +124,22 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
         enterpriseNameJComboBox = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         organizationTypeJComboBox = new javax.swing.JComboBox();
+        jLabel6 = new javax.swing.JLabel();
+        orgNameText = new javax.swing.JTextField();
 
         organizationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Network", "Enterprise Name", "Organization Type", "Organization ID"
+                "Network", "Enterprise Name", "Organization Type", "Orgaization name", "Organization ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, true, true, false
+                true, true, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -181,15 +184,20 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
 
         organizationTypeJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel6.setText("Organization Name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(64, 64, 64)
+                            .addGap(63, 63, 63)
                             .addComponent(backJButton)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(submitJButton))
@@ -199,15 +207,14 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
                                 .addComponent(jLabel5)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
-                                    .addComponent(jLabel4)))
+                                    .addComponent(jLabel4))
+                                .addComponent(jLabel6))
                             .addGap(64, 64, 64)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(networkJComboBox, 0, 136, Short.MAX_VALUE)
                                 .addComponent(enterpriseNameJComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(organizationTypeJComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(organizationTypeJComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(orgNameText)))))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -227,22 +234,28 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(organizationTypeJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(orgNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backJButton)
                     .addComponent(submitJButton))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addGap(56, 56, 56))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
         Enterprise selectedEnterprise = (Enterprise) enterpriseNameJComboBox.getSelectedItem(); 
         Organization.OrganizationType type = (Organization.OrganizationType) organizationTypeJComboBox.getSelectedItem();
-        if (selectedEnterprise == null || type == null) {
+        String name = orgNameText.getText();
+        if (selectedEnterprise == null || type == null || name.equals("")) {
             JOptionPane.showMessageDialog(null, "Invalid Input!");
             return;
         }
-        selectedEnterprise.getOrganizationDirectory().createOrganization(type);        
+        Organization org = selectedEnterprise.getOrganizationDirectory().createOrganization(type);
+        org.setName(name);
         populateTable();
     }//GEN-LAST:event_submitJButtonActionPerformed
 
@@ -271,8 +284,10 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox networkJComboBox;
+    private javax.swing.JTextField orgNameText;
     private javax.swing.JTable organizationTable;
     private javax.swing.JComboBox organizationTypeJComboBox;
     private javax.swing.JButton submitJButton;

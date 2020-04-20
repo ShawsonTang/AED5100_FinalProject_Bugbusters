@@ -211,7 +211,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(photoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 10, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(uploadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,9 +233,9 @@ public class SignUpJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addComponent(userNameJLabel))
                         .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(passwordField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnButtion)
@@ -258,9 +258,9 @@ public class SignUpJPanel extends javax.swing.JPanel {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(58, 58, 58)
                                                 .addComponent(submitButon, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -277,7 +277,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(emailText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,7 +303,10 @@ public class SignUpJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(emailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(emailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addComponent(submitButon, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(networkComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -311,13 +314,13 @@ public class SignUpJPanel extends javax.swing.JPanel {
                             .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(userNameJLabel1))
                         .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(enterpriseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(userNameJLabel2))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(enterpriseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(userNameJLabel2))
                                 .addGap(40, 40, 40)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(OrganizationComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -325,11 +328,11 @@ public class SignUpJPanel extends javax.swing.JPanel {
                                 .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(roleComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(userNameJLabel4)))
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(7, 7, 7)
-                .addComponent(submitButon, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                                    .addComponent(userNameJLabel4))
+                                .addGap(0, 64, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -360,7 +363,9 @@ public class SignUpJPanel extends javax.swing.JPanel {
     }
     private void submitButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButonActionPerformed
         // TODO add your handling code here:
- 
+        Organization selectedOrg = (Organization) OrganizationComboBox.getSelectedItem();
+        Role selectedRole = (Role) roleComboBox.getSelectedItem();
+        
         //Employee setup    
         String name = nameText.getText();
         String phone = phoneNumText.getText();
@@ -376,47 +381,67 @@ public class SignUpJPanel extends javax.swing.JPanel {
              return;
         }
         employee.setPhoto((ImageIcon)photoLabel.getIcon());
-        
-        system.getEmployeeDirectory().getEmployeeList().add(employee);
+                
 
-        Role role =(Role) roleComboBox.getSelectedItem();
+        
         String inputUserName = userNameField.getText();
         String inputPassWord = passwordField.getText();
         String inputPassword = String.valueOf(inputPassWord);   
-        UserAccount ua = system.getUserAccountDirectory().authenticateUser(inputUserName, inputPassword);
-        Enterprise inEnterprise = null;
-        Organization inOrganization = null;
+        UserAccount ua = selectedOrg.getUserAccountDirectory().authenticateUser(inputUserName, inputPassword);
         if (ua == null) {
+            ua = selectedOrg.getUserAccountDirectory().createUserAccount(inputUserName, inputPassword, employee, selectedRole);
+            JOptionPane.showMessageDialog(null, "Create User Account Successfully! ");
             submitButon.setEnabled(true);
             userNameField.setEnabled(false);
             passwordField.setEnabled(false);
             submitButon.setEnabled(false);
             userNameField.setText("");
             passwordField.setText("");
+            nameText.setText("");
+            emailText.setText("");
+            addressText.setText("");
+            phoneNumText.setText("");
             networkComboBox.setEnabled(false);
             enterpriseComboBox.setEnabled(false);
             OrganizationComboBox.setEnabled(false);
             roleComboBox.setEnabled(false);
-            inOrganization = getSystemOrganization(this.system);
-            Organization org = null ;
-            for(Organization o :system.getDefaultOrganizationList()){
-            
-
-            Organization.OrganizationType type = (Organization.OrganizationType)OrganizationComboBox.getSelectedItem(); 
-            if (type.equals(o.getOrganizationType())){
-                org = o;   
-                UserAccount u = org.getUserAccountDirectory().createUserAccount(inputUserName, inputPassword, employee, role);
-
-                JOptionPane.showMessageDialog(null, "Account created successfully  ");
-                for(UserAccount userAccount : o.getUserAccountDirectory().getUserAccountList()){
-                    System.out.println("当前org下所有username " + userAccount.getUsername());
-                }
-            }
-            
-            }
-        }else {
-                JOptionPane.showMessageDialog(null, "Duplicate password/username, enter again ");
-            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Duplicate password/username, enter again ");
+        }
+     
+//        Enterprise inEnterprise = null;
+//        Organization inOrganization = null;
+//        if (ua == null) {
+//            submitButon.setEnabled(true);
+//            userNameField.setEnabled(false);
+//            passwordField.setEnabled(false);
+//            submitButon.setEnabled(false);
+//            userNameField.setText("");
+//            passwordField.setText("");
+//            networkComboBox.setEnabled(false);
+//            enterpriseComboBox.setEnabled(false);
+//            OrganizationComboBox.setEnabled(false);
+//            roleComboBox.setEnabled(false);
+//            inOrganization = getSystemOrganization(this.system);
+//            Organization org = null ;
+//            for(Organization o :system.getDefaultOrganizationList()){
+//            
+//
+//            Organization.OrganizationType type = (Organization.OrganizationType)OrganizationComboBox.getSelectedItem(); 
+//            if (type.equals(o.getOrganizationType())){
+//                org = o;   
+//                UserAccount u = org.getUserAccountDirectory().createUserAccount(inputUserName, inputPassword, employee, role);
+//
+//                JOptionPane.showMessageDialog(null, "Account created successfully  ");
+//                for(UserAccount userAccount : o.getUserAccountDirectory().getUserAccountList()){
+//                    System.out.println("当前org下所有username " + userAccount.getUsername());
+//                }
+//            }
+//            
+//            }
+//        }else {
+//                JOptionPane.showMessageDialog(null, "Duplicate password/username, enter again ");
+//            }
     }//GEN-LAST:event_submitButonActionPerformed
 
     private void userNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameFieldActionPerformed
@@ -579,7 +604,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
         
         selectedEnterprise = (Enterprise) enterpriseComboBox.getSelectedItem();
 
-        for (Organization.OrganizationType o : selectedEnterprise.getSupportedOrganizations()) {
+        for (Organization o : selectedEnterprise.getOrganizationDirectory().getOrganizationList()) {
             OrganizationComboBox.addItem(o);
         }        
         enterpriseComboBox.addActionListener((e) -> {
@@ -591,7 +616,7 @@ public class SignUpJPanel extends javax.swing.JPanel {
             else {                
 //                System.out.println(selectedEnterprise);
 //                System.out.println(selectedEnterprise.getSupportedOrganizations().isEmpty());
-                for (Organization.OrganizationType o : selectedEnterprise.getSupportedOrganizations()) {
+                for (Organization o : selectedEnterprise.getOrganizationDirectory().getOrganizationList()) {
                     OrganizationComboBox.addItem(o);
                 }
             }
@@ -687,113 +712,53 @@ public class SignUpJPanel extends javax.swing.JPanel {
             System.out.println("NetWork name " + network.getName());
             networkComboBox.addItem(network);
        });
-
-
+      
+        
         selectedNetwork = (Network) networkComboBox.getSelectedItem();
         for (Enterprise enterprise : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) { 
                enterpriseComboBox.addItem(enterprise);
         } 
-         networkComboBox.addActionListener((e) -> {
-            enterpriseComboBox.removeAllItems();
+        
+        networkComboBox.addActionListener((e) -> {            
             selectedNetwork = (Network) networkComboBox.getSelectedItem();
+            enterpriseComboBox.removeAllItems();
             for (Enterprise enterprise : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {            
                 enterpriseComboBox.addItem(enterprise);
             }
         });
          
         selectedEnterprise = (Enterprise) enterpriseComboBox.getSelectedItem();
-
-        for (Organization.OrganizationType o : selectedEnterprise.getSupportedOrganizations()) {
+        for (Organization o : selectedEnterprise.getOrganizationDirectory().getOrganizationList()) {
             OrganizationComboBox.addItem(o);
         }   
         
         enterpriseComboBox.addActionListener((e) -> {
-            Enterprise selectedEnterprise = (Enterprise) enterpriseComboBox.getSelectedItem();
+            selectedEnterprise = (Enterprise) enterpriseComboBox.getSelectedItem();
             OrganizationComboBox.removeAllItems();
-            if (selectedEnterprise == null) {              
-            } 
-            else {                
-                for (Organization.OrganizationType o : selectedEnterprise.getSupportedOrganizations()) {
+            if (selectedEnterprise == null) {
+//                OrganizationComboBox.addItem("");
+            }
+            else {
+                for (Organization o : selectedEnterprise.getOrganizationDirectory().getOrganizationList()) {
                     OrganizationComboBox.addItem(o);
-                }
+                }   
+            }
+        });  
+        
+        selectedOrganization = (Organization) OrganizationComboBox.getSelectedItem();
+        for (Role r : selectedOrganization.getSupportedRole()) {
+            roleComboBox.addItem(r);
+        } 
+        OrganizationComboBox.addActionListener((e) -> {           
+            selectedOrganization = (Organization) OrganizationComboBox.getSelectedItem();
+            roleComboBox.removeAllItems();
+            if (selectedOrganization == null) {
+                roleComboBox.addItem("");
+            } else {
+                for (Role r: selectedOrganization.getSupportedRole()) {
+                    roleComboBox.addItem(r);
+                } 
             }
         });
-        Organization.OrganizationType type = (Organization.OrganizationType)OrganizationComboBox.getSelectedItem();
-        Organization organization = null;
-        if (type.getValue().equals(Organization.OrganizationType.Factory.getValue())){
-            organization = new FactoryOrganization();
-          
-        }
-        else if (type.getValue().equals(Organization.OrganizationType.Warehouse.getValue())){
-            organization = new WarehouseOrganization();
-          
-        }
-        else if (type.getValue().equals(Organization.OrganizationType.DoPH.getValue())){
-            organization = new DoPHOrganization();
-            
-        }
-        else if (type.getValue().equals(Organization.OrganizationType.Doctor.getValue())){
-            organization = new DoctorOrganization();
-           
-        } else if(type.getValue().equals(Organization.OrganizationType.HealthDepartment.getValue())) {
-            organization = new HealthDepartmentOrganization();
-           
-        }        
-
-        for (Role o: organization.getSupportedRole()) {
-            roleComboBox.addItem(o);
-        } 
-        OrganizationComboBox.addActionListener((e) -> {
-        roleComboBox.removeAllItems();
-        Organization finalOrganization;
-        Organization.OrganizationType finalType = (Organization.OrganizationType)OrganizationComboBox.getSelectedItem();
-        if (finalType == null) {
-            }else{ 
-        if (finalType.getValue().equals(Organization.OrganizationType.Factory.getValue())){
-            finalOrganization = new FactoryOrganization();
-            System.out.println("Factory");
-            for (Role o : finalOrganization.getSupportedRole()) {
-                    roleComboBox.addItem(o);
-                    System.out.println(o.getClass().getName());}
-          
-        }
-        else if (finalType.getValue().equals(Organization.OrganizationType.Warehouse.getValue())){
-            finalOrganization = new WarehouseOrganization();
-            System.out.println("Warehouse");
-             for (Role o : finalOrganization.getSupportedRole()) {
-                    roleComboBox.addItem(o);
-                    System.out.println(o.getClass().getName());}
-          
-        }
-        else if (finalType.getValue().equals(Organization.OrganizationType.HealthDepartment.getValue())){
-            finalOrganization = new HealthDepartmentOrganization();
-            System.out.println("HealthDepartment");
-             for (Role o : finalOrganization.getSupportedRole()) {
-                    roleComboBox.addItem(o);
-                    System.out.println(o.getClass().getName());}
-            
-        }
-        else if (finalType.getValue().equals(Organization.OrganizationType.Doctor.getValue())){
-            finalOrganization = new DoctorOrganization();
-            System.out.println("Doctor");
-             for (Role o : finalOrganization.getSupportedRole()) {
-                    roleComboBox.addItem(o);
-                    System.out.println(o.getClass().getName());}    
-
-        }
-        else if (finalType.getValue().equals(Organization.OrganizationType.DoPH.getValue())){
-            finalOrganization = new DoPHOrganization();
-            System.out.println("DoPh");
-             for (Role o : finalOrganization.getSupportedRole()) {
-                    roleComboBox.addItem(o);
-                    System.out.println(o.getClass().getName());}
-           
-       
-        //roleComboBox.removeAll();
-       
-        }}       
-                 
-        });
-    
-    }
+    }   
 }

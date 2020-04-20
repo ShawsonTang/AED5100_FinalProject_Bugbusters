@@ -40,7 +40,7 @@ public class SignIn extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);       
         transparencyJPanel.setBackground(new Color(0, 0, 0, 150));
         container.setVisible(false);
-        system = dB4OUtil.retrieveSystem();
+//        system = dB4OUtil.retrieveSystem();
         this.system = ConfigureASystem.configure(); 
         container.setSize(1300, 697);
         this.setSize(1300, 697);
@@ -383,6 +383,11 @@ public class SignIn extends javax.swing.JFrame {
         this.revalidate();
         this.repaint();
     }
+    
+    public DB4OUtil getB4OUtil() {
+        return this.dB4OUtil;
+    }
+    
     
     private void signUpLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLabelMouseEntered
         Border labelBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white);

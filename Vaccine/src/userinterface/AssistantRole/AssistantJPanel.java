@@ -109,6 +109,8 @@ public class AssistantJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane6 = new javax.swing.JScrollPane();
+        requestHistoryTable = new javax.swing.JTable();
         leftJPanel = new javax.swing.JPanel();
         requestPanelArea = new javax.swing.JPanel();
         requestAreaBtn = new javax.swing.JButton();
@@ -141,13 +143,37 @@ public class AssistantJPanel extends javax.swing.JPanel {
         approveBtn = new javax.swing.JButton();
         declineBtn = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        requestHistoryTable = new javax.swing.JTable();
         topJPanel = new javax.swing.JPanel();
         headLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         photoLabel = new javax.swing.JLabel();
         uploadLabel = new javax.swing.JLabel();
+
+        requestHistoryTable.setFont(new java.awt.Font("American Typewriter", 0, 14)); // NOI18N
+        requestHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "PROVIDER", "REQUEST ID", "RECEIVER", "SENDER", "REQUEST DATE"
+            }
+        ));
+        requestHistoryTable.setSelectionBackground(new java.awt.Color(80, 148, 240));
+        requestHistoryTable.setShowVerticalLines(false);
+        jScrollPane6.setViewportView(requestHistoryTable);
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -513,48 +539,26 @@ public class AssistantJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dophbackground.png"))); // NOI18N
-
-        requestHistoryTable.setFont(new java.awt.Font("American Typewriter", 0, 14)); // NOI18N
-        requestHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "PROVIDER", "REQUEST ID", "RECEIVER", "SENDER", "REQUEST DATE"
-            }
-        ));
-        requestHistoryTable.setSelectionBackground(new java.awt.Color(80, 148, 240));
-        requestHistoryTable.setShowVerticalLines(false);
-        jScrollPane6.setViewportView(requestHistoryTable);
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/vaccine010.gif"))); // NOI18N
+        jLabel19.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout requestJPanelLayout = new javax.swing.GroupLayout(requestJPanel);
         requestJPanel.setLayout(requestJPanelLayout);
         requestJPanelLayout.setHorizontalGroup(
             requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
+            .addComponent(jScrollPane4)
             .addGroup(requestJPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(requestJPanelLayout.createSequentialGroup()
+                        .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(requestJPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 809, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 49, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         requestJPanelLayout.setVerticalGroup(
             requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,11 +568,8 @@ public class AssistantJPanel extends javax.swing.JPanel {
                 .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(declineBtn)
                     .addComponent(approveBtn))
-                .addGap(63, 63, 63)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jLabel19))
         );
 
         workAreaJPanel.add(requestJPanel, "card2");
@@ -686,7 +687,7 @@ public class AssistantJPanel extends javax.swing.JPanel {
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
         container.remove(this);
         frame.setJFrameVisible();
-        
+        frame.getB4OUtil().storeSystem(system);        
     }//GEN-LAST:event_logOutBtnActionPerformed
 
     
