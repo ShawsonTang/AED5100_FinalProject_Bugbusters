@@ -124,6 +124,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         photoLabel = new javax.swing.JLabel();
         uploadLabel = new javax.swing.JLabel();
 
+        setPreferredSize(new java.awt.Dimension(1300, 700));
         setSize(new java.awt.Dimension(1300, 700));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -720,7 +721,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                         .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vaccineConfirmJPanelLayout.createSequentialGroup()
-                .addContainerGap(142, Short.MAX_VALUE)
+                .addContainerGap(572, Short.MAX_VALUE)
                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(137, 137, 137))
         );
@@ -780,7 +781,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(photoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
                 .addComponent(uploadLabel)
                 .addGap(20, 20, 20))
         );
@@ -1048,21 +1049,26 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
+        try {
+            VaccineDoctorRequest request = new VaccineDoctorRequest();
+            int dose = Integer.parseInt(doseRequestText.getText());
+            HealthDepartmentOrganization healthDepartmentOrganization = (HealthDepartmentOrganization) healthDepartmentComboBox.getSelectedItem();
+            String message = messageText.getText();
+            request.setVaccine(vaccine);
+            request.setDosesRequest(dose);
+            request.setReceiver(healthDepartmentOrganization);
+            request.setSender(organization);
+            request.setMessage(message);
+            request.setStatus("Pending");
+            organization.getWorkQueue().getWorkRequestList().add(request);
+            healthDepartmentOrganization.getWorkQueue().getWorkRequestList().add(request);
+            JOptionPane.showMessageDialog(null,"Vaccine Request Created Successfully!");
+            populateInfoTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Please enter doses");
+
+        }
         
-        VaccineDoctorRequest request = new VaccineDoctorRequest();
-        int dose = Integer.parseInt(doseRequestText.getText());
-        HealthDepartmentOrganization healthDepartmentOrganization = (HealthDepartmentOrganization) healthDepartmentComboBox.getSelectedItem();
-        String message = messageText.getText();
-        request.setVaccine(vaccine);
-        request.setDosesRequest(dose);
-        request.setReceiver(healthDepartmentOrganization);
-        request.setSender(organization);
-        request.setMessage(message);
-        request.setStatus("Pending");
-        organization.getWorkQueue().getWorkRequestList().add(request);
-        healthDepartmentOrganization.getWorkQueue().getWorkRequestList().add(request);
-        JOptionPane.showMessageDialog(null,"Vaccine Request Created Successfully!");
-        populateInfoTable();
         
        
     }//GEN-LAST:event_confirmBtnActionPerformed

@@ -29,7 +29,9 @@ public class Employee {
 //        id = count;
 //        count++;
 //    }
-
+    public Employee(){
+        
+    }
     public Employee(String name, int id, String phoneNum) {
         this.name = name;
         this.id = id;
