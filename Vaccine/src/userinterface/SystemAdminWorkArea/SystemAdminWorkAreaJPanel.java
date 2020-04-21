@@ -5,12 +5,13 @@
  */
 package userinterface.SystemAdminWorkArea;
 
+import java.awt.CardLayout;
 import Business.EcoSystem;
+import Business.Employee.Employee;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -18,70 +19,97 @@ import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import userinterface.SignIn;
-import userinterface.Signup.SignUpJPanel;
+import javax.swing.border.Border;
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.table.DefaultTableModel;
+import Business.Network.Network;
+import Business.Role.Role;
+import Business.Vaccine.Vaccine;
+import Business.WorkQueue.WorkQueue;
+import Business.WorkQueue.WorkRequest;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import java.awt.Font;
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+
 
 /**
  *
- * @author shawson
+ * @author Jasmine
  */
 public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form SystemAdminWorkAreaJPanel
      */
-    private JPanel userProcessContainer;
-    private EcoSystem ecosystem;
+    private JPanel container;
     private UserAccount userAccount;
     private SignIn frame;
-    public SystemAdminWorkAreaJPanel(JPanel userProcessContainer, SignIn frame, UserAccount userAccount, EcoSystem ecosystem) {
+    private EcoSystem system;
+    private Network selectedNetwork;
+    private Enterprise selectedEnterprise;
+    private Network selectedN;
+    private Enterprise selectedE;
+    private Organization selectedO;
+   
+    public SystemAdminWorkAreaJPanel(JPanel container, SignIn frame, UserAccount userAccount, EcoSystem system) {
         initComponents();
-        this.userProcessContainer=userProcessContainer;
         this.frame = frame;
         this.userAccount = userAccount;
-        this.ecosystem=ecosystem;
+        this.container = container;
+        this.system = system;
+        populateWorkFlowTable();
+        populateNetworkTable();
+        populateEnterpriseTable();
+        populateOrganizationTable();
+        populateComboBoxOfEnterpriseArea();
+        populateNetworkComboBox();
+//        populateComboBoxOfOrg();
+        setTableProperty();
 //        populateTree();
     }
     
-//    public void populateTree(){
-//        DefaultTreeModel model=(DefaultTreeModel)jTree.getModel();
-//        ArrayList<Network> networkList=ecosystem.getNetworkList();
-//        ArrayList<Enterprise> enterpriseList;
-//        ArrayList<Organization> organizationList;
-//        
-//        Network network;
-//        Enterprise enterprise;
-//        Organization organization;
-//        
-//        DefaultMutableTreeNode networks=new DefaultMutableTreeNode("Networks");
-//        DefaultMutableTreeNode root=(DefaultMutableTreeNode)model.getRoot();
-//        root.removeAllChildren();
-//        root.insert(networks, 0);
-//        
-//        DefaultMutableTreeNode networkNode;
-//        DefaultMutableTreeNode enterpriseNode;
-//        DefaultMutableTreeNode organizationNode;
-//        
-//        for(int i=0;i<networkList.size();i++){
-//            network=networkList.get(i);
-//            networkNode=new DefaultMutableTreeNode(network.getName());
-//            networks.insert(networkNode, i);
-//            
-//            enterpriseList=network.getEnterpriseDirectory().getEnterpriseList();
-//            for(int j=0; j<enterpriseList.size();j++){
-//                enterprise=enterpriseList.get(j);
-//                enterpriseNode=new DefaultMutableTreeNode(enterprise.getName());
-//                networkNode.insert(enterpriseNode, j);
-//                
-//                organizationList=enterprise.getOrganizationDirectory().getOrganizationList();
-//                for(int k=0;k<organizationList.size();k++){
-//                    organization=organizationList.get(i);
-//                    organizationNode=new DefaultMutableTreeNode(organization.getName());
-//                    enterpriseNode.insert(organizationNode, k);
-//                }
-//            }
-//        }
-//        model.reload();
-//    }
+    private void setTableProperty() {
+        networkJTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 20));
+        networkJTable.getTableHeader().setOpaque(false);
+        networkJTable.getTableHeader().setBackground(new Color(18, 30, 82));
+        networkJTable.getTableHeader().setForeground(new Color(255, 255, 255));
+        
+        workFlowTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 15));
+        workFlowTable.getTableHeader().setOpaque(false);
+        workFlowTable.getTableHeader().setBackground(new Color(18, 30, 82));
+        workFlowTable.getTableHeader().setForeground(new Color(255, 255, 255));
+        
+        enterpriseJTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 18));
+        enterpriseJTable.getTableHeader().setOpaque(false);
+        enterpriseJTable.getTableHeader().setBackground(new Color(141, 157, 185));
+        enterpriseJTable.getTableHeader().setForeground(new Color(0, 0, 0));
+        
+        organizationTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 15));
+        organizationTable.getTableHeader().setOpaque(false);
+        organizationTable.getTableHeader().setBackground(new Color(120, 168, 252));
+        organizationTable.getTableHeader().setForeground(new Color(0, 0, 0));
+        
+        userAccInfoTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 15));
+        userAccInfoTable.getTableHeader().setOpaque(false);
+        userAccInfoTable.getTableHeader().setBackground(new Color(210, 234, 238));
+        userAccInfoTable.getTableHeader().setForeground(new Color(0, 0, 0));
+        
+        
+//        vaccineTotalTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 15));
+//        vaccineTotalTable.getTableHeader().setOpaque(false);
+//        vaccineTotalTable.getTableHeader().setBackground(new Color(120, 168, 252));
+//        vaccineTotalTable.getTableHeader().setForeground(new Color(0, 0, 0));                        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,164 +119,1814 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPane = new javax.swing.JSplitPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        lblSelectedNode = new javax.swing.JLabel();
-        btnManageNetwork = new javax.swing.JButton();
-        btnManageEnterprise = new javax.swing.JButton();
-        btnManageOrganization = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        leftJPanel = new javax.swing.JPanel();
         logOutBtn = new javax.swing.JButton();
-        signUp = new javax.swing.JButton();
+        networkPanelArea = new javax.swing.JPanel();
+        networkAreaBtn = new javax.swing.JButton();
+        organizationPanelArea = new javax.swing.JPanel();
+        organizationAreaBtn = new javax.swing.JButton();
+        enterprisePanelArea = new javax.swing.JPanel();
+        enterpriseAreaBtn = new javax.swing.JButton();
+        useraccountPanelArea = new javax.swing.JPanel();
+        useraccountAreaBtn = new javax.swing.JButton();
+        workareajPanel = new javax.swing.JPanel();
+        networkjPanel = new javax.swing.JPanel();
+        stateText = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        enterpriseLabel2 = new javax.swing.JLabel();
+        addStateBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        networkJTable = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        workFlowTable = new javax.swing.JTable();
+        enterpriseLabel5 = new javax.swing.JLabel();
+        deleteStateBtn = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        enterprisejPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        enterpriseNameText = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        enterpriseTypeJComboBox = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
+        networkJComboBox = new javax.swing.JComboBox();
+        enterpriseLabel3 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        enterpriseJTable = new javax.swing.JTable();
+        createEnterpriseBtn = new javax.swing.JButton();
+        deleteEnterpriseBtn = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        organizationjPanel = new javax.swing.JPanel();
+        networkComboBoxInOrg = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        enterpriseComboBoxInOrg = new javax.swing.JComboBox();
+        jLabel6 = new javax.swing.JLabel();
+        organizationTypeComboBoxInOrg = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        organizationTable = new javax.swing.JTable();
+        orgNameText = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
+        enterpriseLabel4 = new javax.swing.JLabel();
+        createOrgBtn = new javax.swing.JButton();
+        deleteOrgBtn = new javax.swing.JButton();
+        useraccountjPanel = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        userAccInfoTable = new javax.swing.JTable();
+        enterpriseLabel6 = new javax.swing.JLabel();
+        userAccnameText = new javax.swing.JTextField();
+        userAccemailText = new javax.swing.JTextField();
+        userAccphoneNumText = new javax.swing.JTextField();
+        userAccCreateBtn = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        userAccusernameText = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        userAccpasswordText = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        uploadLabel = new javax.swing.JLabel();
+        userAccphotoLabel = new javax.swing.JLabel();
+        userNameJLabel1 = new javax.swing.JLabel();
+        userNameJLabel2 = new javax.swing.JLabel();
+        userAccNetworkComboBox = new javax.swing.JComboBox<>();
+        userAccEnterpriseComboBox = new javax.swing.JComboBox<>();
+        userNameJLabel3 = new javax.swing.JLabel();
+        userNameJLabel4 = new javax.swing.JLabel();
+        userAccOrganizationComboBox = new javax.swing.JComboBox<>();
+        userAccRoleComboBox = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        userAccaddressText = new javax.swing.JTextField();
+        userAccDeleteBtn = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
 
-        setLayout(new java.awt.BorderLayout());
+        jTextField1.setText("jTextField1");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 29, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
-        );
+        setMaximumSize(new java.awt.Dimension(1300, 697));
+        setPreferredSize(new java.awt.Dimension(1300, 697));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jSplitPane.setLeftComponent(jPanel1);
+        leftJPanel.setBackground(new java.awt.Color(23, 35, 51));
+        leftJPanel.setPreferredSize(new java.awt.Dimension(129, 697));
 
-        jLabel1.setText("Selected Node:");
-
-        lblSelectedNode.setText("<View_selected_node>");
-
-        btnManageNetwork.setText("Manage Network");
-        btnManageNetwork.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageNetworkActionPerformed(evt);
+        logOutBtn.setBackground(new java.awt.Color(51, 153, 255));
+        logOutBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        logOutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        logOutBtn.setText("Log out");
+        logOutBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        logOutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logOutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logOutBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logOutBtnMouseEntered(evt);
             }
         });
-
-        btnManageEnterprise.setText("Manage Enterprise");
-        btnManageEnterprise.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageEnterpriseActionPerformed(evt);
-            }
-        });
-
-        btnManageOrganization.setText("Manage Organization");
-        btnManageOrganization.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageOrganizationActionPerformed(evt);
-            }
-        });
-
-        logOutBtn.setText("logout");
         logOutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logOutBtnActionPerformed(evt);
             }
         });
 
-        signUp.setText("SignUp");
-        signUp.addActionListener(new java.awt.event.ActionListener() {
+        networkPanelArea.setBackground(new java.awt.Color(41, 57, 80));
+
+        networkAreaBtn.setBackground(new java.awt.Color(41, 57, 80));
+        networkAreaBtn.setFont(new java.awt.Font("Menlo", 1, 18)); // NOI18N
+        networkAreaBtn.setForeground(new java.awt.Color(255, 255, 255));
+        networkAreaBtn.setText("Network");
+        networkAreaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        networkAreaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        networkAreaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                networkAreaBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                networkAreaBtnMouseEntered(evt);
+            }
+        });
+        networkAreaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signUpActionPerformed(evt);
+                networkAreaBtnActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblSelectedNode))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(logOutBtn)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnManageEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnManageNetwork, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnManageOrganization, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(signUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(300, Short.MAX_VALUE))
+        javax.swing.GroupLayout networkPanelAreaLayout = new javax.swing.GroupLayout(networkPanelArea);
+        networkPanelArea.setLayout(networkPanelAreaLayout);
+        networkPanelAreaLayout.setHorizontalGroup(
+            networkPanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, networkPanelAreaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(networkAreaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(lblSelectedNode))
-                .addGap(54, 54, 54)
-                .addComponent(btnManageNetwork)
-                .addGap(18, 18, 18)
-                .addComponent(btnManageEnterprise)
-                .addGap(18, 18, 18)
-                .addComponent(btnManageOrganization)
-                .addGap(18, 18, 18)
-                .addComponent(signUp)
-                .addGap(27, 27, 27)
-                .addComponent(logOutBtn)
-                .addContainerGap(72, Short.MAX_VALUE))
+        networkPanelAreaLayout.setVerticalGroup(
+            networkPanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(networkAreaBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
         );
 
-        jSplitPane.setRightComponent(jPanel2);
+        organizationPanelArea.setBackground(new java.awt.Color(23, 35, 51));
 
-        add(jSplitPane, java.awt.BorderLayout.CENTER);
+        organizationAreaBtn.setBackground(new java.awt.Color(41, 57, 80));
+        organizationAreaBtn.setFont(new java.awt.Font("Menlo", 1, 16)); // NOI18N
+        organizationAreaBtn.setForeground(new java.awt.Color(255, 255, 255));
+        organizationAreaBtn.setText("Organization");
+        organizationAreaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        organizationAreaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        organizationAreaBtn.setMaximumSize(new java.awt.Dimension(73, 29));
+        organizationAreaBtn.setMinimumSize(new java.awt.Dimension(73, 29));
+        organizationAreaBtn.setName(""); // NOI18N
+        organizationAreaBtn.setPreferredSize(new java.awt.Dimension(73, 29));
+        organizationAreaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                organizationAreaBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                organizationAreaBtnMouseEntered(evt);
+            }
+        });
+        organizationAreaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                organizationAreaBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout organizationPanelAreaLayout = new javax.swing.GroupLayout(organizationPanelArea);
+        organizationPanelArea.setLayout(organizationPanelAreaLayout);
+        organizationPanelAreaLayout.setHorizontalGroup(
+            organizationPanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, organizationPanelAreaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(organizationAreaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        organizationPanelAreaLayout.setVerticalGroup(
+            organizationPanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, organizationPanelAreaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(organizationAreaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        enterprisePanelArea.setBackground(new java.awt.Color(23, 35, 51));
+
+        enterpriseAreaBtn.setBackground(new java.awt.Color(41, 57, 80));
+        enterpriseAreaBtn.setFont(new java.awt.Font("Menlo", 1, 18)); // NOI18N
+        enterpriseAreaBtn.setForeground(new java.awt.Color(255, 255, 255));
+        enterpriseAreaBtn.setText("Enterprise");
+        enterpriseAreaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        enterpriseAreaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        enterpriseAreaBtn.setPreferredSize(new java.awt.Dimension(75, 29));
+        enterpriseAreaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                enterpriseAreaBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                enterpriseAreaBtnMouseEntered(evt);
+            }
+        });
+        enterpriseAreaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterpriseAreaBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout enterprisePanelAreaLayout = new javax.swing.GroupLayout(enterprisePanelArea);
+        enterprisePanelArea.setLayout(enterprisePanelAreaLayout);
+        enterprisePanelAreaLayout.setHorizontalGroup(
+            enterprisePanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, enterprisePanelAreaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(enterpriseAreaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        enterprisePanelAreaLayout.setVerticalGroup(
+            enterprisePanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(enterpriseAreaBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+        );
+
+        useraccountPanelArea.setBackground(new java.awt.Color(23, 35, 51));
+
+        useraccountAreaBtn.setBackground(new java.awt.Color(41, 57, 80));
+        useraccountAreaBtn.setFont(new java.awt.Font("Menlo", 1, 18)); // NOI18N
+        useraccountAreaBtn.setForeground(new java.awt.Color(255, 255, 255));
+        useraccountAreaBtn.setText("User");
+        useraccountAreaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        useraccountAreaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        useraccountAreaBtn.setPreferredSize(new java.awt.Dimension(75, 29));
+        useraccountAreaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                useraccountAreaBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                useraccountAreaBtnMouseEntered(evt);
+            }
+        });
+        useraccountAreaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                useraccountAreaBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout useraccountPanelAreaLayout = new javax.swing.GroupLayout(useraccountPanelArea);
+        useraccountPanelArea.setLayout(useraccountPanelAreaLayout);
+        useraccountPanelAreaLayout.setHorizontalGroup(
+            useraccountPanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, useraccountPanelAreaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(useraccountAreaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        useraccountPanelAreaLayout.setVerticalGroup(
+            useraccountPanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, useraccountPanelAreaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(useraccountAreaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout leftJPanelLayout = new javax.swing.GroupLayout(leftJPanel);
+        leftJPanel.setLayout(leftJPanelLayout);
+        leftJPanelLayout.setHorizontalGroup(
+            leftJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leftJPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(leftJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(logOutBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(organizationPanelArea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(networkPanelArea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(enterprisePanelArea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(useraccountPanelArea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        leftJPanelLayout.setVerticalGroup(
+            leftJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftJPanelLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(networkPanelArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(enterprisePanelArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(organizationPanelArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(useraccountPanelArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+                .addComponent(logOutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        add(leftJPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        workareajPanel.setPreferredSize(new java.awt.Dimension(1170, 700));
+        workareajPanel.setLayout(new java.awt.CardLayout());
+
+        networkjPanel.setBackground(new java.awt.Color(78, 101, 149));
+        networkjPanel.setMinimumSize(new java.awt.Dimension(1170, 700));
+        networkjPanel.setOpaque(false);
+        networkjPanel.setPreferredSize(new java.awt.Dimension(1170, 697));
+        networkjPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        stateText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stateTextActionPerformed(evt);
+            }
+        });
+        networkjPanel.add(stateText, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 330, -1));
+
+        jLabel1.setBackground(new java.awt.Color(78, 101, 149));
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("State");
+        networkjPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 110, -1));
+
+        enterpriseLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        enterpriseLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        enterpriseLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        enterpriseLabel2.setText("Manage Network");
+        networkjPanel.add(enterpriseLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, 329, 71));
+
+        addStateBtn.setBackground(new java.awt.Color(51, 153, 255));
+        addStateBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        addStateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addStateBtn.setText("Add State");
+        addStateBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        addStateBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addStateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addStateBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addStateBtnMouseEntered(evt);
+            }
+        });
+        addStateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addStateBtnActionPerformed(evt);
+            }
+        });
+        networkjPanel.add(addStateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 280, 310, 30));
+
+        networkJTable.setBackground(new java.awt.Color(18, 30, 82));
+        networkJTable.setFont(new java.awt.Font("American Typewriter", 1, 18)); // NOI18N
+        networkJTable.setForeground(new java.awt.Color(255, 255, 255));
+        networkJTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "State"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(networkJTable);
+
+        networkjPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 1170, 100));
+
+        workFlowTable.setBackground(new java.awt.Color(18, 30, 82));
+        workFlowTable.setFont(new java.awt.Font("American Typewriter", 1, 14)); // NOI18N
+        workFlowTable.setForeground(new java.awt.Color(255, 255, 255));
+        workFlowTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "REQUEST ID", "SENDER", "REICEIVER", "REQUEST DATE", "RESOLVE DATE", "STATUS"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(workFlowTable);
+        if (workFlowTable.getColumnModel().getColumnCount() > 0) {
+            workFlowTable.getColumnModel().getColumn(0).setMaxWidth(100);
+            workFlowTable.getColumnModel().getColumn(5).setMinWidth(200);
+            workFlowTable.getColumnModel().getColumn(5).setMaxWidth(300);
+        }
+
+        networkjPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 600, 1170, 100));
+
+        enterpriseLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        enterpriseLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        enterpriseLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        enterpriseLabel5.setText("All Work Request");
+        networkjPanel.add(enterpriseLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 520, 329, 71));
+
+        deleteStateBtn.setBackground(new java.awt.Color(51, 153, 255));
+        deleteStateBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        deleteStateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        deleteStateBtn.setText("Delete State");
+        deleteStateBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        deleteStateBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteStateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteStateBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteStateBtnMouseEntered(evt);
+            }
+        });
+        deleteStateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteStateBtnActionPerformed(evt);
+            }
+        });
+        networkjPanel.add(deleteStateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 310, 30));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/network_background.jpg"))); // NOI18N
+        jLabel9.setText("jLabel9");
+        jLabel9.setOpaque(true);
+        networkjPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 700));
+
+        workareajPanel.add(networkjPanel, "card4");
+
+        enterprisejPanel.setBackground(new java.awt.Color(78, 101, 149));
+        enterprisejPanel.setMinimumSize(new java.awt.Dimension(1170, 697));
+        enterprisejPanel.setPreferredSize(new java.awt.Dimension(1170, 697));
+        enterprisejPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setBackground(new java.awt.Color(78, 101, 149));
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Name");
+        enterprisejPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 430, 140, -1));
+
+        enterpriseNameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterpriseNameTextActionPerformed(evt);
+            }
+        });
+        enterprisejPanel.add(enterpriseNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 430, 210, -1));
+
+        jLabel3.setBackground(new java.awt.Color(78, 101, 149));
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Enterprise Type");
+        enterprisejPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 380, 250, -1));
+
+        enterpriseTypeJComboBox.setBackground(new java.awt.Color(70, 87, 119));
+        enterpriseTypeJComboBox.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        enterpriseTypeJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        enterpriseTypeJComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterpriseTypeJComboBoxActionPerformed(evt);
+            }
+        });
+        enterprisejPanel.add(enterpriseTypeJComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 380, 210, -1));
+
+        jLabel4.setBackground(new java.awt.Color(78, 101, 149));
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Network");
+        enterprisejPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 170, -1));
+
+        networkJComboBox.setBackground(new java.awt.Color(70, 87, 119));
+        networkJComboBox.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        networkJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        networkJComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                networkJComboBoxActionPerformed(evt);
+            }
+        });
+        enterprisejPanel.add(networkJComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 330, 210, -1));
+
+        enterpriseLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        enterpriseLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        enterpriseLabel3.setText("Manage Enterprise");
+        enterprisejPanel.add(enterpriseLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 360, 71));
+
+        enterpriseJTable.setBackground(new java.awt.Color(141, 157, 185));
+        enterpriseJTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Enterprise Name", "Network", "Type"
+            }
+        ));
+        enterpriseJTable.setOpaque(false);
+        jScrollPane4.setViewportView(enterpriseJTable);
+
+        enterprisejPanel.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1170, 110));
+
+        createEnterpriseBtn.setBackground(new java.awt.Color(51, 153, 255));
+        createEnterpriseBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        createEnterpriseBtn.setForeground(new java.awt.Color(255, 255, 255));
+        createEnterpriseBtn.setText("Create Enterprise");
+        createEnterpriseBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        createEnterpriseBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        createEnterpriseBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                createEnterpriseBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                createEnterpriseBtnMouseEntered(evt);
+            }
+        });
+        createEnterpriseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createEnterpriseBtnActionPerformed(evt);
+            }
+        });
+        enterprisejPanel.add(createEnterpriseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 500, 310, 60));
+
+        deleteEnterpriseBtn.setBackground(new java.awt.Color(51, 153, 255));
+        deleteEnterpriseBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        deleteEnterpriseBtn.setForeground(new java.awt.Color(255, 255, 255));
+        deleteEnterpriseBtn.setText("Delete Enterprise");
+        deleteEnterpriseBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        deleteEnterpriseBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteEnterpriseBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteEnterpriseBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteEnterpriseBtnMouseEntered(evt);
+            }
+        });
+        deleteEnterpriseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteEnterpriseBtnActionPerformed(evt);
+            }
+        });
+        enterprisejPanel.add(deleteEnterpriseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 500, 310, 60));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/enterprise_background.png"))); // NOI18N
+        enterprisejPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 700));
+
+        workareajPanel.add(enterprisejPanel, "card2");
+        enterprisejPanel.getAccessibleContext().setAccessibleName("");
+
+        organizationjPanel.setBackground(new java.awt.Color(78, 101, 149));
+        organizationjPanel.setMaximumSize(new java.awt.Dimension(1170, 700));
+        organizationjPanel.setMinimumSize(new java.awt.Dimension(1170, 700));
+        organizationjPanel.setPreferredSize(new java.awt.Dimension(1170, 697));
+
+        networkComboBoxInOrg.setBackground(new java.awt.Color(255, 255, 255));
+        networkComboBoxInOrg.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        networkComboBoxInOrg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        networkComboBoxInOrg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                networkComboBoxInOrgActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setBackground(new java.awt.Color(78, 101, 149));
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Enterprise Name");
+
+        enterpriseComboBoxInOrg.setBackground(new java.awt.Color(255, 255, 255));
+        enterpriseComboBoxInOrg.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        enterpriseComboBoxInOrg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        enterpriseComboBoxInOrg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterpriseComboBoxInOrgActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setBackground(new java.awt.Color(78, 101, 149));
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Organization Type");
+
+        organizationTypeComboBoxInOrg.setBackground(new java.awt.Color(255, 255, 255));
+        organizationTypeComboBoxInOrg.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        organizationTypeComboBoxInOrg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel7.setBackground(new java.awt.Color(78, 101, 149));
+        jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Organization Name");
+
+        organizationTable.setBackground(new java.awt.Color(120, 168, 252));
+        organizationTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Network", "Enterprise Name", "Organization Type", "Orgaization name", "Organization ID"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        organizationTable.setShowHorizontalLines(false);
+        organizationTable.setShowVerticalLines(false);
+        jScrollPane3.setViewportView(organizationTable);
+
+        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel8.setBackground(new java.awt.Color(78, 101, 149));
+        jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Network");
+
+        enterpriseLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        enterpriseLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        enterpriseLabel4.setText("Manage Organization");
+
+        createOrgBtn.setBackground(new java.awt.Color(51, 153, 255));
+        createOrgBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        createOrgBtn.setForeground(new java.awt.Color(255, 255, 255));
+        createOrgBtn.setText("Create Organization");
+        createOrgBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        createOrgBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        createOrgBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                createOrgBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                createOrgBtnMouseEntered(evt);
+            }
+        });
+        createOrgBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createOrgBtnActionPerformed(evt);
+            }
+        });
+
+        deleteOrgBtn.setBackground(new java.awt.Color(51, 153, 255));
+        deleteOrgBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        deleteOrgBtn.setForeground(new java.awt.Color(255, 255, 255));
+        deleteOrgBtn.setText("Delete Organization");
+        deleteOrgBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        deleteOrgBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteOrgBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteOrgBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteOrgBtnMouseEntered(evt);
+            }
+        });
+        deleteOrgBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteOrgBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout organizationjPanelLayout = new javax.swing.GroupLayout(organizationjPanel);
+        organizationjPanel.setLayout(organizationjPanelLayout);
+        organizationjPanelLayout.setHorizontalGroup(
+            organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(organizationjPanelLayout.createSequentialGroup()
+                    .addGap(384, 384, 384)
+                    .addComponent(enterpriseLabel4))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(organizationjPanelLayout.createSequentialGroup()
+                    .addGap(252, 252, 252)
+                    .addComponent(deleteOrgBtn)
+                    .addGap(260, 260, 260)
+                    .addComponent(createOrgBtn)))
+            .addGroup(organizationjPanelLayout.createSequentialGroup()
+                .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(organizationjPanelLayout.createSequentialGroup()
+                        .addGap(223, 223, 223)
+                        .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
+                        .addGap(111, 111, 111)
+                        .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(orgNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(organizationTypeComboBoxInOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(enterpriseComboBoxInOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(organizationjPanelLayout.createSequentialGroup()
+                        .addGap(560, 560, 560)
+                        .addComponent(networkComboBoxInOrg, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        organizationjPanelLayout.setVerticalGroup(
+            organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(organizationjPanelLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(enterpriseLabel4)
+                .addGap(46, 46, 46)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(networkComboBoxInOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(enterpriseComboBoxInOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(organizationTypeComboBoxInOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56)
+                .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(orgNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(createOrgBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteOrgBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26))
+        );
+
+        workareajPanel.add(organizationjPanel, "card3");
+
+        useraccountjPanel.setBackground(new java.awt.Color(78, 101, 149));
+        useraccountjPanel.setMaximumSize(new java.awt.Dimension(1170, 700));
+        useraccountjPanel.setPreferredSize(new java.awt.Dimension(1170, 697));
+        useraccountjPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        userAccInfoTable.setAutoCreateRowSorter(true);
+        userAccInfoTable.setBackground(new java.awt.Color(210, 234, 238));
+        userAccInfoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Network", "Organization", "Enterprise", "Name", "User Name", "Password"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(userAccInfoTable);
+
+        useraccountjPanel.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 1170, 100));
+
+        enterpriseLabel6.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        enterpriseLabel6.setForeground(new java.awt.Color(142, 205, 237));
+        enterpriseLabel6.setText("Manage User Account");
+        useraccountjPanel.add(enterpriseLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 430, 71));
+
+        userAccnameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccnameTextActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccnameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, 130, -1));
+
+        userAccemailText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccemailTextActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccemailText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 390, 130, -1));
+
+        userAccphoneNumText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccphoneNumTextActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccphoneNumText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, 130, -1));
+
+        userAccCreateBtn.setText("Create");
+        userAccCreateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccCreateBtnActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccCreateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 650, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(87, 145, 196));
+        jLabel12.setText("Password:");
+        useraccountjPanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 580, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(87, 145, 196));
+        jLabel13.setText("Username:");
+        useraccountjPanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 530, -1, -1));
+
+        userAccusernameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccusernameTextActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccusernameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 540, 130, -1));
+
+        jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(87, 145, 196));
+        jLabel14.setText("Name:");
+        useraccountjPanel.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, -1, -1));
+
+        jLabel15.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(87, 145, 196));
+        jLabel15.setText("Photo:");
+        useraccountjPanel.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 350, -1, -1));
+
+        userAccpasswordText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccpasswordTextActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccpasswordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 580, 130, -1));
+
+        jLabel16.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(87, 145, 196));
+        jLabel16.setText("Address:");
+        useraccountjPanel.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 440, -1, -1));
+
+        jLabel17.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(87, 145, 196));
+        jLabel17.setText("Phone Number:");
+        useraccountjPanel.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, -1, -1));
+
+        jPanel3.setBackground(new java.awt.Color(229, 229, 255));
+
+        uploadLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-upload.png"))); // NOI18N
+        uploadLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        uploadLabel.setEnabled(false);
+        uploadLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                uploadLabelMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                uploadLabelMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                uploadLabelMouseEntered(evt);
+            }
+        });
+
+        userAccphotoLabel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(87, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(uploadLabel)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(userAccphotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(uploadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userAccphotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
+        );
+
+        useraccountjPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 340, 270, 290));
+
+        userNameJLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        userNameJLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        userNameJLabel1.setForeground(new java.awt.Color(87, 145, 196));
+        userNameJLabel1.setText("Network");
+        useraccountjPanel.add(userNameJLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, -1));
+
+        userNameJLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        userNameJLabel2.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        userNameJLabel2.setForeground(new java.awt.Color(87, 145, 196));
+        userNameJLabel2.setText("Enterprise");
+        useraccountjPanel.add(userNameJLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, -1));
+
+        userAccNetworkComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        userAccNetworkComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccNetworkComboBoxActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccNetworkComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 220, -1));
+
+        userAccEnterpriseComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        userAccEnterpriseComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccEnterpriseComboBoxActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccEnterpriseComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 220, -1));
+
+        userNameJLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        userNameJLabel3.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        userNameJLabel3.setForeground(new java.awt.Color(87, 145, 196));
+        userNameJLabel3.setText("Organization");
+        useraccountjPanel.add(userNameJLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, -1, -1));
+
+        userNameJLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        userNameJLabel4.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        userNameJLabel4.setForeground(new java.awt.Color(87, 145, 196));
+        userNameJLabel4.setText("Role");
+        useraccountjPanel.add(userNameJLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 160, 61, -1));
+
+        userAccOrganizationComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        useraccountjPanel.add(userAccOrganizationComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 100, 280, -1));
+
+        userAccRoleComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        useraccountjPanel.add(userAccRoleComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 160, 280, -1));
+
+        jLabel18.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(87, 145, 196));
+        jLabel18.setText("Email:");
+        useraccountjPanel.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 390, -1, -1));
+
+        userAccaddressText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccaddressTextActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccaddressText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 440, 130, -1));
+
+        userAccDeleteBtn.setText("Delete");
+        userAccDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccDeleteBtnActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccDeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 650, -1, -1));
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/useraccount_background.jpg"))); // NOI18N
+        useraccountjPanel.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 700));
+
+        workareajPanel.add(useraccountjPanel, "card5");
+
+        add(workareajPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 1170, 700));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnManageNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageNetworkActionPerformed
-        ManageNetworkJPanel manageNetworkJPanel=new ManageNetworkJPanel(userProcessContainer, ecosystem);
-        userProcessContainer.add("manageNetworkJPanel",manageNetworkJPanel);
-        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
-    }//GEN-LAST:event_btnManageNetworkActionPerformed
+    
+    private void populateWorkFlowTable() {
+        DefaultTableModel model = (DefaultTableModel) workFlowTable.getModel();
+        model.setRowCount(0);
+         for (WorkRequest w : system.getWorkQueue().getWorkRequestList()) {            
+            Object[] row = new Object[6];
+            row[0] = w.getId();
+            row[1] = w.getSender();
+            row[2] = w.getReceiver();
+            row[3] = w.getRequestDate();
+            row[4] = w.getResolveDate();
+            row[5] = w.getStatus();
+            model.addRow(row);                                                
+         }
+        
+    }
+    
+    private void populateNetworkTable() {
+        DefaultTableModel model = (DefaultTableModel) networkJTable.getModel();
 
-    private void btnManageEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageEnterpriseActionPerformed
-        ManageEnterpriseJPanel manageEnterpriseJPanel=new ManageEnterpriseJPanel(userProcessContainer, ecosystem);
-        userProcessContainer.add("manageEnterpriseJPanel",manageEnterpriseJPanel);
-        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
-    }//GEN-LAST:event_btnManageEnterpriseActionPerformed
+        model.setRowCount(0);
+        for (Network network : system.getNetworkList()) {
+            Object[] row = new Object[1];
+            row[0] = network.getName();
+            model.addRow(row);
+        }
+    }
+    
+    private void populateEnterpriseTable() {
+        DefaultTableModel model = (DefaultTableModel) enterpriseJTable.getModel();
 
-    private void btnManageOrganizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageOrganizationActionPerformed
-        ManageOrganizationJPanel manageOrganizationJPanel = new ManageOrganizationJPanel(userProcessContainer, ecosystem);
-        userProcessContainer.add("manageEnterpriseJPanel", manageOrganizationJPanel);
-        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
-    }//GEN-LAST:event_btnManageOrganizationActionPerformed
+        model.setRowCount(0);
+        for (Network network : system.getNetworkList()) {
+            for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                Object[] row = new Object[3];
+                row[0] = enterprise.getName();
+                row[1] = network.getName();
+                row[2] = enterprise.getEnterpriseType().getValue();
+
+                model.addRow(row);
+            }
+        }
+    }
+    private void populateComboBoxOfEnterpriseArea() {
+        networkJComboBox.removeAllItems();
+        enterpriseTypeJComboBox.removeAllItems();
+
+        for (Network network : system.getNetworkList()) {
+            networkJComboBox.addItem(network);
+        }
+
+        for (Enterprise.EnterpriseType type : Enterprise.EnterpriseType.values()) {
+            enterpriseTypeJComboBox.addItem(type);
+        }
+
+    }
+    
+    private void populateOrganizationTable() {
+        DefaultTableModel model = (DefaultTableModel) organizationTable.getModel();
+
+        model.setRowCount(0);
+        for (Network network : system.getNetworkList()) {
+//            System.out.println("Network: " + network.getName());
+            for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+//                System.out.println("Enterprise in " + network.getName() + " : " + enterprise.getName());
+                for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+//                    System.out.println("Organization in " + enterprise.getName() + " : " + organization.getName());
+                    Object[] row = new Object[5];                    
+                    row[0] = network.getName();                     
+                    row[1] = enterprise.getName();                    
+                    row[2] = organization.getOrganizationType().getValue();
+                    row[3] = organization.getName();
+                    row[4] = organization.getOrganizationID();
+                    model.addRow(row);    
+                }                
+            }
+        }
+    }
+
+    private void populateNetworkComboBox() {
+        networkJComboBox.removeAllItems();
+        enterpriseTypeJComboBox.removeAllItems();
+
+        for (Network network : system.getNetworkList()) {
+            networkJComboBox.addItem(network);
+        }
+
+        for (Enterprise.EnterpriseType type : Enterprise.EnterpriseType.values()) {
+            enterpriseTypeJComboBox.addItem(type);
+        }
+
+    }   
+    
+    private void populateComboBoxOfOrg() {
+        networkComboBoxInOrg.removeAllItems();
+        enterpriseComboBoxInOrg.removeAllItems();
+        organizationTypeComboBoxInOrg.removeAllItems();
+        
+        for (Network network : system.getNetworkList()) {            
+            networkComboBoxInOrg.addItem(network);
+        }
+        
+        selectedNetwork = (Network) networkComboBoxInOrg.getSelectedItem();
+        if (selectedNetwork == null) {
+            JOptionPane.showMessageDialog(null, "Please add a network first!");
+            return;
+        }
+        selectedNetwork.getEnterpriseDirectory().getEnterpriseList().forEach((action) -> System.out.println(action));
+        for (Enterprise enterprise : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {            
+                enterpriseComboBoxInOrg.addItem(enterprise);
+        }  
+//        System.out.println("1. Current selected is: " + selectedNetwork);
+        
+        networkComboBoxInOrg.addActionListener((e) -> {                        
+            selectedNetwork = (Network) networkComboBoxInOrg.getSelectedItem();
+            enterpriseComboBoxInOrg.removeAllItems(); 
+            if (selectedNetwork == null) {
+                selectedNetwork = system.getNetworkList().get(0);
+            }
+//            System.out.println("2. Current selected is: " + selectedNetwork);
+//            System.out.println("2. Current selected is: " + selectedNetwork);
+            else {
+                for (Enterprise enterprise : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {                
+                    enterpriseComboBoxInOrg.addItem(enterprise);                
+                }
+            }
+        });
+        
+       
+        selectedEnterprise = (Enterprise) enterpriseComboBoxInOrg.getSelectedItem();
+        if (selectedEnterprise == null) {
+            JOptionPane.showMessageDialog(null, "Please add an enterprise first!");
+            return;
+        }
+//        System.out.println(selectedEnterprise.getName());
+//        System.out.println(selectedEnterprise.getSupportedOrganizations().isEmpty());
+        for (Organization.OrganizationType o : selectedEnterprise.getSupportedOrganizations()) {
+//            System.out.println(organization.getOrganizationType());
+            organizationTypeComboBoxInOrg.addItem(o);
+        }        
+        enterpriseComboBoxInOrg.addActionListener((e) -> {
+            selectedEnterprise = (Enterprise) enterpriseComboBoxInOrg.getSelectedItem();
+            organizationTypeComboBoxInOrg.removeAllItems();
+            if (selectedEnterprise == null) {
+                organizationTypeComboBoxInOrg.addItem("");
+            } 
+            else {                
+//                System.out.println(selectedEnterprise);
+//                System.out.println(selectedEnterprise.getSupportedOrganizations().isEmpty());
+                for (Organization.OrganizationType o : selectedEnterprise.getSupportedOrganizations()) {
+                    organizationTypeComboBoxInOrg.addItem(o);
+                }
+            }
+        });
+    }
+    
+    
+//    private void populateDebugNetworkComboBox() {
+//        networkComboBoxInOrg.removeAllItems();
+//        for (Network network : system.getNetworkList()) {            
+//            networkComboBoxInOrg.addItem(network);
+//        }
+//        
+//        selectedNetwork = (Network) networkComboBoxInOrg.getSelectedItem();
+//        selectedNetwork.getEnterpriseDirectory().getEnterpriseList().forEach((action) -> System.out.println(action));
+//        for (Enterprise enterprise : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {            
+//                enterpriseComboBoxInOrg.addItem(enterprise);
+//        }  
+//        System.out.println("1. Current selected is: " + selectedNetwork);
+//        
+//        networkComboBoxInOrg.addActionListener((e) -> {                        
+//            selectedNetwork = (Network) networkComboBoxInOrg.getSelectedItem();
+//            enterpriseComboBoxInOrg.removeAllItems();
+//            if (selectedNetwork == null) {
+//                selectedNetwork = system.getNetworkList().get(0);
+//            }
+//            System.out.println("2. Current selected is: " + selectedNetwork);            
+//            
+//            for (Enterprise enterprise : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {                
+//                enterpriseComboBoxInOrg.addItem(enterprise);                
+//            }
+//            
+//        
+//        });
+//    }
+    
+    private void logOutBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logOutBtnMouseEntered
+        logOutBtn.setBackground(new Color(80, 148, 240));
+        Border btnBorder = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE);
+        logOutBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_logOutBtnMouseEntered
+
+    private void logOutBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logOutBtnMouseExited
+        logOutBtn.setBackground(new Color(51, 153, 255));
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        logOutBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_logOutBtnMouseExited
 
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
-        userProcessContainer.remove(this);
+        container.remove(this);
         frame.setJFrameVisible();
+        frame.getB4OUtil().storeSystem(system);
     }//GEN-LAST:event_logOutBtnActionPerformed
 
-    private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
-        // TODO add your handling code here:
-        SignUpJPanel signUpJPanel = new SignUpJPanel(userProcessContainer, ecosystem);
-        userProcessContainer.add("manageEnterpriseJPanel", signUpJPanel);
-        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
-        
-    }//GEN-LAST:event_signUpActionPerformed
+    private void useraccountAreaBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_useraccountAreaBtnMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        useraccountAreaBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_useraccountAreaBtnMouseEntered
 
+    private void useraccountAreaBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_useraccountAreaBtnMouseExited
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK);
+        useraccountAreaBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_useraccountAreaBtnMouseExited
+
+    private void useraccountAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useraccountAreaBtnActionPerformed
+        populateUserAccountComboBox();
+        populateUserAccountAreaTable();
+        activeColor(useraccountPanelArea);
+        inactiveColor(enterprisePanelArea);
+        inactiveColor(networkPanelArea);
+        inactiveColor(organizationPanelArea);
+        networkjPanel.setVisible(false);
+        enterprisejPanel.setVisible(false);
+        organizationjPanel.setVisible(false);
+        useraccountjPanel.setVisible(true);
+    }//GEN-LAST:event_useraccountAreaBtnActionPerformed
+    
+    private void populateUserAccountAreaTable() {
+        DefaultTableModel model = (DefaultTableModel) userAccInfoTable.getModel();
+        model.setRowCount(0);
+        for (Network n : system.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    for (UserAccount u : o.getUserAccountDirectory().getUserAccountList()) {
+                        Object[] row = new Object[6];                    
+                        row[0] = n.getName();                     
+                        row[1] = e.getName();                    
+                        row[2] = o.getOrganizationType().getValue();
+                        row[3] = u.getEmployee().getName();
+                        row[4] = u.getUsername();
+                        row[5] = u.getPassword();
+                        model.addRow(row); 
+                    }                      
+                }
+            }
+        }
+    }
+    
+    
+    private void organizationAreaBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_organizationAreaBtnMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        organizationAreaBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_organizationAreaBtnMouseEntered
+
+    private void organizationAreaBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_organizationAreaBtnMouseExited
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK);
+        organizationAreaBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_organizationAreaBtnMouseExited
+
+    private void organizationAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationAreaBtnActionPerformed
+//        if (system.getNetworkList().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Please add a network(state) first!");            
+//        }
+//        selectedEnterprise = (Enterprise) enterpriseComboBoxInOrg.getSelectedItem();
+//        if (selectedEnterprise == null) {
+//            JOptionPane.showMessageDialog(null, "Please add an enterprise first!");
+//            return;
+//        }
+        populateOrganizationTable();        
+        populateComboBoxOfOrg();
+//        populateDebugNetworkComboBox();
+        activeColor(organizationPanelArea);
+        inactiveColor(enterprisePanelArea);
+        inactiveColor(useraccountPanelArea);
+        inactiveColor(networkPanelArea);
+        networkjPanel.setVisible(false);
+        enterprisejPanel.setVisible(false);
+        organizationjPanel.setVisible(true);
+        useraccountjPanel.setVisible(false);
+    }//GEN-LAST:event_organizationAreaBtnActionPerformed
+
+    private void networkAreaBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_networkAreaBtnMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        networkAreaBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_networkAreaBtnMouseEntered
+
+    private void networkAreaBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_networkAreaBtnMouseExited
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK);
+        networkAreaBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_networkAreaBtnMouseExited
+
+    private void networkAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkAreaBtnActionPerformed
+
+        populateNetworkTable();       
+        activeColor(networkPanelArea);
+        inactiveColor(enterprisePanelArea);
+        inactiveColor(useraccountPanelArea);
+        inactiveColor(organizationPanelArea);
+        networkjPanel.setVisible(true);
+        enterprisejPanel.setVisible(false);
+        organizationjPanel.setVisible(false);
+        useraccountjPanel.setVisible(false);
+    }//GEN-LAST:event_networkAreaBtnActionPerformed
+    
+    private void populatenetworkComboBoxofOrg() {
+        networkComboBoxInOrg.removeAllItems();
+        for (Network network : system.getNetworkList()) {
+            networkComboBoxInOrg.addItem(network);
+        }
+    }
+    
+    
+    
+    private void enterpriseAreaBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enterpriseAreaBtnMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        enterpriseAreaBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_enterpriseAreaBtnMouseEntered
+
+    private void enterpriseAreaBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enterpriseAreaBtnMouseExited
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK);
+        enterpriseAreaBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_enterpriseAreaBtnMouseExited
+
+    private void enterpriseAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseAreaBtnActionPerformed
+        if (this.system.getNetworkList().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please add a network(state) first!");            
+        }
+        populateEnterpriseTable();
+        populateComboBoxOfEnterpriseArea();
+        activeColor(enterprisePanelArea);
+        inactiveColor(networkPanelArea);
+        inactiveColor(useraccountPanelArea);
+        inactiveColor(organizationPanelArea);
+        networkjPanel.setVisible(false);
+        enterprisejPanel.setVisible(true);
+        organizationjPanel.setVisible(false);
+        useraccountjPanel.setVisible(false);
+    }//GEN-LAST:event_enterpriseAreaBtnActionPerformed
+
+    private void stateTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stateTextActionPerformed
+
+    private void networkJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkJComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_networkJComboBoxActionPerformed
+
+    private void enterpriseNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseNameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_enterpriseNameTextActionPerformed
+
+    private void networkComboBoxInOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkComboBoxInOrgActionPerformed
+        
+    }//GEN-LAST:event_networkComboBoxInOrgActionPerformed
+
+    private void enterpriseComboBoxInOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseComboBoxInOrgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_enterpriseComboBoxInOrgActionPerformed
+
+    private void enterpriseTypeJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseTypeJComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_enterpriseTypeJComboBoxActionPerformed
+
+    private void addStateBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addStateBtnMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE);
+        addStateBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_addStateBtnMouseEntered
+
+    private void addStateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addStateBtnMouseExited
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        addStateBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_addStateBtnMouseExited
+
+    private void addStateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStateBtnActionPerformed
+        String name = stateText.getText();
+        if (name == null || name.equals("")) {
+            JOptionPane.showMessageDialog(null, "State is invalid!"); 
+            return;
+        }
+        system.createAndAddNetwork(name);        
+        JOptionPane.showMessageDialog(null, "Add State successfully!"); 
+        stateText.setText("");        
+        populateNetworkTable();
+//        populateComboBoxOfOrg();
+    }//GEN-LAST:event_addStateBtnActionPerformed
+
+    private void createEnterpriseBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createEnterpriseBtnMouseExited
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        createEnterpriseBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_createEnterpriseBtnMouseExited
+
+    private void createEnterpriseBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createEnterpriseBtnMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE);
+        createEnterpriseBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_createEnterpriseBtnMouseEntered
+
+    private void createEnterpriseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createEnterpriseBtnActionPerformed
+        Network network = (Network) networkJComboBox.getSelectedItem();
+        Enterprise.EnterpriseType type = (Enterprise.EnterpriseType) enterpriseTypeJComboBox.getSelectedItem();
+
+        if (network == null || type == null) {
+            JOptionPane.showMessageDialog(null, "Invalid Input!");
+            return;
+        }
+
+        String name = enterpriseNameText.getText();
+
+        Enterprise enterprise = network.getEnterpriseDirectory().createAndAddEnterprise(name, type);
+        populateEnterpriseTable();
+        JOptionPane.showMessageDialog(null, "Create enterprise successfully!");
+        enterpriseNameText.setText("");
+    }//GEN-LAST:event_createEnterpriseBtnActionPerformed
+
+    private void createOrgBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createOrgBtnMouseExited
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        createOrgBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_createOrgBtnMouseExited
+
+    private void createOrgBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createOrgBtnMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE);
+        createOrgBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_createOrgBtnMouseEntered
+
+    private void createOrgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createOrgBtnActionPerformed
+        Enterprise selectedEnterprise = (Enterprise) enterpriseComboBoxInOrg.getSelectedItem();
+        Organization.OrganizationType type = (Organization.OrganizationType) organizationTypeComboBoxInOrg.getSelectedItem();
+        String name = orgNameText.getText();
+        if (selectedEnterprise == null || type == null || name.equals("")) {
+            JOptionPane.showMessageDialog(null, "Invalid Input!");
+            return;
+        }
+        Organization org = selectedEnterprise.getOrganizationDirectory().createOrganization(type);
+        org.setName(name);
+        populateOrganizationTable();
+        JOptionPane.showMessageDialog(null, "Create organization successfully!");
+        orgNameText.setText("");
+//        networkComboBoxInOrg.setEnabled(false);
+    }//GEN-LAST:event_createOrgBtnActionPerformed
+
+    private void userAccnameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccnameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccnameTextActionPerformed
+
+    private void userAccemailTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccemailTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccemailTextActionPerformed
+
+    private void userAccphoneNumTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccphoneNumTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccphoneNumTextActionPerformed
+
+    private void userAccCreateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccCreateBtnActionPerformed
+        
+        Organization selectedOrg = (Organization) userAccOrganizationComboBox.getSelectedItem();
+        Role selectedRole = (Role) userAccRoleComboBox.getSelectedItem();
+        if (selectedN == null || selectedE == null || selectedO == null || selectedRole == null) {
+            JOptionPane.showMessageDialog(null, "You have not selected your network/enterprise/organization/role yet!");
+            return;
+        }
+        //Employee setup
+        String name = userAccnameText.getText();
+        String phone = userAccphoneNumText.getText();
+        String address = userAccaddressText.getText();
+        String email = userAccemailText.getText();
+        Employee employee = new Employee();
+        employee.setName(name);
+        employee.setPhoneNum(phone);
+        employee.setAddress(address);
+        employee.setEmail(email);
+
+        if((ImageIcon)userAccphotoLabel.getIcon()==null){
+            JOptionPane.showMessageDialog(null, "upload photo please ");
+            return;
+        }
+        employee.setPhoto((ImageIcon)userAccphotoLabel.getIcon());
+
+        String inputUserName = userAccusernameText.getText();
+        String inputPassWord = userAccpasswordText.getText();
+        String inputPassword = String.valueOf(inputPassWord);
+        UserAccount ua = selectedOrg.getUserAccountDirectory().authenticateUser(inputUserName, inputPassword);
+        if (ua == null) {
+            ua = selectedOrg.getUserAccountDirectory().createUserAccount(inputUserName, inputPassword, employee, selectedRole);
+            JOptionPane.showMessageDialog(null, "Create User Account Successfully! ");
+            populateUserAccountAreaTable();
+//            userAccCreateBtn.setEnabled(true);
+//            userAccusernameText.setEnabled(false);
+//            userAccpasswordText.setEnabled(false);
+//            userAccCreateBtn.setEnabled(false);
+            userAccusernameText.setText("");
+            userAccpasswordText.setText("");
+            userAccnameText.setText("");
+            userAccemailText.setText("");
+            userAccaddressText.setText("");
+            userAccphoneNumText.setText("");
+//            userAccNetworkComboBox.setEnabled(false);
+//            userAccEnterpriseComboBox.setEnabled(false);
+//            userAccOrganizationComboBox.setEnabled(false);
+//            userAccRoleComboBox.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Duplicate password/username, enter again ");
+        }
+
+        //        if(username == null || username.equals("") || password == null || username.equals("") || name == null || name.equals("") || address == null || address.equals("") || phoneNum == null || phoneNum.equals("")){
+            //            JOptionPane.showMessageDialog(null, "Text field can't be empty.");
+            //            return;
+            //        }
+        //        if (system.getUserAccountDirectory().checkIfUsernameIsUnique(username)) {
+            //            Employee employee = system.getEmployeeDirectory().createEmployee(name);
+            //            UserAccount userAccount = system.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
+            //            Restaurant restaurant = new Restaurant(name, address, phoneNum, userAccount);
+            //            system.getRestaurantDirectory().getRestaurantList().add(restaurant);
+            //            JOptionPane.showMessageDialog(null,"Restaurant created successfully!");
+            //            nameText.setText("");
+            //            addressText.setText("");
+            //            phoneNumText.setText("");
+            //            usernameText.setText("");
+            //            passwordText.setText("");
+            //        } else {
+            //            JOptionPane.showMessageDialog(null, "This username already exists!");
+            //        }
+    }//GEN-LAST:event_userAccCreateBtnActionPerformed
+
+    private void userAccusernameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccusernameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccusernameTextActionPerformed
+
+    private void userAccpasswordTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccpasswordTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccpasswordTextActionPerformed
+
+    private void uploadLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadLabelMouseClicked
+        JFileChooser chooser = new JFileChooser();
+        chooser.addChoosableFileFilter(new ImageFilter());
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.showSaveDialog(null);
+        if (chooser.getSelectedFile() != null) {
+            File f = chooser.getSelectedFile();
+            userAccphotoLabel.setIcon(new ImageIcon(f.toString()));
+        }
+    }//GEN-LAST:event_uploadLabelMouseClicked
+    
+    class ImageFilter extends FileFilter {
+        @Override
+        public boolean accept(File f) {
+            if (f.isDirectory()) {
+                return true;
+            }
+            String fileName = f.getName();
+            int i = f.getName().lastIndexOf('.');
+            return fileName.substring(i + 1).equals("jpg") || fileName.substring(i + 1).equals("png");
+        }
+        @Override
+        public String getDescription() {
+            return "please select .jpg and .png file";
+        }
+    }   
+    
+    private void populateUserAccountComboBox() {
+        userAccOrganizationComboBox.removeAllItems();
+        userAccEnterpriseComboBox.removeAllItems();
+        userAccNetworkComboBox.removeAllItems();
+        userAccRoleComboBox.removeAllItems();
+        system.getNetworkList().forEach((network) -> {
+            System.out.println("NetWork name " + network.getName());
+            userAccNetworkComboBox.addItem(network);
+       });
+      
+        
+        selectedN = (Network) userAccNetworkComboBox.getSelectedItem();
+        if (selectedN == null) {
+            JOptionPane.showMessageDialog(null, "Please add a network first!");
+            return;
+        }
+        for (Enterprise enterprise : selectedN.getEnterpriseDirectory().getEnterpriseList()) { 
+               userAccEnterpriseComboBox.addItem(enterprise);
+        } 
+        
+        userAccNetworkComboBox.addActionListener((e) -> {            
+            selectedN = (Network) userAccNetworkComboBox.getSelectedItem();
+            userAccEnterpriseComboBox.removeAllItems();
+            if (selectedN == null) {
+                selectedN = system.getNetworkList().get(0);
+            }
+            for (Enterprise enterprise : selectedN.getEnterpriseDirectory().getEnterpriseList()) {            
+                userAccEnterpriseComboBox.addItem(enterprise);
+            }
+        });
+         
+        selectedE = (Enterprise) userAccEnterpriseComboBox.getSelectedItem();
+        if (selectedE == null) {
+            JOptionPane.showMessageDialog(null, "Please add an enterprise first!");
+            return;
+        }
+        for (Organization o : selectedE.getOrganizationDirectory().getOrganizationList()) {
+            userAccOrganizationComboBox.addItem(o);
+        }   
+        
+        userAccEnterpriseComboBox.addActionListener((e) -> {
+            selectedE = (Enterprise) userAccEnterpriseComboBox.getSelectedItem();
+            userAccOrganizationComboBox.removeAllItems();
+            if (selectedE == null) {
+//                OrganizationComboBox.addItem("");
+            }
+            else {
+                for (Organization o : selectedE.getOrganizationDirectory().getOrganizationList()) {
+                    userAccOrganizationComboBox.addItem(o);
+                }   
+            }
+        });  
+        
+        selectedO = (Organization) userAccOrganizationComboBox.getSelectedItem();
+        if (selectedO == null) {
+            JOptionPane.showMessageDialog(null, "Please add an organization first!");
+            return;
+        }
+        for (Role r : selectedO.getSupportedRole()) {
+            userAccRoleComboBox.addItem(r);
+        } 
+        userAccOrganizationComboBox.addActionListener((e) -> {           
+            selectedO = (Organization) userAccOrganizationComboBox.getSelectedItem();
+            userAccRoleComboBox.removeAllItems();
+            if (selectedO == null) {
+                userAccRoleComboBox.addItem("");
+            } else {
+                for (Role r: selectedO.getSupportedRole()) {
+                    userAccRoleComboBox.addItem(r);
+                } 
+            }
+        });  
+        
+ //       throw new UnsupportedOperationException("Signup ComboBox issue"); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    private void uploadLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadLabelMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        uploadLabel.setBorder(btnBorder);
+    }//GEN-LAST:event_uploadLabelMouseEntered
+
+    private void uploadLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadLabelMouseExited
+        uploadLabel.setBorder(null);
+    }//GEN-LAST:event_uploadLabelMouseExited
+
+    private void userAccNetworkComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccNetworkComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccNetworkComboBoxActionPerformed
+
+    private void userAccEnterpriseComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccEnterpriseComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccEnterpriseComboBoxActionPerformed
+
+    private void userAccaddressTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccaddressTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccaddressTextActionPerformed
+
+    private void deleteStateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteStateBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteStateBtnMouseExited
+
+    private void deleteStateBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteStateBtnMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteStateBtnMouseEntered
+
+    private void deleteStateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStateBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedRow =  networkJTable.getSelectedRow();
+         if(selectedRow<0){
+             JOptionPane.showMessageDialog(null, "Please select a row" );
+             return;
+    }
+        int column = 0;
+        int row = networkJTable.getSelectedRow();
+        String value = networkJTable.getModel().getValueAt(row, column).toString();
+        system.deleteNetwork(value);
+        this.populateNetworkTable();
+    }//GEN-LAST:event_deleteStateBtnActionPerformed
+
+    private void deleteEnterpriseBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteEnterpriseBtnMouseExited
+
+    private void deleteEnterpriseBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteEnterpriseBtnMouseEntered
+
+    private void deleteEnterpriseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnActionPerformed
+        // TODO add your handling code here:
+         int selectedRow = enterpriseJTable.getSelectedRow();
+         if(selectedRow<0){
+             JOptionPane.showMessageDialog(null, "Please select a row" );
+             return;
+    }
+         String deletEnterprise = (String)enterpriseJTable.getValueAt(selectedRow, 0);
+         System.out.println("Enterprise "+ deletEnterprise);
+         for( int i = 0; i < system.getNetworkList().size(); i++ )
+            {
+                for(int j=0;j < system.getNetworkList().get(i).getEnterpriseDirectory().getEnterpriseList().size();j++){
+                    Enterprise enterprise = system.getNetworkList().get(i).getEnterpriseDirectory().getEnterpriseList().get(j);
+                    if(enterprise.getName().equals(deletEnterprise)){
+                        system.getNetworkList().get(i).getEnterpriseDirectory().getEnterpriseList().remove(j);
+                        j--;
+                    }
+                   
+                }
+               
+            }
+         JOptionPane.showMessageDialog(null, "Delete Successful" );
+         populateEnterpriseTable();
+
+//         for (Network network : system.getNetworkList()) {
+//            for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+//                if(enterprise.getName().equals(deletEnterprise)){
+//                   network.getEnterpriseDirectory().getEnterpriseList().remove(enterprise);
+//                    JOptionPane.showMessageDialog(null, "Delete Successful" );
+//                    populateEnterpriseTable();
+//                    break;
+//
+//                }
+//               
+//            }
+//        }
+    
+        
+            
+    }//GEN-LAST:event_deleteEnterpriseBtnActionPerformed
+
+    private void deleteOrgBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteOrgBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteOrgBtnMouseExited
+
+    private void deleteOrgBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteOrgBtnMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteOrgBtnMouseEntered
+
+    private void deleteOrgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteOrgBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteOrgBtnActionPerformed
+
+    private void userAccDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccDeleteBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccDeleteBtnActionPerformed
+    
+    public void activeColor(JPanel panel) {
+        panel.setBackground(new Color(41, 57, 80));
+    }
+    
+    public void inactiveColor(JPanel panel) {
+        panel.setBackground(new Color(23, 35, 51));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnManageEnterprise;
-    private javax.swing.JButton btnManageNetwork;
-    private javax.swing.JButton btnManageOrganization;
+    private javax.swing.JButton addStateBtn;
+    private javax.swing.JButton createEnterpriseBtn;
+    private javax.swing.JButton createOrgBtn;
+    private javax.swing.JButton deleteEnterpriseBtn;
+    private javax.swing.JButton deleteOrgBtn;
+    private javax.swing.JButton deleteStateBtn;
+    private javax.swing.JButton enterpriseAreaBtn;
+    private javax.swing.JComboBox enterpriseComboBoxInOrg;
+    private javax.swing.JTable enterpriseJTable;
+    private javax.swing.JLabel enterpriseLabel2;
+    private javax.swing.JLabel enterpriseLabel3;
+    private javax.swing.JLabel enterpriseLabel4;
+    private javax.swing.JLabel enterpriseLabel5;
+    private javax.swing.JLabel enterpriseLabel6;
+    private javax.swing.JTextField enterpriseNameText;
+    private javax.swing.JPanel enterprisePanelArea;
+    private javax.swing.JComboBox enterpriseTypeJComboBox;
+    private javax.swing.JPanel enterprisejPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JSplitPane jSplitPane;
-    private javax.swing.JLabel lblSelectedNode;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel leftJPanel;
     private javax.swing.JButton logOutBtn;
-    private javax.swing.JButton signUp;
+    private javax.swing.JButton networkAreaBtn;
+    private javax.swing.JComboBox networkComboBoxInOrg;
+    private javax.swing.JComboBox networkJComboBox;
+    private javax.swing.JTable networkJTable;
+    private javax.swing.JPanel networkPanelArea;
+    private javax.swing.JPanel networkjPanel;
+    private javax.swing.JTextField orgNameText;
+    private javax.swing.JButton organizationAreaBtn;
+    private javax.swing.JPanel organizationPanelArea;
+    private javax.swing.JTable organizationTable;
+    private javax.swing.JComboBox organizationTypeComboBoxInOrg;
+    private javax.swing.JPanel organizationjPanel;
+    private javax.swing.JTextField stateText;
+    private javax.swing.JLabel uploadLabel;
+    private javax.swing.JButton userAccCreateBtn;
+    private javax.swing.JButton userAccDeleteBtn;
+    private javax.swing.JComboBox<Object> userAccEnterpriseComboBox;
+    private javax.swing.JTable userAccInfoTable;
+    private javax.swing.JComboBox<Object> userAccNetworkComboBox;
+    private javax.swing.JComboBox<Object> userAccOrganizationComboBox;
+    private javax.swing.JComboBox<Object> userAccRoleComboBox;
+    private javax.swing.JTextField userAccaddressText;
+    private javax.swing.JTextField userAccemailText;
+    private javax.swing.JTextField userAccnameText;
+    private javax.swing.JTextField userAccpasswordText;
+    private javax.swing.JTextField userAccphoneNumText;
+    private javax.swing.JLabel userAccphotoLabel;
+    private javax.swing.JTextField userAccusernameText;
+    private javax.swing.JLabel userNameJLabel1;
+    private javax.swing.JLabel userNameJLabel2;
+    private javax.swing.JLabel userNameJLabel3;
+    private javax.swing.JLabel userNameJLabel4;
+    private javax.swing.JButton useraccountAreaBtn;
+    private javax.swing.JPanel useraccountPanelArea;
+    private javax.swing.JPanel useraccountjPanel;
+    private javax.swing.JTable workFlowTable;
+    private javax.swing.JPanel workareajPanel;
     // End of variables declaration//GEN-END:variables
 }

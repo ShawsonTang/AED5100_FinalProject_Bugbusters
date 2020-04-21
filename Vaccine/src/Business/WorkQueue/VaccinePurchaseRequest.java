@@ -14,6 +14,7 @@ import Business.Vaccine.Vaccine;
  */
 public class VaccinePurchaseRequest extends WorkRequest{
     private int dosesPurchase;
+    private int doseForUpdate;
     private WarehouseOrganization receiver;
     private Vaccine vaccine;
 
@@ -29,8 +30,15 @@ public class VaccinePurchaseRequest extends WorkRequest{
     public void setDosesPurchase(int dosesPurchase) {
         this.dosesPurchase = dosesPurchase;
     }
-    
-    
+
+    public int getDoseForUpdate() {
+        return doseForUpdate;
+    }
+
+    public void setDoseForUpdate(int doseForUpdate) {
+        this.doseForUpdate = doseForUpdate;
+    }
+        
 
     public WarehouseOrganization getReceiver() {
         return receiver;

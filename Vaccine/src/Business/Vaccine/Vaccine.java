@@ -25,6 +25,7 @@ public class Vaccine {
 
     private String vaccineType;
     private String id;
+    private String description;
     private int doseProdeced;
     private int doseInStock;
     private Map<Organization.OrganizationType, Organization> vaccineHistory;
@@ -75,7 +76,15 @@ public class Vaccine {
         this.id = id;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
 
     public int getDoseProdeced() {
         return doseProdeced;
