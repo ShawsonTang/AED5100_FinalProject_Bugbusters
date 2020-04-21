@@ -78,26 +78,20 @@ public class ConfigureASystem {
                 }
             } 
         }
-//        System.out.println(factoryOrganization1.getVaccineDirectory().getVaccineList().size());
-         
+
         //have some employees 
         //Create a system admin employee
         Employee admin = new SystemAdmin("shawson", 1027900, "6175167197");
         system.getEmployeeDirectory().getEmployeeList().add(admin);
-//        
         //Create a factory manager employee
         Employee factoryManager1 = new FactoryManager("Test Factory Manager", 1027901, "6175167190");
         factoryManager1.setAddress("Huntington Ave 001");
         factoryManager1.setEmail("test_fm@husky.neu.edu");
         factoryOrganization1.getEmployeeDirectory().getEmployeeList().add(factoryManager1);
-//        
-        //Create a warehouse keeper emplyee
         Employee warehouseKeeper1 = new WarehouseKeeper("Test Warehouse Keeper", 1027441, "6175564423");
         warehouseKeeper1.setAddress("Huntington Ave 002");
         warehouseKeeper1.setEmail("test_wk@husky.neu.edu");
         warehouseOrganization1.getEmployeeDirectory().getEmployeeList().add(warehouseKeeper1);
-//       
-//        //Create a doctor employee
         Employee doctor1 = new Doctor("Test Doctor", 1027332, "6175167797");
         doctor1.setAddress("Huntington Ave 003");
         doctor1.setEmail("test_dc@husky.neu.edu");
@@ -142,7 +136,7 @@ public class ConfigureASystem {
         deafaultOrganizations.add(factoryOrganization1);
         deafaultOrganizations.add(doctorOrganization1);
         deafaultOrganizations.add(dophOrganization1);
-        system.setDefaultOrganizationList(deafaultOrganizations);
+        system.setDefaultOrganizationList(deafaultOrganizations);     
         return system;
     }
     

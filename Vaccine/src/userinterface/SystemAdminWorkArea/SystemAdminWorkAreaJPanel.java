@@ -848,7 +848,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(enterpriseComboBoxInOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(organizationTypeComboBoxInOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -929,7 +929,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 userAccCreateBtnActionPerformed(evt);
             }
         });
-        useraccountjPanel.add(userAccCreateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 650, -1, -1));
+        useraccountjPanel.add(userAccCreateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 650, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(87, 145, 196));
@@ -1084,7 +1084,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 userAccDeleteBtnActionPerformed(evt);
             }
         });
-        useraccountjPanel.add(userAccDeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 650, -1, -1));
+        useraccountjPanel.add(userAccDeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 650, -1, -1));
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/useraccount_background.jpg"))); // NOI18N
         useraccountjPanel.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 700));
@@ -1473,6 +1473,12 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "State is invalid!"); 
             return;
         }
+        for (Network n : system.getNetworkList()) {            
+            if (n.getName().equalsIgnoreCase(name)) {
+                JOptionPane.showMessageDialog(null, "This state name has been used, please choose another one!");
+                return;
+            }            
+        }
         system.createAndAddNetwork(name);        
         JOptionPane.showMessageDialog(null, "Add State successfully!"); 
         stateText.setText("");        
@@ -1500,7 +1506,14 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         }
 
         String name = enterpriseNameText.getText();
-
+        for (Network n : system.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e.getName().equalsIgnoreCase(name)) {
+                    JOptionPane.showMessageDialog(null, "This enterprise name has been used, please choose another one!");
+                    return;
+                }
+            }
+        }
         Enterprise enterprise = network.getEnterpriseDirectory().createAndAddEnterprise(name, type);
         populateEnterpriseTable();
         JOptionPane.showMessageDialog(null, "Create enterprise successfully!");
@@ -1526,7 +1539,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             return;
         }
         Organization org = selectedEnterprise.getOrganizationDirectory().createOrganization(type);
-        org.setName(name);
+        org.setName(name + org.getOrganizationID());
         populateOrganizationTable();
         JOptionPane.showMessageDialog(null, "Create organization successfully!");
         orgNameText.setText("");
@@ -1829,11 +1842,49 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteOrgBtnMouseEntered
 
     private void deleteOrgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteOrgBtnActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = organizationTable.getSelectedRow();
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null,"Please select a row from table first.","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+       int deleteOrgId = (int) organizationTable.getValueAt(selectedRow, 4);
+        for (Network n : system.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    if (o.getOrganizationID() == deleteOrgId) {
+                        e.getOrganizationDirectory().getOrganizationList().remove(o);
+                        JOptionPane.showMessageDialog(null,"Delete this user successfully");
+                        populateOrganizationTable();
+                        break;
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_deleteOrgBtnActionPerformed
 
     private void userAccDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccDeleteBtnActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = userAccInfoTable.getSelectedRow();
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null,"Please select a row from table first.","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+       String deleteUser = (String) userAccInfoTable.getValueAt(selectedRow, 4);
+        for (Network n : system.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    for (UserAccount u : o.getUserAccountDirectory().getUserAccountList()) {
+                        if (u.getUsername().equals(deleteUser)) {
+                            o.getUserAccountDirectory().getUserAccountList().remove(u);
+                            JOptionPane.showMessageDialog(null,"Delete this user successfully");
+                            populateUserAccountAreaTable();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_userAccDeleteBtnActionPerformed
     
     public void activeColor(JPanel panel) {
