@@ -1197,6 +1197,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         }
         
         selectedNetwork = (Network) networkComboBoxInOrg.getSelectedItem();
+        if (selectedNetwork == null) {
+            JOptionPane.showMessageDialog(null, "Please add a network first!");
+            return;
+        }
         selectedNetwork.getEnterpriseDirectory().getEnterpriseList().forEach((action) -> System.out.println(action));
         for (Enterprise enterprise : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {            
                 enterpriseComboBoxInOrg.addItem(enterprise);
@@ -1211,13 +1215,19 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
 //            System.out.println("2. Current selected is: " + selectedNetwork);
 //            System.out.println("2. Current selected is: " + selectedNetwork);
-            for (Enterprise enterprise : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {                
-                enterpriseComboBoxInOrg.addItem(enterprise);                
+            else {
+                for (Enterprise enterprise : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {                
+                    enterpriseComboBoxInOrg.addItem(enterprise);                
+                }
             }
         });
         
        
         selectedEnterprise = (Enterprise) enterpriseComboBoxInOrg.getSelectedItem();
+        if (selectedEnterprise == null) {
+            JOptionPane.showMessageDialog(null, "Please add an enterprise first!");
+            return;
+        }
 //        System.out.println(selectedEnterprise.getName());
 //        System.out.println(selectedEnterprise.getSupportedOrganizations().isEmpty());
         for (Organization.OrganizationType o : selectedEnterprise.getSupportedOrganizations()) {
@@ -1344,14 +1354,14 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_organizationAreaBtnMouseExited
 
     private void organizationAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationAreaBtnActionPerformed
-        if (system.getNetworkList().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please add a network(state) first!");
-            return;
-        }
-        if (enterpriseComboBoxInOrg.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Please add an enterprise first!");
-            return;
-        }
+//        if (system.getNetworkList().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Please add a network(state) first!");            
+//        }
+//        selectedEnterprise = (Enterprise) enterpriseComboBoxInOrg.getSelectedItem();
+//        if (selectedEnterprise == null) {
+//            JOptionPane.showMessageDialog(null, "Please add an enterprise first!");
+//            return;
+//        }
         populateOrganizationTable();        
         populateComboBoxOfOrg();
 //        populateDebugNetworkComboBox();
@@ -1409,8 +1419,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void enterpriseAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseAreaBtnActionPerformed
         if (this.system.getNetworkList().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please add a network(state) first!");
-            return;
+            JOptionPane.showMessageDialog(null, "Please add a network(state) first!");            
         }
         populateEnterpriseTable();
         populateComboBoxOfEnterpriseArea();
@@ -1460,6 +1469,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void addStateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStateBtnActionPerformed
         String name = stateText.getText();
+        if (name == null || name.equals("")) {
+            JOptionPane.showMessageDialog(null, "State is invalid!"); 
+            return;
+        }
         system.createAndAddNetwork(name);        
         JOptionPane.showMessageDialog(null, "Add State successfully!"); 
         stateText.setText("");        
@@ -1533,9 +1546,13 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_userAccphoneNumTextActionPerformed
 
     private void userAccCreateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccCreateBtnActionPerformed
+        
         Organization selectedOrg = (Organization) userAccOrganizationComboBox.getSelectedItem();
         Role selectedRole = (Role) userAccRoleComboBox.getSelectedItem();
-
+        if (selectedN == null || selectedE == null || selectedO == null || selectedRole == null) {
+            JOptionPane.showMessageDialog(null, "You have not selected your network/enterprise/organization/role yet!");
+            return;
+        }
         //Employee setup
         String name = userAccnameText.getText();
         String phone = userAccphoneNumText.getText();
@@ -1561,20 +1578,20 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             ua = selectedOrg.getUserAccountDirectory().createUserAccount(inputUserName, inputPassword, employee, selectedRole);
             JOptionPane.showMessageDialog(null, "Create User Account Successfully! ");
             populateUserAccountAreaTable();
-            userAccCreateBtn.setEnabled(true);
-            userAccusernameText.setEnabled(false);
-            userAccpasswordText.setEnabled(false);
-            userAccCreateBtn.setEnabled(false);
+//            userAccCreateBtn.setEnabled(true);
+//            userAccusernameText.setEnabled(false);
+//            userAccpasswordText.setEnabled(false);
+//            userAccCreateBtn.setEnabled(false);
             userAccusernameText.setText("");
             userAccpasswordText.setText("");
             userAccnameText.setText("");
             userAccemailText.setText("");
             userAccaddressText.setText("");
             userAccphoneNumText.setText("");
-            userAccNetworkComboBox.setEnabled(false);
-            userAccEnterpriseComboBox.setEnabled(false);
-            userAccOrganizationComboBox.setEnabled(false);
-            userAccRoleComboBox.setEnabled(false);
+//            userAccNetworkComboBox.setEnabled(false);
+//            userAccEnterpriseComboBox.setEnabled(false);
+//            userAccOrganizationComboBox.setEnabled(false);
+//            userAccRoleComboBox.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(null, "Duplicate password/username, enter again ");
         }
@@ -1646,6 +1663,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
       
         
         selectedN = (Network) userAccNetworkComboBox.getSelectedItem();
+        if (selectedN == null) {
+            JOptionPane.showMessageDialog(null, "Please add a network first!");
+            return;
+        }
         for (Enterprise enterprise : selectedN.getEnterpriseDirectory().getEnterpriseList()) { 
                userAccEnterpriseComboBox.addItem(enterprise);
         } 
@@ -1662,6 +1683,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         });
          
         selectedE = (Enterprise) userAccEnterpriseComboBox.getSelectedItem();
+        if (selectedE == null) {
+            JOptionPane.showMessageDialog(null, "Please add an enterprise first!");
+            return;
+        }
         for (Organization o : selectedE.getOrganizationDirectory().getOrganizationList()) {
             userAccOrganizationComboBox.addItem(o);
         }   
@@ -1680,6 +1705,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         });  
         
         selectedO = (Organization) userAccOrganizationComboBox.getSelectedItem();
+        if (selectedO == null) {
+            JOptionPane.showMessageDialog(null, "Please add an organization first!");
+            return;
+        }
         for (Role r : selectedO.getSupportedRole()) {
             userAccRoleComboBox.addItem(r);
         } 
@@ -1730,6 +1759,11 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void deleteStateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStateBtnActionPerformed
         // TODO add your handling code here:
+        int selectedRow =  networkJTable.getSelectedRow();
+         if(selectedRow<0){
+             JOptionPane.showMessageDialog(null, "Please select a row" );
+             return;
+    }
         int column = 0;
         int row = networkJTable.getSelectedRow();
         String value = networkJTable.getModel().getValueAt(row, column).toString();
@@ -1747,6 +1781,43 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void deleteEnterpriseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnActionPerformed
         // TODO add your handling code here:
+         int selectedRow = enterpriseJTable.getSelectedRow();
+         if(selectedRow<0){
+             JOptionPane.showMessageDialog(null, "Please select a row" );
+             return;
+    }
+         String deletEnterprise = (String)enterpriseJTable.getValueAt(selectedRow, 0);
+         System.out.println("Enterprise "+ deletEnterprise);
+         for( int i = 0; i < system.getNetworkList().size(); i++ )
+            {
+                for(int j=0;j < system.getNetworkList().get(i).getEnterpriseDirectory().getEnterpriseList().size();j++){
+                    Enterprise enterprise = system.getNetworkList().get(i).getEnterpriseDirectory().getEnterpriseList().get(j);
+                    if(enterprise.getName().equals(deletEnterprise)){
+                        system.getNetworkList().get(i).getEnterpriseDirectory().getEnterpriseList().remove(j);
+                        j--;
+                    }
+                   
+                }
+               
+            }
+         JOptionPane.showMessageDialog(null, "Delete Successful" );
+         populateEnterpriseTable();
+
+//         for (Network network : system.getNetworkList()) {
+//            for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+//                if(enterprise.getName().equals(deletEnterprise)){
+//                   network.getEnterpriseDirectory().getEnterpriseList().remove(enterprise);
+//                    JOptionPane.showMessageDialog(null, "Delete Successful" );
+//                    populateEnterpriseTable();
+//                    break;
+//
+//                }
+//               
+//            }
+//        }
+    
+        
+            
     }//GEN-LAST:event_deleteEnterpriseBtnActionPerformed
 
     private void deleteOrgBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteOrgBtnMouseExited

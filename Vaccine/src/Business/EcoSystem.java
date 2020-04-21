@@ -5,6 +5,7 @@
  */
 package Business;
 
+import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.Role;
@@ -56,11 +57,6 @@ public class EcoSystem extends Organization {
     }
     
     public void deleteNetwork(String value) {
-//        for(Network network : networkList){
-//            if(value.equals(network.getName())){
-//                networkList.remove(network);
-//            }
-//        }
             for( int i = 0; i < networkList.size(); i++ )
             {
                 String temp = networkList.get(i).getName();
@@ -71,6 +67,8 @@ public class EcoSystem extends Organization {
                 }  
             }
     }
+   
+    
 
     public void setNetworkList(ArrayList<Network> networkList) {
         this.networkList = networkList;
