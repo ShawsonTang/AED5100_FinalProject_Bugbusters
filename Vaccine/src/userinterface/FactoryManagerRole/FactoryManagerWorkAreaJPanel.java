@@ -812,12 +812,12 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
             vaccineProduceJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane5)
             .addGroup(vaccineProduceJPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(vaccineProduceJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vaccineProduceJPanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(vaccineProduceJPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(vaccineProduceJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(vaccineProduceJPanelLayout.createSequentialGroup()
                                 .addComponent(warehouseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -877,7 +877,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(produceBtn)
                     .addComponent(expDateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
-                .addGroup(vaccineProduceJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(vaccineProduceJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(warehouseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(storeBtn))
                 .addGap(60, 60, 60)
@@ -1131,6 +1131,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_approveBtnMouseEntered
 
     private void approveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveBtnActionPerformed
+        
         int selectedRow = vaccineRequestTable.getSelectedRow();
         if (selectedRow < 0){
             JOptionPane.showMessageDialog(null,"Please select a row from table first.","Warning",JOptionPane.WARNING_MESSAGE);
@@ -1147,11 +1148,16 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
 //                System.out.println(vaccineProduceRequest.getId());
                 vaccineProduceTable.setValueAt((Integer)vaccineProduceRequest.getId(), count, 1);
                 model.fireTableCellUpdated(count, 1);
+                populateVaccineProduceTable();
+                populateVaccineRequestTable();
+                vaccineProduceTable.setValueAt((Integer)vaccineProduceRequest.getId(), count, 1);
+                break;
             }
             System.out.println(model.getValueAt(count, 1));
+            
         }
-        populateVaccineProduceTable();
-        populateVaccineRequestTable();
+        
+
 
     }//GEN-LAST:event_approveBtnActionPerformed
 
