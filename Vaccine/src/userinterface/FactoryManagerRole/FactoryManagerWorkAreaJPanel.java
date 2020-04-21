@@ -1337,7 +1337,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null,"This id already exists please use another one!","Warning",JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
+            idSet.add(id);
             int dose = Integer.parseInt(doseText.getText());
             SimpleDateFormat formatter = new SimpleDateFormat("MM dd, yyyy");
             Date manuDate = formatter.parse(manuDateText.getText());
@@ -1353,6 +1353,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
             manuDateText.setText("");
             expDateText.setText("");
             populateVaccineProduceTable();
+            
             JOptionPane.showMessageDialog(null,"Produce vaccine successfully!");
         } catch (ParseException ex) {
 //            ex.printStackTrace();
