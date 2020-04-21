@@ -141,6 +141,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         workFlowTable = new javax.swing.JTable();
         enterpriseLabel5 = new javax.swing.JLabel();
+        deleteStateBtn = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         enterprisejPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -153,6 +154,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         enterpriseJTable = new javax.swing.JTable();
         createEnterpriseBtn = new javax.swing.JButton();
+        deleteEnterpriseBtn = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         organizationjPanel = new javax.swing.JPanel();
         networkComboBoxInOrg = new javax.swing.JComboBox();
@@ -168,6 +170,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         enterpriseLabel4 = new javax.swing.JLabel();
         createOrgBtn = new javax.swing.JButton();
+        deleteOrgBtn = new javax.swing.JButton();
         useraccountjPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         userAccInfoTable = new javax.swing.JTable();
@@ -197,6 +200,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         userAccRoleComboBox = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         userAccaddressText = new javax.swing.JTextField();
+        userAccDeleteBtn = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
@@ -456,7 +460,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 addStateBtnActionPerformed(evt);
             }
         });
-        networkjPanel.add(addStateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 310, 30));
+        networkjPanel.add(addStateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 280, 310, 30));
 
         networkJTable.setBackground(new java.awt.Color(18, 30, 82));
         networkJTable.setFont(new java.awt.Font("American Typewriter", 1, 18)); // NOI18N
@@ -529,6 +533,27 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         enterpriseLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         enterpriseLabel5.setText("All Work Request");
         networkjPanel.add(enterpriseLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 520, 329, 71));
+
+        deleteStateBtn.setBackground(new java.awt.Color(51, 153, 255));
+        deleteStateBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        deleteStateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        deleteStateBtn.setText("Delete State");
+        deleteStateBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        deleteStateBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteStateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteStateBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteStateBtnMouseEntered(evt);
+            }
+        });
+        deleteStateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteStateBtnActionPerformed(evt);
+            }
+        });
+        networkjPanel.add(deleteStateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 310, 30));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/network_background.jpg"))); // NOI18N
         jLabel9.setText("jLabel9");
@@ -628,7 +653,28 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 createEnterpriseBtnActionPerformed(evt);
             }
         });
-        enterprisejPanel.add(createEnterpriseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 500, 310, 60));
+        enterprisejPanel.add(createEnterpriseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 500, 310, 60));
+
+        deleteEnterpriseBtn.setBackground(new java.awt.Color(51, 153, 255));
+        deleteEnterpriseBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        deleteEnterpriseBtn.setForeground(new java.awt.Color(255, 255, 255));
+        deleteEnterpriseBtn.setText("Delete Enterprise");
+        deleteEnterpriseBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        deleteEnterpriseBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteEnterpriseBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteEnterpriseBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteEnterpriseBtnMouseEntered(evt);
+            }
+        });
+        deleteEnterpriseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteEnterpriseBtnActionPerformed(evt);
+            }
+        });
+        enterprisejPanel.add(deleteEnterpriseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 500, 310, 60));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/enterprise_background.png"))); // NOI18N
         enterprisejPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 700));
@@ -733,6 +779,26 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        deleteOrgBtn.setBackground(new java.awt.Color(51, 153, 255));
+        deleteOrgBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        deleteOrgBtn.setForeground(new java.awt.Color(255, 255, 255));
+        deleteOrgBtn.setText("Delete Organization");
+        deleteOrgBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        deleteOrgBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteOrgBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteOrgBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteOrgBtnMouseEntered(evt);
+            }
+        });
+        deleteOrgBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteOrgBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout organizationjPanelLayout = new javax.swing.GroupLayout(organizationjPanel);
         organizationjPanel.setLayout(organizationjPanelLayout);
         organizationjPanelLayout.setHorizontalGroup(
@@ -744,7 +810,9 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(enterpriseLabel4))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(organizationjPanelLayout.createSequentialGroup()
-                    .addGap(458, 458, 458)
+                    .addGap(252, 252, 252)
+                    .addComponent(deleteOrgBtn)
+                    .addGap(260, 260, 260)
                     .addComponent(createOrgBtn)))
             .addGroup(organizationjPanelLayout.createSequentialGroup()
                 .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -791,7 +859,9 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(createOrgBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(organizationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(createOrgBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteOrgBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
 
@@ -859,7 +929,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 userAccCreateBtnActionPerformed(evt);
             }
         });
-        useraccountjPanel.add(userAccCreateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 650, -1, -1));
+        useraccountjPanel.add(userAccCreateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 650, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(87, 145, 196));
@@ -1007,6 +1077,14 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
         useraccountjPanel.add(userAccaddressText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 440, 130, -1));
+
+        userAccDeleteBtn.setText("Delete");
+        userAccDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccDeleteBtnActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(userAccDeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 650, -1, -1));
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/useraccount_background.jpg"))); // NOI18N
         useraccountjPanel.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 700));
@@ -1266,6 +1344,14 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_organizationAreaBtnMouseExited
 
     private void organizationAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationAreaBtnActionPerformed
+        if (system.getNetworkList().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please add a network(state) first!");
+            return;
+        }
+        if (enterpriseComboBoxInOrg.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Please add an enterprise first!");
+            return;
+        }
         populateOrganizationTable();        
         populateComboBoxOfOrg();
 //        populateDebugNetworkComboBox();
@@ -1290,6 +1376,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_networkAreaBtnMouseExited
 
     private void networkAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkAreaBtnActionPerformed
+
         populateNetworkTable();       
         activeColor(networkPanelArea);
         inactiveColor(enterprisePanelArea);
@@ -1321,6 +1408,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_enterpriseAreaBtnMouseExited
 
     private void enterpriseAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpriseAreaBtnActionPerformed
+        if (this.system.getNetworkList().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please add a network(state) first!");
+            return;
+        }
         populateEnterpriseTable();
         populateComboBoxOfEnterpriseArea();
         activeColor(enterprisePanelArea);
@@ -1628,6 +1719,46 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private void userAccaddressTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccaddressTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userAccaddressTextActionPerformed
+
+    private void deleteStateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteStateBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteStateBtnMouseExited
+
+    private void deleteStateBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteStateBtnMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteStateBtnMouseEntered
+
+    private void deleteStateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStateBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteStateBtnActionPerformed
+
+    private void deleteEnterpriseBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteEnterpriseBtnMouseExited
+
+    private void deleteEnterpriseBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteEnterpriseBtnMouseEntered
+
+    private void deleteEnterpriseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteEnterpriseBtnActionPerformed
+
+    private void deleteOrgBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteOrgBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteOrgBtnMouseExited
+
+    private void deleteOrgBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteOrgBtnMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteOrgBtnMouseEntered
+
+    private void deleteOrgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteOrgBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteOrgBtnActionPerformed
+
+    private void userAccDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccDeleteBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userAccDeleteBtnActionPerformed
     
     public void activeColor(JPanel panel) {
         panel.setBackground(new Color(41, 57, 80));
@@ -1641,6 +1772,9 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton addStateBtn;
     private javax.swing.JButton createEnterpriseBtn;
     private javax.swing.JButton createOrgBtn;
+    private javax.swing.JButton deleteEnterpriseBtn;
+    private javax.swing.JButton deleteOrgBtn;
+    private javax.swing.JButton deleteStateBtn;
     private javax.swing.JButton enterpriseAreaBtn;
     private javax.swing.JComboBox enterpriseComboBoxInOrg;
     private javax.swing.JTable enterpriseJTable;
@@ -1696,6 +1830,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField stateText;
     private javax.swing.JLabel uploadLabel;
     private javax.swing.JButton userAccCreateBtn;
+    private javax.swing.JButton userAccDeleteBtn;
     private javax.swing.JComboBox<Object> userAccEnterpriseComboBox;
     private javax.swing.JTable userAccInfoTable;
     private javax.swing.JComboBox<Object> userAccNetworkComboBox;
