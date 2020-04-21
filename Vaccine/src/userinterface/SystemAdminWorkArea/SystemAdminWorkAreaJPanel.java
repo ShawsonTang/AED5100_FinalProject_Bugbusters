@@ -1726,7 +1726,20 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteStateBtnMouseEntered
 
     private void deleteStateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStateBtnActionPerformed
-        // TODO add your handling code here:
+        int selectedRow =  networkJTable.getSelectedRow();
+        if(selectedRow<0){
+            JOptionPane.showMessageDialog(null, "Please select a row" );
+            return;
+        } 
+        String deleteNetwork = (String) networkJTable.getValueAt(selectedRow, 0);
+        for (Network n : system.getNetworkList()) {
+            if (n.getName().equals(deleteNetwork)) {
+                system.getNetworkList().remove(n);
+                JOptionPane.showMessageDialog(null, "Delete Successful" );
+                populateNetworkTable();
+                break;
+            }
+        }
     }//GEN-LAST:event_deleteStateBtnActionPerformed
 
     private void deleteEnterpriseBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnMouseExited
@@ -1740,7 +1753,27 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteEnterpriseBtnMouseEntered
 
     private void deleteEnterpriseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnActionPerformed
+        int selectedRow = enterpriseJTable.getSelectedRow();
+         if(selectedRow<0){
+             JOptionPane.showMessageDialog(null, "Please select a row" );
+             return;
+    }
+         String deletEnterprise = (String)enterpriseJTable.getValueAt(selectedRow, 0);
+         System.out.println("Enterprise "+ deletEnterprise);
+         for( int i = 0; i < system.getNetworkList().size(); i++ )
+            {
+                for(int j=0;j < system.getNetworkList().get(i).getEnterpriseDirectory().getEnterpriseList().size();j++){
+                    Enterprise enterprise = system.getNetworkList().get(i).getEnterpriseDirectory().getEnterpriseList().get(j);
+                    if(enterprise.getName().equals(deletEnterprise)){
+                        system.getNetworkList().get(i).getEnterpriseDirectory().getEnterpriseList().remove(j);
+                        j--;
+                    }
 
+                }
+
+            }
+         JOptionPane.showMessageDialog(null, "Delete Successful" );
+         populateEnterpriseTable();
     }//GEN-LAST:event_deleteEnterpriseBtnActionPerformed
 
     private void deleteOrgBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteOrgBtnMouseExited

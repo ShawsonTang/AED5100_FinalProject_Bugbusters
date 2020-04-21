@@ -1591,7 +1591,8 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         int doseTyped = Integer.parseInt(doseText.getText());
         int dosePurchase = vaccinePurchaseRequest.getDosesPurchase();
         if (doseTyped != dosePurchase) {
-            JOptionPane.showMessageDialog(null,"The quantity of the vaccine you tend to sold does not match it is requested!","Warning",JOptionPane.WARNING_MESSAGE);                    
+            JOptionPane.showMessageDialog(null,"The quantity of the vaccine you tend to sold does not match it is requested!","Warning",JOptionPane.WARNING_MESSAGE); 
+            return;
         }
 //            SimpleDateFormat formatter = new SimpleDateFormat();
 //            Date manuDate = formatter.parse(manuText.getText());
