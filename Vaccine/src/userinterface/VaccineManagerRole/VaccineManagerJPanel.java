@@ -23,6 +23,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
@@ -1249,7 +1250,8 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
                 }
                 else {
                     vaccineDoctorRequest.setStatus("Approved");                    
-                    target.setDoseInStock(total - requestV);                                       
+                    target.setDoseInStock(total - requestV); 
+                    vaccineDoctorRequest.setResolveDate(new Date());
                     JOptionPane.showMessageDialog(null, "Approve Request Successfully!");
                     populateDoctorRequestTable();
                     populateVaccineTotalTable();
@@ -1301,6 +1303,7 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
         request.setSender(organization);
         request.setStatus("pending");
         organization.getWorkQueue().getWorkRequestList().add(request);
+        system.getWorkQueue().getWorkRequestList().add(request);
         selected.getWorkQueue().getWorkRequestList().add(request);
         JOptionPane.showMessageDialog(null, "Registration Request Process Successfully!");
     }//GEN-LAST:event_registerBtnActionPerformed
@@ -1344,6 +1347,7 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
         request.setSender(organization);        
         request.setStatus("Pending");
         organization.getWorkQueue().getWorkRequestList().add(request);
+        system.getWorkQueue().getWorkRequestList().add(request);
         warehouseOrganization.getWorkQueue().getWorkRequestList().add(request);
         populatePurchaseTable();
         JOptionPane.showMessageDialog(null,"Vaccine Purchase Request Created Successfully!");

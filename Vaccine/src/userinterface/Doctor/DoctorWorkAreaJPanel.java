@@ -1129,6 +1129,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
             request.setSender(organization);          
             request.setStatus("Pending");
             organization.getWorkQueue().getWorkRequestList().add(request);
+            system.getWorkQueue().getWorkRequestList().add(request);
             healthDepartmentOrganization.getWorkQueue().getWorkRequestList().add(request);
             JOptionPane.showMessageDialog(null,"Vaccine Request Created Successfully!");
             vaccineText.setText("");

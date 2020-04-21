@@ -26,6 +26,8 @@ import javax.swing.table.DefaultTableModel;
 import Business.Network.Network;
 import Business.Role.Role;
 import Business.Vaccine.Vaccine;
+import Business.WorkQueue.WorkQueue;
+import Business.WorkQueue.WorkRequest;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
@@ -37,7 +39,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-import userinterface.SystemAdminWorkArea.SignUpJPanel.ImageFilter;
+
 
 /**
  *
@@ -64,6 +66,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         this.userAccount = userAccount;
         this.container = container;
         this.system = system;
+        populateWorkFlowTable();
         populateNetworkTable();
         populateEnterpriseTable();
         populateOrganizationTable();
@@ -79,6 +82,11 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         networkJTable.getTableHeader().setOpaque(false);
         networkJTable.getTableHeader().setBackground(new Color(18, 30, 82));
         networkJTable.getTableHeader().setForeground(new Color(255, 255, 255));
+        
+        workFlowTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 15));
+        workFlowTable.getTableHeader().setOpaque(false);
+        workFlowTable.getTableHeader().setBackground(new Color(18, 30, 82));
+        workFlowTable.getTableHeader().setForeground(new Color(255, 255, 255));
         
         enterpriseJTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 18));
         enterpriseJTable.getTableHeader().setOpaque(false);
@@ -130,6 +138,9 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         addStateBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         networkJTable = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        workFlowTable = new javax.swing.JTable();
+        enterpriseLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         enterprisejPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -204,11 +215,11 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         logOutBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         logOutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         logOutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                logOutBtnMouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 logOutBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logOutBtnMouseEntered(evt);
             }
         });
         logOutBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -405,22 +416,26 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         networkjPanel.setMinimumSize(new java.awt.Dimension(1170, 700));
         networkjPanel.setOpaque(false);
         networkjPanel.setPreferredSize(new java.awt.Dimension(1170, 697));
+        networkjPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         stateText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stateTextActionPerformed(evt);
             }
         });
+        networkjPanel.add(stateText, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 330, -1));
 
         jLabel1.setBackground(new java.awt.Color(78, 101, 149));
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("State");
+        networkjPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 110, -1));
 
         enterpriseLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         enterpriseLabel2.setForeground(new java.awt.Color(255, 255, 255));
         enterpriseLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         enterpriseLabel2.setText("Manage Network");
+        networkjPanel.add(enterpriseLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, 329, 71));
 
         addStateBtn.setBackground(new java.awt.Color(51, 153, 255));
         addStateBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
@@ -441,10 +456,15 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 addStateBtnActionPerformed(evt);
             }
         });
+        networkjPanel.add(addStateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 310, 30));
 
+        networkJTable.setBackground(new java.awt.Color(18, 30, 82));
         networkJTable.setFont(new java.awt.Font("American Typewriter", 1, 18)); // NOI18N
+        networkJTable.setForeground(new java.awt.Color(255, 255, 255));
         networkJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null},
+                {null},
                 {null},
                 {null},
                 {null},
@@ -471,48 +491,49 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(networkJTable);
 
+        networkjPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 1170, 100));
+
+        workFlowTable.setBackground(new java.awt.Color(18, 30, 82));
+        workFlowTable.setFont(new java.awt.Font("American Typewriter", 1, 14)); // NOI18N
+        workFlowTable.setForeground(new java.awt.Color(255, 255, 255));
+        workFlowTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "REQUEST ID", "SENDER", "REICEIVER", "REQUEST DATE", "RESOLVE DATE", "STATUS"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(workFlowTable);
+        if (workFlowTable.getColumnModel().getColumnCount() > 0) {
+            workFlowTable.getColumnModel().getColumn(0).setMaxWidth(100);
+            workFlowTable.getColumnModel().getColumn(5).setMinWidth(200);
+            workFlowTable.getColumnModel().getColumn(5).setMaxWidth(300);
+        }
+
+        networkjPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 600, 1170, 100));
+
+        enterpriseLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        enterpriseLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        enterpriseLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        enterpriseLabel5.setText("All Work Request");
+        networkjPanel.add(enterpriseLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 520, 329, 71));
+
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/network_background.jpg"))); // NOI18N
         jLabel9.setText("jLabel9");
         jLabel9.setOpaque(true);
-
-        javax.swing.GroupLayout networkjPanelLayout = new javax.swing.GroupLayout(networkjPanel);
-        networkjPanel.setLayout(networkjPanelLayout);
-        networkjPanelLayout.setHorizontalGroup(
-            networkjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(networkjPanelLayout.createSequentialGroup()
-                .addGap(300, 300, 300)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(networkjPanelLayout.createSequentialGroup()
-                .addGap(470, 470, 470)
-                .addComponent(stateText, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1170, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(networkjPanelLayout.createSequentialGroup()
-                .addGap(390, 390, 390)
-                .addComponent(enterpriseLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(networkjPanelLayout.createSequentialGroup()
-                .addGap(400, 400, 400)
-                .addComponent(addStateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 1170, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        networkjPanelLayout.setVerticalGroup(
-            networkjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(networkjPanelLayout.createSequentialGroup()
-                .addGap(340, 340, 340)
-                .addComponent(jLabel1))
-            .addGroup(networkjPanelLayout.createSequentialGroup()
-                .addGap(340, 340, 340)
-                .addComponent(stateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(networkjPanelLayout.createSequentialGroup()
-                .addGap(180, 180, 180)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(networkjPanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(enterpriseLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(networkjPanelLayout.createSequentialGroup()
-                .addGap(430, 430, 430)
-                .addComponent(addStateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        networkjPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 700));
 
         workareajPanel.add(networkjPanel, "card4");
 
@@ -571,6 +592,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         enterpriseLabel3.setText("Manage Enterprise");
         enterprisejPanel.add(enterpriseLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 360, 71));
 
+        enterpriseJTable.setBackground(new java.awt.Color(141, 157, 185));
         enterpriseJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -581,19 +603,11 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             new String [] {
                 "Enterprise Name", "Network", "Type"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         enterpriseJTable.setOpaque(false);
         jScrollPane4.setViewportView(enterpriseJTable);
 
-        enterprisejPanel.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1170, 100));
+        enterprisejPanel.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1170, 110));
 
         createEnterpriseBtn.setBackground(new java.awt.Color(51, 153, 255));
         createEnterpriseBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
@@ -664,6 +678,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Organization Name");
 
+        organizationTable.setBackground(new java.awt.Color(120, 168, 252));
         organizationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -787,6 +802,8 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         useraccountjPanel.setPreferredSize(new java.awt.Dimension(1170, 697));
         useraccountjPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        userAccInfoTable.setAutoCreateRowSorter(true);
+        userAccInfoTable.setBackground(new java.awt.Color(210, 234, 238));
         userAccInfoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -999,6 +1016,23 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         add(workareajPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 1170, 700));
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void populateWorkFlowTable() {
+        DefaultTableModel model = (DefaultTableModel) workFlowTable.getModel();
+        model.setRowCount(0);
+         for (WorkRequest w : system.getWorkQueue().getWorkRequestList()) {            
+            Object[] row = new Object[6];
+            row[0] = w.getId();
+            row[1] = w.getSender();
+            row[2] = w.getReceiver();
+            row[3] = w.getRequestDate();
+            row[4] = w.getResolveDate();
+            row[5] = w.getStatus();
+            model.addRow(row);                                                
+         }
+        
+    }
+    
     private void populateNetworkTable() {
         DefaultTableModel model = (DefaultTableModel) networkJTable.getModel();
 
@@ -1613,6 +1647,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel enterpriseLabel2;
     private javax.swing.JLabel enterpriseLabel3;
     private javax.swing.JLabel enterpriseLabel4;
+    private javax.swing.JLabel enterpriseLabel5;
     private javax.swing.JLabel enterpriseLabel6;
     private javax.swing.JTextField enterpriseNameText;
     private javax.swing.JPanel enterprisePanelArea;
@@ -1638,6 +1673,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -1679,6 +1715,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton useraccountAreaBtn;
     private javax.swing.JPanel useraccountPanelArea;
     private javax.swing.JPanel useraccountjPanel;
+    private javax.swing.JTable workFlowTable;
     private javax.swing.JPanel workareajPanel;
     // End of variables declaration//GEN-END:variables
 }
