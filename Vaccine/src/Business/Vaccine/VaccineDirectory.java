@@ -34,12 +34,20 @@ public class VaccineDirectory {
 //        Date covid19Exp = exp.getTime();
         
         Vaccine covid19 = new Vaccine("COVID19");
+        covid19.setDescription("KEEP CORONAVIRUS FROM YOURSELF!");
         Vaccine hib = new Vaccine("Hib");
+        hib.setDescription("1-4 doses; the number of doses is determined by vaccine product and age the series begins");
         Vaccine dtap = new Vaccine("DTap");
+        dtap.setDescription("4 doses");
         Vaccine polio = new Vaccine("Polio");
+        polio.setDescription("3 doses");
         Vaccine hepatitisB = new Vaccine("Hepatitis B");
+        hepatitisB.setDescription("3 doses; laboratory evidence of immunity acceptable");
         Vaccine mmr = new Vaccine("MMR");
-        Vaccine varicella = new Vaccine("Varicella");                
+        mmr.setDescription("1 dose; must be given on or after the 1st birthday; laboratory evidence of immunity acceptable");
+        Vaccine varicella = new Vaccine("Varicella"); 
+        varicella.setDescription("1 dose; must be given on or after the 1st birthday; a reliable history of chickenpox* or laboratory evidence of\n" +
+        "immunity acceptable");
         vaccineList.add(covid19);
         vaccineList.add(hib);
         vaccineList.add(dtap);

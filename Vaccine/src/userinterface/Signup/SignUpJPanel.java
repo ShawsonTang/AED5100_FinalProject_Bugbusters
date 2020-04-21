@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.Signup;
+package userinterface.SystemAdminWorkArea;
 
 import Business.EcoSystem;
 import Business.Employee.Employee;
