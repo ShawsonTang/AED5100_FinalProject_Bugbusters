@@ -71,12 +71,12 @@ public class AssistantJPanel extends javax.swing.JPanel {
     
     void populateTextField() {
         headLabel.setEnabled(false);            
-        headLabel.setText("Vaccine Manager: " + userAccount.getEmployee().getName().toUpperCase());
+        headLabel.setText("Assistant Scretary: " + userAccount.getEmployee().getName());
         headLabel.setBackground(new Color(51, 153, 255));
         headLabel.setForeground(Color.BLACK);
         headLabel.setFont(new Font("Serif", Font.BOLD, 18));
         
-        headLabel.setText("Assistant Scretary: " + userAccount.getEmployee().getName());
+        
         nameText.setText(userAccount.getEmployee().getName());
         phoneNumText.setText(userAccount.getEmployee().getPhoneNum());
         addressText.setText(userAccount.getEmployee().getAddress());
@@ -109,6 +109,8 @@ public class AssistantJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane6 = new javax.swing.JScrollPane();
+        requestHistoryTable = new javax.swing.JTable();
         leftJPanel = new javax.swing.JPanel();
         requestPanelArea = new javax.swing.JPanel();
         requestAreaBtn = new javax.swing.JButton();
@@ -141,13 +143,39 @@ public class AssistantJPanel extends javax.swing.JPanel {
         approveBtn = new javax.swing.JButton();
         declineBtn = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        requestHistoryTable = new javax.swing.JTable();
+        tableDesLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         topJPanel = new javax.swing.JPanel();
         headLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         photoLabel = new javax.swing.JLabel();
         uploadLabel = new javax.swing.JLabel();
+
+        requestHistoryTable.setFont(new java.awt.Font("American Typewriter", 0, 14)); // NOI18N
+        requestHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "PROVIDER", "REQUEST ID", "RECEIVER", "SENDER", "REQUEST DATE"
+            }
+        ));
+        requestHistoryTable.setSelectionBackground(new java.awt.Color(80, 148, 240));
+        requestHistoryTable.setShowVerticalLines(false);
+        jScrollPane6.setViewportView(requestHistoryTable);
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -513,62 +541,81 @@ public class AssistantJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dophbackground.png"))); // NOI18N
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/vaccine010.gif"))); // NOI18N
+        jLabel19.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        requestHistoryTable.setFont(new java.awt.Font("American Typewriter", 0, 14)); // NOI18N
-        requestHistoryTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "PROVIDER", "REQUEST ID", "RECEIVER", "SENDER", "REQUEST DATE"
+        tableDesLabel.setBackground(new java.awt.Color(204, 255, 204));
+        tableDesLabel.setFont(new java.awt.Font("American Typewriter", 1, 24)); // NOI18N
+        tableDesLabel.setForeground(new java.awt.Color(120, 168, 252));
+        tableDesLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tableDesLabel.setText("Registration Request ");
+        tableDesLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tableDesLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDesLabelMouseClicked(evt);
             }
-        ));
-        requestHistoryTable.setSelectionBackground(new java.awt.Color(80, 148, 240));
-        requestHistoryTable.setShowVerticalLines(false);
-        jScrollPane6.setViewportView(requestHistoryTable);
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tableDesLabelMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tableDesLabelMouseEntered(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(189, 255, 214));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout requestJPanelLayout = new javax.swing.GroupLayout(requestJPanel);
         requestJPanel.setLayout(requestJPanelLayout);
         requestJPanelLayout.setHorizontalGroup(
             requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
             .addGroup(requestJPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(requestJPanelLayout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addComponent(tableDesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(requestJPanelLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(537, 537, 537)
+                        .addComponent(approveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(requestJPanelLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabel19))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(requestJPanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane4)
                 .addContainerGap())
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         requestJPanelLayout.setVerticalGroup(
             requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(requestJPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(tableDesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(declineBtn)
-                    .addComponent(approveBtn))
-                .addGap(63, 63, 63)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addGroup(requestJPanelLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(approveBtn)))
+                .addGap(72, 72, 72)
+                .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         workAreaJPanel.add(requestJPanel, "card2");
@@ -686,7 +733,7 @@ public class AssistantJPanel extends javax.swing.JPanel {
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
         container.remove(this);
         frame.setJFrameVisible();
-        
+        frame.getB4OUtil().storeSystem(system);        
     }//GEN-LAST:event_logOutBtnActionPerformed
 
     
@@ -799,7 +846,7 @@ public class AssistantJPanel extends javax.swing.JPanel {
         request.getSender().setRegistered(true);
         request.setResolveDate(new Date());
         populateRegisterTable();
-
+        JOptionPane.showMessageDialog(null,"You have authorized " + request.getSender() + " successfully!");
     }//GEN-LAST:event_approveBtnActionPerformed
 
     private void declineBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_declineBtnMouseExited
@@ -821,6 +868,8 @@ public class AssistantJPanel extends javax.swing.JPanel {
         }
         ProviderRegisterRequest providerRegisterRequest = (ProviderRegisterRequest) registerTable.getValueAt(selectedRow, 0);
         providerRegisterRequest.setStatus("Declined");
+        providerRegisterRequest.setResolveDate(new Date());
+        populateRegisterTable();
     }//GEN-LAST:event_declineBtnActionPerformed
 
     private void headLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headLabelMouseClicked
@@ -856,6 +905,18 @@ public class AssistantJPanel extends javax.swing.JPanel {
         Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
         uploadLabel.setBorder(btnBorder);
     }//GEN-LAST:event_uploadLabelMouseEntered
+
+    private void tableDesLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabelMouseClicked
+
+    private void tableDesLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabelMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabelMouseExited
+
+    private void tableDesLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDesLabelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableDesLabelMouseEntered
     
     public void inactiveColor(JPanel panel) {
         panel.setBackground(new Color(23, 35, 51));
@@ -900,6 +961,7 @@ public class AssistantJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
@@ -917,6 +979,7 @@ public class AssistantJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel requestJPanel;
     private javax.swing.JPanel requestPanelArea;
     private javax.swing.JButton saveBtn;
+    private javax.swing.JLabel tableDesLabel;
     private javax.swing.JPanel topJPanel;
     private javax.swing.JLabel uploadLabel;
     private javax.swing.JTextField usernameText;

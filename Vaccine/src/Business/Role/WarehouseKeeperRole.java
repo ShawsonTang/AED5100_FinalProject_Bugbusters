@@ -14,7 +14,6 @@ import Business.UserAccount.UserAccount;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import userinterface.SignIn;
-import userinterface.WareHouseKeeperRole.OldWarehouseKeeperWorkAreaJPanel;
 import userinterface.WareHouseKeeperRole.WarehouseKeeperWorkAreaJPanel;
 
 /**

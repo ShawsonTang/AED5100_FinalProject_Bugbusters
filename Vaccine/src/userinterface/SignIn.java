@@ -41,7 +41,7 @@ public class SignIn extends javax.swing.JFrame {
         transparencyJPanel.setBackground(new Color(0, 0, 0, 150));
         container.setVisible(false);
         system = dB4OUtil.retrieveSystem();
-        this.system = ConfigureASystem.configure(); 
+//        this.system = ConfigureASystem.configure(); 
         container.setSize(1300, 697);
         this.setSize(1300, 697);
     }
@@ -346,7 +346,7 @@ public class SignIn extends javax.swing.JFrame {
 //            second.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //            second.setLocationRelativeTo(null);
 //            this.dispose();
-            System.out.println(inNetwork);
+//            System.out.println(inNetwork);
             CardLayout layout = (CardLayout)container.getLayout();            
             container.add("workArea",userAccount.getRole().createWorkArea(container, this, userAccount, inOrganization, inEnterprise, inNetwork, system));
             layout.next(container);
@@ -360,7 +360,7 @@ public class SignIn extends javax.swing.JFrame {
 //            loginJPanel.add("workArea",userAccount.getRole().createWorkArea(loginJPanel, userAccount, inOrganization, inEnterprise, system));
 //            layout.next(loginJPanel);
            
-            System.out.println(inNetwork);
+//            System.out.println(inNetwork);
             CardLayout layout=(CardLayout)container.getLayout();
             container.add("workArea",userAccount.getRole().createWorkArea(container, this, userAccount, inOrganization, inEnterprise, inNetwork, system));
             layout.next(container);           
@@ -383,6 +383,11 @@ public class SignIn extends javax.swing.JFrame {
         this.revalidate();
         this.repaint();
     }
+    
+    public DB4OUtil getB4OUtil() {
+        return this.dB4OUtil;
+    }
+    
     
     private void signUpLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLabelMouseEntered
         Border labelBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white);
