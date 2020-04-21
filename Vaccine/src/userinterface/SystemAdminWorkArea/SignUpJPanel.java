@@ -27,7 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileFilter;
 
-import userinterface.SystemAdminWorkArea.ManageOrganizationJPanel;
+
 import userinterface.SystemAdminWorkArea.SystemAdminWorkAreaJPanel;
 
 /**

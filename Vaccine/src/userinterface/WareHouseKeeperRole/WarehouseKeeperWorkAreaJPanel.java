@@ -1586,12 +1586,16 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
                 
         Vaccine purchaseVaccine = vaccinePurchaseRequest.getVaccine();
         String id = "" + vaccineIDComboBox.getSelectedItem();
-        int dose = Integer.parseInt(doseText.getText());
+        int doseTyped = Integer.parseInt(doseText.getText());
+        int dosePurchase = vaccinePurchaseRequest.getDosesPurchase();
+        if (doseTyped != dosePurchase) {
+            JOptionPane.showMessageDialog(null,"The quantity of the vaccine you tend to sold does not match it is requested!","Warning",JOptionPane.WARNING_MESSAGE);                    
+        }
 //            SimpleDateFormat formatter = new SimpleDateFormat();
 //            Date manuDate = formatter.parse(manuText.getText());
 //            Date expDate = formatter.parse(expText.getText());
         purchaseVaccine.setId(id);
-        purchaseVaccine.setDoseInStock(dose);
+        purchaseVaccine.setDoseInStock(doseTyped);
 
         
 
@@ -1599,7 +1603,7 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         for (int i = 0; i < infoModel.getRowCount(); i++) {
             Vaccine sameIDVaccine = (Vaccine)infoModel.getValueAt(i, 0);
             if (sameIDVaccine.getId().equals(id)) {
-                int updatePurchaseDoseReqeust = dose - sameIDVaccine.getDoseInStock() < 0 ? 0 : dose - sameIDVaccine.getDoseInStock();
+                int updatePurchaseDoseReqeust = doseTyped - sameIDVaccine.getDoseInStock() < 0 ? 0 : doseTyped - sameIDVaccine.getDoseInStock();
                 if (updatePurchaseDoseReqeust > 0) {
                     sameIDVaccine.setDoseInStock(0);
                     vaccinePurchaseRequest.setDoseForUpdate(updatePurchaseDoseReqeust);
@@ -1610,7 +1614,7 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
                 }
                 else {
                     vaccinePurchaseRequest.setDoseForUpdate(updatePurchaseDoseReqeust);
-                    sameIDVaccine.setDoseInStock(sameIDVaccine.getDoseInStock() - dose);
+                    sameIDVaccine.setDoseInStock(sameIDVaccine.getDoseInStock() - doseTyped);
                     purchaseVaccine.setExpDate(sameIDVaccine.getExpDate());
                     purchaseVaccine.setProDate(sameIDVaccine.getProDate());
                     vaccinePurchaseRequest.setStatus("Approved");            
