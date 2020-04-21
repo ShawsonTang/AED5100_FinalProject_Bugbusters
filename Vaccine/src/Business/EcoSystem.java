@@ -54,6 +54,23 @@ public class EcoSystem extends Organization {
     public ArrayList<Network> getNetworkList() {
         return networkList;
     }
+    
+    public void deleteNetwork(String value) {
+//        for(Network network : networkList){
+//            if(value.equals(network.getName())){
+//                networkList.remove(network);
+//            }
+//        }
+            for( int i = 0; i < networkList.size(); i++ )
+            {
+                String temp = networkList.get(i).getName();
+                if(temp.equals(value))
+                {
+                     networkList.remove(i);
+                     i--; 
+                }  
+            }
+    }
 
     public void setNetworkList(ArrayList<Network> networkList) {
         this.networkList = networkList;

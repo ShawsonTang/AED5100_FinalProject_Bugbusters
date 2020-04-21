@@ -1730,6 +1730,11 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void deleteStateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStateBtnActionPerformed
         // TODO add your handling code here:
+        int column = 0;
+        int row = networkJTable.getSelectedRow();
+        String value = networkJTable.getModel().getValueAt(row, column).toString();
+        system.deleteNetwork(value);
+        this.populateNetworkTable();
     }//GEN-LAST:event_deleteStateBtnActionPerformed
 
     private void deleteEnterpriseBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnMouseExited
