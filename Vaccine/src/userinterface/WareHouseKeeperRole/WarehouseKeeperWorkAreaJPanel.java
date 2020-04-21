@@ -19,6 +19,7 @@ import Business.WorkQueue.WorkRequest;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -1361,6 +1362,7 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         request.setSender(organization);
         request.setStatus("Pending");
         organization.getWorkQueue().getWorkRequestList().add(request);
+        system.getWorkQueue().getWorkRequestList().add(request);
         factoryOrganization.getWorkQueue().getWorkRequestList().add(request);
         populateRequestTable();
         JOptionPane.showMessageDialog(null,"Vaccine Purchase Request Created Successfully!");
@@ -1617,7 +1619,8 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
                     sameIDVaccine.setDoseInStock(sameIDVaccine.getDoseInStock() - doseTyped);
                     purchaseVaccine.setExpDate(sameIDVaccine.getExpDate());
                     purchaseVaccine.setProDate(sameIDVaccine.getProDate());
-                    vaccinePurchaseRequest.setStatus("Approved");            
+                    vaccinePurchaseRequest.setStatus("Approved");
+                    vaccinePurchaseRequest.setResolveDate(new Date());
                     JOptionPane.showMessageDialog(null,"Approve vaccine purchase successfully.");
                 }
             }
