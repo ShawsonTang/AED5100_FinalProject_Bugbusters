@@ -178,7 +178,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         userAccnameText = new javax.swing.JTextField();
         userAccemailText = new javax.swing.JTextField();
         userAccphoneNumText = new javax.swing.JTextField();
-        userAccCreateBtn = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         userAccusernameText = new javax.swing.JTextField();
@@ -201,6 +200,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jLabel18 = new javax.swing.JLabel();
         userAccaddressText = new javax.swing.JTextField();
         userAccDeleteBtn = new javax.swing.JButton();
+        createUserBtn = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
@@ -923,14 +923,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         });
         useraccountjPanel.add(userAccphoneNumText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, 130, -1));
 
-        userAccCreateBtn.setText("Create");
-        userAccCreateBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userAccCreateBtnActionPerformed(evt);
-            }
-        });
-        useraccountjPanel.add(userAccCreateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 650, -1, -1));
-
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(87, 145, 196));
         jLabel12.setText("Password:");
@@ -1015,7 +1007,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(uploadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(userAccphotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         useraccountjPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 340, 270, 290));
@@ -1078,13 +1070,45 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         });
         useraccountjPanel.add(userAccaddressText, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 440, 130, -1));
 
-        userAccDeleteBtn.setText("Delete");
+        userAccDeleteBtn.setBackground(new java.awt.Color(51, 153, 255));
+        userAccDeleteBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        userAccDeleteBtn.setText("Delete ");
+        userAccDeleteBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        userAccDeleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        userAccDeleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                userAccDeleteBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                userAccDeleteBtnMouseEntered(evt);
+            }
+        });
         userAccDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userAccDeleteBtnActionPerformed(evt);
             }
         });
-        useraccountjPanel.add(userAccDeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 650, -1, -1));
+        useraccountjPanel.add(userAccDeleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 640, 140, 30));
+
+        createUserBtn.setBackground(new java.awt.Color(51, 153, 255));
+        createUserBtn.setFont(new java.awt.Font("Al Bayan", 1, 18)); // NOI18N
+        createUserBtn.setText("Create");
+        createUserBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        createUserBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        createUserBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                createUserBtnMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                createUserBtnMouseEntered(evt);
+            }
+        });
+        createUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createUserBtnActionPerformed(evt);
+            }
+        });
+        useraccountjPanel.add(createUserBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 640, 140, 30));
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/useraccount_background.jpg"))); // NOI18N
         useraccountjPanel.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 700));
@@ -1558,77 +1582,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_userAccphoneNumTextActionPerformed
 
-    private void userAccCreateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccCreateBtnActionPerformed
-        
-        Organization selectedOrg = (Organization) userAccOrganizationComboBox.getSelectedItem();
-        Role selectedRole = (Role) userAccRoleComboBox.getSelectedItem();
-        if (selectedN == null || selectedE == null || selectedO == null || selectedRole == null) {
-            JOptionPane.showMessageDialog(null, "You have not selected your network/enterprise/organization/role yet!");
-            return;
-        }
-        //Employee setup
-        String name = userAccnameText.getText();
-        String phone = userAccphoneNumText.getText();
-        String address = userAccaddressText.getText();
-        String email = userAccemailText.getText();
-        Employee employee = new Employee();
-        employee.setName(name);
-        employee.setPhoneNum(phone);
-        employee.setAddress(address);
-        employee.setEmail(email);
-
-        if((ImageIcon)userAccphotoLabel.getIcon()==null){
-            JOptionPane.showMessageDialog(null, "upload photo please ");
-            return;
-        }
-        employee.setPhoto((ImageIcon)userAccphotoLabel.getIcon());
-
-        String inputUserName = userAccusernameText.getText();
-        String inputPassWord = userAccpasswordText.getText();
-        String inputPassword = String.valueOf(inputPassWord);
-        UserAccount ua = selectedOrg.getUserAccountDirectory().authenticateUser(inputUserName, inputPassword);
-        if (ua == null) {
-            ua = selectedOrg.getUserAccountDirectory().createUserAccount(inputUserName, inputPassword, employee, selectedRole);
-            JOptionPane.showMessageDialog(null, "Create User Account Successfully! ");
-            populateUserAccountAreaTable();
-//            userAccCreateBtn.setEnabled(true);
-//            userAccusernameText.setEnabled(false);
-//            userAccpasswordText.setEnabled(false);
-//            userAccCreateBtn.setEnabled(false);
-            userAccusernameText.setText("");
-            userAccpasswordText.setText("");
-            userAccnameText.setText("");
-            userAccemailText.setText("");
-            userAccaddressText.setText("");
-            userAccphoneNumText.setText("");
-//            userAccNetworkComboBox.setEnabled(false);
-//            userAccEnterpriseComboBox.setEnabled(false);
-//            userAccOrganizationComboBox.setEnabled(false);
-//            userAccRoleComboBox.setEnabled(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Duplicate password/username, enter again ");
-        }
-
-        //        if(username == null || username.equals("") || password == null || username.equals("") || name == null || name.equals("") || address == null || address.equals("") || phoneNum == null || phoneNum.equals("")){
-            //            JOptionPane.showMessageDialog(null, "Text field can't be empty.");
-            //            return;
-            //        }
-        //        if (system.getUserAccountDirectory().checkIfUsernameIsUnique(username)) {
-            //            Employee employee = system.getEmployeeDirectory().createEmployee(name);
-            //            UserAccount userAccount = system.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
-            //            Restaurant restaurant = new Restaurant(name, address, phoneNum, userAccount);
-            //            system.getRestaurantDirectory().getRestaurantList().add(restaurant);
-            //            JOptionPane.showMessageDialog(null,"Restaurant created successfully!");
-            //            nameText.setText("");
-            //            addressText.setText("");
-            //            phoneNumText.setText("");
-            //            usernameText.setText("");
-            //            passwordText.setText("");
-            //        } else {
-            //            JOptionPane.showMessageDialog(null, "This username already exists!");
-            //        }
-    }//GEN-LAST:event_userAccCreateBtnActionPerformed
-
     private void userAccusernameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccusernameTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userAccusernameTextActionPerformed
@@ -1763,11 +1716,13 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_userAccaddressTextActionPerformed
 
     private void deleteStateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteStateBtnMouseExited
-        // TODO add your handling code here:
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        deleteStateBtn.setBorder(btnBorder);
     }//GEN-LAST:event_deleteStateBtnMouseExited
 
     private void deleteStateBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteStateBtnMouseEntered
-        // TODO add your handling code here:
+        Border btnBorder = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE);
+        deleteStateBtn.setBorder(btnBorder);
     }//GEN-LAST:event_deleteStateBtnMouseEntered
 
     private void deleteStateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStateBtnActionPerformed
@@ -1775,23 +1730,27 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteStateBtnActionPerformed
 
     private void deleteEnterpriseBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnMouseExited
-        // TODO add your handling code here:
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        deleteEnterpriseBtn.setBorder(btnBorder);
     }//GEN-LAST:event_deleteEnterpriseBtnMouseExited
 
     private void deleteEnterpriseBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnMouseEntered
-        // TODO add your handling code here:
+        Border btnBorder = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE);
+        deleteEnterpriseBtn.setBorder(btnBorder);
     }//GEN-LAST:event_deleteEnterpriseBtnMouseEntered
 
     private void deleteEnterpriseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEnterpriseBtnActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_deleteEnterpriseBtnActionPerformed
 
     private void deleteOrgBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteOrgBtnMouseExited
-        // TODO add your handling code here:
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE);
+        deleteOrgBtn.setBorder(btnBorder);
     }//GEN-LAST:event_deleteOrgBtnMouseExited
 
     private void deleteOrgBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteOrgBtnMouseEntered
-        // TODO add your handling code here:
+        Border btnBorder = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.WHITE);
+        deleteOrgBtn.setBorder(btnBorder);
     }//GEN-LAST:event_deleteOrgBtnMouseEntered
 
     private void deleteOrgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteOrgBtnActionPerformed
@@ -1816,6 +1775,16 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_deleteOrgBtnActionPerformed
 
+    private void userAccDeleteBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userAccDeleteBtnMouseExited
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK);
+        userAccDeleteBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_userAccDeleteBtnMouseExited
+
+    private void userAccDeleteBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userAccDeleteBtnMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK);
+        userAccDeleteBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_userAccDeleteBtnMouseEntered
+
     private void userAccDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccDeleteBtnActionPerformed
         int selectedRow = userAccInfoTable.getSelectedRow();
         if (selectedRow < 0){
@@ -1838,7 +1807,70 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 }
             }
         }
+                                
     }//GEN-LAST:event_userAccDeleteBtnActionPerformed
+
+    private void createUserBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createUserBtnMouseExited
+        Border btnBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK);
+        createUserBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_createUserBtnMouseExited
+
+    private void createUserBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createUserBtnMouseEntered
+        Border btnBorder = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK);
+        createUserBtn.setBorder(btnBorder);
+    }//GEN-LAST:event_createUserBtnMouseEntered
+
+    private void createUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUserBtnActionPerformed
+        Organization selectedOrg = (Organization) userAccOrganizationComboBox.getSelectedItem();
+        Role selectedRole = (Role) userAccRoleComboBox.getSelectedItem();
+        if (selectedN == null || selectedE == null || selectedO == null || selectedRole == null) {
+            JOptionPane.showMessageDialog(null, "You have not selected your network/enterprise/organization/role yet!");
+            return;
+        }
+        //Employee setup
+        String name = userAccnameText.getText();
+        String phone = userAccphoneNumText.getText();
+        String address = userAccaddressText.getText();
+        String email = userAccemailText.getText();
+        Employee employee = new Employee();
+        employee.setName(name);
+        employee.setPhoneNum(phone);
+        employee.setAddress(address);
+        employee.setEmail(email);
+
+        if((ImageIcon)userAccphotoLabel.getIcon()==null){
+            JOptionPane.showMessageDialog(null, "upload photo please ");
+            return;
+        }
+        employee.setPhoto((ImageIcon)userAccphotoLabel.getIcon());
+
+        String inputUserName = userAccusernameText.getText();
+        String inputPassWord = userAccpasswordText.getText();
+        String inputPassword = String.valueOf(inputPassWord);
+        UserAccount ua = selectedOrg.getUserAccountDirectory().authenticateUser(inputUserName, inputPassword);
+        if (ua == null) {
+            ua = selectedOrg.getUserAccountDirectory().createUserAccount(inputUserName, inputPassword, employee, selectedRole);
+            JOptionPane.showMessageDialog(null, "Create User Account Successfully! ");
+            populateUserAccountAreaTable();
+//            userAccCreateBtn.setEnabled(true);
+//            userAccusernameText.setEnabled(false);
+//            userAccpasswordText.setEnabled(false);
+//            userAccCreateBtn.setEnabled(false);
+            userAccusernameText.setText("");
+            userAccpasswordText.setText("");
+            userAccnameText.setText("");
+            userAccemailText.setText("");
+            userAccaddressText.setText("");
+            userAccphoneNumText.setText("");
+//            userAccNetworkComboBox.setEnabled(false);
+//            userAccEnterpriseComboBox.setEnabled(false);
+//            userAccOrganizationComboBox.setEnabled(false);
+//            userAccRoleComboBox.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Duplicate password/username, enter again ");
+        }
+
+    }//GEN-LAST:event_createUserBtnActionPerformed
     
     public void activeColor(JPanel panel) {
         panel.setBackground(new Color(41, 57, 80));
@@ -1852,6 +1884,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton addStateBtn;
     private javax.swing.JButton createEnterpriseBtn;
     private javax.swing.JButton createOrgBtn;
+    private javax.swing.JButton createUserBtn;
     private javax.swing.JButton deleteEnterpriseBtn;
     private javax.swing.JButton deleteOrgBtn;
     private javax.swing.JButton deleteStateBtn;
@@ -1909,7 +1942,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel organizationjPanel;
     private javax.swing.JTextField stateText;
     private javax.swing.JLabel uploadLabel;
-    private javax.swing.JButton userAccCreateBtn;
     private javax.swing.JButton userAccDeleteBtn;
     private javax.swing.JComboBox<Object> userAccEnterpriseComboBox;
     private javax.swing.JTable userAccInfoTable;
