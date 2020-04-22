@@ -44,7 +44,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
     private UserAccount userAccount;
     private EcoSystem system;
     private SignIn frame;
-    private Set<String> idSet;
+    private final static Set<String> idSet = new HashSet<>();
    
     /**
      * Creates new form NewFactoryManagerWorkAreaJPanel
@@ -57,7 +57,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.userAccount = userAccount;
         this.system = system;
-        idSet = new HashSet<>();
+//        idSet = new HashSet<>();
         populateTextField();
         setTableProperty();
         populateVaccineProduceTable();
@@ -1299,7 +1299,12 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please select a row from table first.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
         VaccineProduceRequest vaccineProduceRequest = (VaccineProduceRequest) vaccineRequestTable.getValueAt(selectedRow, 0);
+        if (vaccineProduceRequest.getStatus().equalsIgnoreCase("produced and stored")) {
+            JOptionPane.showMessageDialog(null,"This work request has completed yet!","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         vaccineProduceRequest.setStatus("Declined");
     }//GEN-LAST:event_declineBtnActionPerformed
 
@@ -1346,7 +1351,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
             selectedVaccine.setDoseProdeced(dose);
             selectedVaccine.setProDate(manuDate);
             selectedVaccine.setExpDate(expDate);
-            
+            System.out.println(idSet.size());
 //            vaccineText.setText("");
             idText.setText("");
             doseText.setText("");

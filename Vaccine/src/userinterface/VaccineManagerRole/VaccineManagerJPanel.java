@@ -1234,6 +1234,10 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
             return;
         }       
         VaccineDoctorRequest vaccineDoctorRequest = (VaccineDoctorRequest) doctorRequestTable.getValueAt(selectedRow, 0);
+        if (vaccineDoctorRequest.getStatus().equalsIgnoreCase("Approved")) {
+            JOptionPane.showMessageDialog(null,"This work request has completed yet!","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Vaccine selectedVaccine = vaccineDoctorRequest.getVaccine();
         DefaultTableModel model = (DefaultTableModel) vaccineTotalTable.getModel();
         for (int count = 0; count < model.getRowCount(); count++) {
@@ -1292,6 +1296,10 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
             return;
         }
         VaccineDoctorRequest vaccineDoctorRequest = (VaccineDoctorRequest) doctorRequestTable.getValueAt(selectedRow, 0);
+        if (vaccineDoctorRequest.getStatus().equalsIgnoreCase("Approved")) {
+            JOptionPane.showMessageDialog(null,"This work request has completed yet!","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         vaccineDoctorRequest.setStatus("Declined");
         populateDoctorRequestTable();
     }//GEN-LAST:event_declineBtnActionPerformed

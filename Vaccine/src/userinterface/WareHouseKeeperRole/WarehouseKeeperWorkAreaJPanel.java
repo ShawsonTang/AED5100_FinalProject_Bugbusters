@@ -1234,7 +1234,10 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
             return;
         }
         VaccinePurchaseRequest vaccinePurchaseRequest = (VaccinePurchaseRequest) vaccinePurchaseTable.getValueAt(selectedRow, 0);
-        
+        if (vaccinePurchaseRequest.getStatus().equalsIgnoreCase("Approved")) {
+            JOptionPane.showMessageDialog(null,"This work request has completed yet!","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         Vaccine selectedVaccine = vaccinePurchaseRequest.getVaccine();
         purchaseVaccineText.setText(selectedVaccine.getVaccineType());
         purchaseVaccineText.setEnabled(false);
@@ -1304,6 +1307,10 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
             return;
         }
         VaccinePurchaseRequest vaccinePurchaseRequest = (VaccinePurchaseRequest) vaccinePurchaseTable.getValueAt(selectedRow, 0);
+        if (vaccinePurchaseRequest.getStatus().equalsIgnoreCase("Approved")) {
+            JOptionPane.showMessageDialog(null,"This work request has completed yet!","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         vaccinePurchaseRequest.setStatus("Declined");
     }//GEN-LAST:event_declineBtnActionPerformed
 
