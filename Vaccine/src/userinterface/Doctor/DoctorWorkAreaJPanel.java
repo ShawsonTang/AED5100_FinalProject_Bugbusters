@@ -1122,7 +1122,9 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                  }
              }             
         }
-            
+            if (healthDepartmentOrganization == null) {
+                return;
+            }
             request.setVaccine(vaccine);
             request.setDosesRequest(dose);
             request.setReceiver(healthDepartmentOrganization);

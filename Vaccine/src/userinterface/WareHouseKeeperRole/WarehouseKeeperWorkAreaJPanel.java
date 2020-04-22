@@ -1340,6 +1340,9 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         
         Vaccine selectedVaccine = (Vaccine) vaccineTotalTable.getValueAt(selectedRow, 0);
         FactoryOrganization factoryOrganization = (FactoryOrganization) factoryComboBox.getSelectedItem();
+        if (factoryOrganization == null) {
+            return;
+        }
         DefaultTableModel requestModel = (DefaultTableModel) vaccineRequestTable.getModel();
         for (int i = 0; i < requestModel.getRowCount(); i++) {
              VaccineProduceRequest targetRequest = (VaccineProduceRequest) requestModel.getValueAt(i, 0);
@@ -1587,6 +1590,9 @@ public class WarehouseKeeperWorkAreaJPanel extends javax.swing.JPanel {
         }
                 
         Vaccine purchaseVaccine = vaccinePurchaseRequest.getVaccine();
+        if (vaccineIDComboBox.getSelectedItem() == null) {
+            return;
+        }
         String id = "" + vaccineIDComboBox.getSelectedItem();
         int doseTyped = Integer.parseInt(doseText.getText());
         int dosePurchase = vaccinePurchaseRequest.getDosesPurchase();

@@ -1799,7 +1799,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                     if (o.getOrganizationID() == deleteOrgId) {
                         e.getOrganizationDirectory().getOrganizationList().remove(o);
-                        JOptionPane.showMessageDialog(null,"Delete this user successfully");
+                        JOptionPane.showMessageDialog(null,"Delete this orgnization successfully");
                         populateOrganizationTable();
                         break;
                     }

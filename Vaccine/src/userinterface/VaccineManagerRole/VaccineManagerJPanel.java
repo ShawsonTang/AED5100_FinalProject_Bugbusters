@@ -1339,7 +1339,10 @@ public class VaccineManagerJPanel extends javax.swing.JPanel {
         Vaccine selectedVaccine = (Vaccine) vaccineTotalTable.getValueAt(selectedRow, 0);
         VaccinePurchaseRequest request = new VaccinePurchaseRequest();
         int dose = Integer.parseInt(doseRequestText.getText());
-        WarehouseOrganization warehouseOrganization = (WarehouseOrganization) warehouseComboBox.getSelectedItem();        
+        WarehouseOrganization warehouseOrganization = (WarehouseOrganization) warehouseComboBox.getSelectedItem();
+        if (warehouseOrganization == null) {
+            return;
+        }
         request.setVaccine(selectedVaccine);
         request.setDosesPurchase(dose);
         request.setDoseForUpdate(dose);
