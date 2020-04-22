@@ -57,7 +57,7 @@ public abstract class Organization {
         ++counter;
     }
 
-    public abstract ArrayList<Role> getSupportedRole();
+    public abstract ArrayList<Role.RoleType> getSupportedRole();
     
     public UserAccountDirectory getUserAccountDirectory() {
         return userAccountDirectory;
