@@ -20,9 +20,9 @@ public class WarehouseOrganization extends Organization {
     }
     
     @Override
-    public ArrayList<Role.RoleType> getSupportedRole() {
-        ArrayList<Role.RoleType> roles = new ArrayList();
-        roles.add(Role.RoleType.WarehouseKeeper);
+    public ArrayList<Role> getSupportedRole() {
+        ArrayList<Role> roles = new ArrayList();
+        roles.add(new WarehouseKeeperRole());
         return roles;
     }
     

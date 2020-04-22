@@ -1675,7 +1675,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please add an organization first!");
             return;
         }
-        for (Role.RoleType r : selectedO.getSupportedRole()) {
+        for (Role r : selectedO.getSupportedRole()) {
             userAccRoleComboBox.addItem(r);
         } 
         userAccOrganizationComboBox.addActionListener((e) -> {           
@@ -1684,7 +1684,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             if (selectedO == null) {
                 userAccRoleComboBox.addItem("");
             } else {
-                for (Role.RoleType r: selectedO.getSupportedRole()) {
+                for (Role r: selectedO.getSupportedRole()) {
                     userAccRoleComboBox.addItem(r);
                 } 
             }

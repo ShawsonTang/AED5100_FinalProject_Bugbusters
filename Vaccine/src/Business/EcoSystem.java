@@ -41,9 +41,9 @@ public class EcoSystem extends Organization {
         return network;
     }
     @Override
-    public ArrayList<Role.RoleType> getSupportedRole() {
-        ArrayList<Role.RoleType> roleList=new ArrayList<>();
-        roleList.add(Role.RoleType.Admin);
+    public ArrayList<Role> getSupportedRole() {
+        ArrayList<Role> roleList=new ArrayList<>();
+        roleList.add(new SystemAdminRole());
         return roleList;
     }
     private EcoSystem(){
