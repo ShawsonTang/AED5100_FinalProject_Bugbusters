@@ -19,9 +19,9 @@ public class DoPHOrganization extends Organization {
     }
     
     @Override
-    public ArrayList<Role.RoleType> getSupportedRole() {
-       ArrayList<Role.RoleType> roles = new ArrayList();
-        roles.add(Role.RoleType.AssistantSecretary);
+    public ArrayList<Role> getSupportedRole() {
+       ArrayList<Role> roles = new ArrayList();
+        roles.add(new AssistantSecretaryRole());
         return roles;
     }
     
