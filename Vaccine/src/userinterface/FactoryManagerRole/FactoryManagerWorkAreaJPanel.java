@@ -1387,6 +1387,9 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
         }
         
         WarehouseOrganization warehouseOrganization = (WarehouseOrganization) warehouseComboBox.getSelectedItem();
+        if (warehouseOrganization == null) {
+            return;
+        }
         Vaccine selectedVaccine = (Vaccine) vaccineProduceTable.getValueAt(selectedRow, 0);
         if (!selectedVaccine.getVaccineType().equalsIgnoreCase(vaccineText.getText()) || selectedVaccine.getId() == null|| selectedVaccine.getId().equals("")) {
             JOptionPane.showMessageDialog(null,"Please produce the vaccine first or select the vaccine as text area suggests.","Warning",JOptionPane.WARNING_MESSAGE);
