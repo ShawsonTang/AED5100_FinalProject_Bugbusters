@@ -5,6 +5,7 @@
  */
 package userinterface.FactoryManagerRole;
 
+
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Organization.FactoryOrganization;
@@ -669,7 +670,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
                             .addGroup(requestJPanelLayout.createSequentialGroup()
                                 .addGap(90, 90, 90)
                                 .addComponent(tableDesLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 154, Short.MAX_VALUE))
+                        .addGap(0, 584, Short.MAX_VALUE))
                     .addGroup(requestJPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -689,7 +690,7 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(requestJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(approveBtn)
                     .addComponent(declineBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -702,31 +703,28 @@ public class FactoryManagerWorkAreaJPanel extends javax.swing.JPanel {
         vaccineProduceTable.setFont(new java.awt.Font("American Typewriter", 0, 14)); // NOI18N
         vaccineProduceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "VACCINE", "REQUEST ID", "VACCINE ID", "DOSE", "MANU DATE", "EXP DATE"
+                "VACCINE", "VACCINE ID", "DOSE", "MANU DATE", "EXP DATE"
             }
         ));
         vaccineProduceTable.setSelectionBackground(new java.awt.Color(80, 148, 240));
         vaccineProduceTable.setShowVerticalLines(false);
         jScrollPane5.setViewportView(vaccineProduceTable);
-        if (vaccineProduceTable.getColumnModel().getColumnCount() > 0) {
-            vaccineProduceTable.getColumnModel().getColumn(1).setHeaderValue("REQUEST ID");
-        }
 
         produceBtn.setBackground(new java.awt.Color(102, 102, 102));
         produceBtn.setFont(new java.awt.Font("Menlo", 1, 18)); // NOI18N

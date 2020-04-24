@@ -1,0 +1,14 @@
+Doctor Role:
+User & Password: doctor1
+
+Vaccine Manager Role:
+User & Password: vmanager
+
+Assistant Scretary Role:
+User & Password: assistant
+
+Warehouse Keeper Role:
+User & Password: keeper
+
+Factory Manager Role:
+User & Password: fmanager
